@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Sparkles, Play, StopCircle } from 'lucide-react';
+import { Sparkles, Play } from 'lucide-react';
 
 export const DemoPreview = () => {
     return (
