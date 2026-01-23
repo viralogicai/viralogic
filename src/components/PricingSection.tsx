@@ -4,6 +4,7 @@ import { Button } from './Button';
 import { motion } from 'framer-motion';
 import { PayOSModal } from './PayOSModal';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const plans = [
     {
@@ -34,18 +35,22 @@ const plans = [
 export const PricingSection = () => {
     const [selectedPlan, setSelectedPlan] = useState<typeof plans[0] | null>(null);
     const navigate = useNavigate();
+    const { upgradeTier } = useAuth();
 
     const handleSuccess = () => {
         if (selectedPlan) {
-            // Mock validation logic
-            localStorage.setItem('membership', selectedPlan.id === 'elite' ? 'elite' : 'basic');
+            // Update Context
+            if (selectedPlan.id === 'starter') upgradeTier('starter');
+            if (selectedPlan.id === 'pro') upgradeTier('pro');
+            if (selectedPlan.id === 'elite') upgradeTier('elite');
 
-            if (selectedPlan.id === 'elite') {
-                navigate('/membership');
+            // Routing Logic
+            if (selectedPlan.id === 'starter') {
+                navigate('/upsell');
             } else {
-                alert('Cảm ơn bạn! Link tải đã được gửi qua email (Simulated).');
-                setSelectedPlan(null);
+                navigate('/membership');
             }
+            setSelectedPlan(null);
         }
     };
 

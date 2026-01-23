@@ -2,8 +2,8 @@ from rembg import remove
 from PIL import Image
 import io
 
-input_path = 'anh download.jpg'
-output_path = 'public/product-box-transparent.png'
+input_path = 'uploaded_image_1769173647267.png'
+output_path = 'public/logo-brand.png'
 
 print(f"Processing {input_path}...")
 
