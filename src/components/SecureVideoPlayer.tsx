@@ -52,7 +52,7 @@ export const SecureVideoPlayer = ({ src, poster, title }: SecureVideoPlayerProps
                 </div>
 
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-16 h-16 rounded-full bg-brand-cyan/20 backdrop-blur-sm flex items-center justify-center border border-brand-cyan/50 shadow-[0_0_30px_rgba(0,240,255,0.3)]">
+                    <div className="w-16 h-16 rounded-full bg-brand-cyan/20 backdrop-blur-sm flex items-center justify-center border border-brand-cyan/50 shadow-[0_0_30px_rgba(6,182,212,0.3)]">
                         {isPlaying ? <Pause className="w-8 h-8 text-white fill-current" /> : <Play className="w-8 h-8 text-white fill-current ml-1" />}
                     </div>
                 </div>

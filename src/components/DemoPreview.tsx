@@ -11,7 +11,7 @@ export const DemoPreview = () => {
 
             <div className="relative group">
                 {/* Glow behind */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 to-cyan-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-brand-purple to-brand-cyan rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 animate-pulse-glow"></div>
 
                 {/* Chat Interface */}
                 <div className="relative bg-[#0A0E1A] border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl">
@@ -20,7 +20,7 @@ export const DemoPreview = () => {
                         <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
                         <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
                         <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
-                        <div className="ml-auto text-xs text-gray-500 font-mono">ChatGPT / Claude / Bing</div>
+                        <div className="ml-auto text-xs text-gray-500 font-mono">Chat / AI / Script</div>
                     </div>
 
                     <div className="p-6 md:p-8 space-y-6 max-h-[600px] overflow-y-auto no-scrollbar">
@@ -30,8 +30,8 @@ export const DemoPreview = () => {
                             <div className="flex-1">
                                 <div className="bg-gray-800/50 p-4 rounded-lg rounded-tl-none border border-white/5 text-sm md:text-base text-gray-200 font-mono">
                                     <span className="text-gray-500 block mb-2 text-xs">[Copy Paste Prompt #42]</span>
-                                    <p className="mb-1"><span className="text-violet-400">Chủ đề:</span> Bán khóa học tiếng Anh.</p>
-                                    <p className="mb-1"><span className="text-violet-400">Target:</span> GenZ mất gốc.</p>
+                                    <p className="mb-1"><span className="text-brand-purple-light">Chủ đề:</span> Bán khóa học tiếng Anh.</p>
+                                    <p className="mb-1"><span className="text-brand-purple-light">Target:</span> GenZ mất gốc.</p>
                                     <p>Hãy viết 3 hook gây sốc trong 3 giây đầu tiên.</p>
                                 </div>
                             </div>
@@ -45,12 +45,12 @@ export const DemoPreview = () => {
                             transition={{ delay: 0.5 }}
                             className="flex gap-4"
                         >
-                            <div className="w-8 h-8 rounded bg-gradient-to-br from-violet-500 to-cyan-500 flex-shrink-0 flex items-center justify-center text-white">
+                            <div className="w-8 h-8 rounded bg-gradient-to-br from-brand-purple to-brand-cyan flex-shrink-0 flex items-center justify-center text-white shadow-lg shadow-brand-purple/20">
                                 <Sparkles className="w-4 h-4" />
                             </div>
                             <div className="flex-1">
-                                <div className="bg-violet-900/10 p-4 rounded-lg rounded-tl-none border border-violet-500/20 text-sm md:text-base text-gray-100">
-                                    <p className="mb-3 text-violet-300 text-xs uppercase tracking-wider font-bold">ViraLogic AI Output:</p>
+                                <div className="bg-brand-purple/10 p-4 rounded-lg rounded-tl-none border border-brand-purple/20 text-sm md:text-base text-gray-100">
+                                    <p className="mb-3 text-brand-purple-light text-xs uppercase tracking-wider font-bold">ViraLogic AI Output:</p>
                                     <ul className="space-y-4">
                                         <li className="flex gap-3">
                                             <span className="text-brand-cyan font-bold font-mono">1.</span>

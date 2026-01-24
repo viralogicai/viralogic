@@ -8,9 +8,14 @@ export default {
     extend: {
       colors: {
         brand: {
-          cyan: '#00F0FF',
-          dark: '#050510',
-          void: '#000000',
+          dark: '#030712',
+          navy: '#0f172a',
+          cyan: '#06b6d4',
+          'cyan-light': '#22d3ee',
+          purple: '#7c3aed',
+          'purple-light': '#a78bfa',
+          pink: '#f43f5e',
+          'pink-light': '#fb7185',
           glass: 'rgba(255, 255, 255, 0.05)',
         }
       },

@@ -21,12 +21,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                         "text-base px-8 py-4": size === 'lg',
 
                         // Style variants
-                        "bg-white text-black hover:bg-brand-cyan hover:text-black": variant === 'primary',
-                        "border border-white/20 text-white hover:border-brand-cyan/50 hover:bg-white/5": variant === 'outline',
+                        "bg-gradient-to-r from-brand-cyan via-brand-purple to-brand-pink text-white hover:opacity-90 hover:shadow-[0_0_20px_rgba(124,58,237,0.5)] border-none": variant === 'primary',
+                        "border border-white/20 text-white hover:border-brand-purple/50 hover:bg-white/5": variant === 'outline',
                         "text-gray-400 hover:text-white": variant === 'ghost',
 
                         // Cyber variant (Special)
-                        "bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/50 hover:bg-brand-cyan hover:text-black hover:shadow-[0_0_20px_rgba(0,240,255,0.4)]": variant === 'cyber',
+                        "bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/50 hover:bg-brand-cyan hover:text-black hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]": variant === 'cyber',
                     },
                     className
                 )}

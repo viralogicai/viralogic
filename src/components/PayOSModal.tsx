@@ -45,12 +45,12 @@ export const PayOSModal = ({ isOpen, onClose, planName, amount, onSuccess }: Pay
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-brand-dark/90 backdrop-blur-md">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
-                        className="w-full max-w-lg bg-[#0B0F1A] border-tech rounded-2xl overflow-hidden relative"
+                        className="w-full max-w-lg bg-brand-navy border border-brand-primary/20 rounded-2xl overflow-hidden relative shadow-2xl shadow-brand-purple/20"
                     >
                         <button
                             onClick={onClose}
@@ -62,7 +62,7 @@ export const PayOSModal = ({ isOpen, onClose, planName, amount, onSuccess }: Pay
                         <div className="p-8">
                             <div className="text-center mb-6">
                                 <h3 className="text-2xl font-display font-bold text-white mb-2">Thanh toán an toàn</h3>
-                                <p className="text-gray-400">Gói <span className="text-brand-cyan font-bold">{planName}</span> - <span className="text-white font-bold">{amount.toLocaleString()}đ</span></p>
+                                <p className="text-gray-400">Gói <span className="text-brand-cyan font-bold">{planName}</span> - <span className="text-gradient-brand font-bold">{amount.toLocaleString()}đ</span></p>
                             </div>
 
                             <div className="flex flex-col md:flex-row items-center gap-8 justify-center mb-8">

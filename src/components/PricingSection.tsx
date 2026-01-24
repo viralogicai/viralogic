@@ -69,10 +69,10 @@ export const PricingSection = () => {
                         <motion.div
                             key={plan.id}
                             whileHover={{ y: -10 }}
-                            className={`relative p-8 rounded-2xl border ${plan.highlight ? 'bg-[#0B0F1A] border-brand-cyan/50 shadow-[0_0_40px_rgba(0,240,255,0.1)]' : 'bg-white/5 border-white/10 hover:bg-white/10'} transition-all`}
+                            className={`relative p-8 rounded-2xl border backdrop-blur-sm ${plan.highlight ? 'bg-brand-navy/60 border-brand-cyan/50 shadow-[0_0_40px_rgba(6,182,212,0.15)]' : 'bg-white/5 border-white/10 hover:bg-white/10'} transition-all`}
                         >
                             {plan.highlight && (
-                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-cyan text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-cyan via-brand-purple to-brand-pink text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
                                     {plan.tag}
                                 </div>
                             )}
@@ -95,7 +95,7 @@ export const PricingSection = () => {
                             </ul>
 
                             <Button
-                                variant={plan.highlight ? 'cyber' : 'outline'}
+                                variant={plan.highlight ? 'primary' : 'outline'}
                                 className="w-full"
                                 onClick={() => setSelectedPlan(plan)}
                             >

@@ -4,12 +4,12 @@
 
 @layer base {
   :root {
-    --background: 5 5 16;
-    --foreground: 255 255 255;
+    --background: 3 7 18;
+    --foreground: 248 250 252;
   }
 
   body {
-    @apply bg-[#050814] text-[#E2E8F0] font-sans overflow-x-hidden antialiased;
+    @apply bg-brand-dark text-slate-50 font-sans overflow-x-hidden antialiased;
   }
 }
 
@@ -32,7 +32,7 @@
   }
 
   .text-gradient-brand {
-    @apply bg-clip-text text-transparent bg-gradient-to-br from-[#A78BFA] to-[#22D3EE];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan via-brand-purple to-brand-pink;
   }
 
   .glow-effect {
