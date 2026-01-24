@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { SecureVideoPlayer } from '../components/SecureVideoPlayer';
 import { Lock, Copy, Download, Folder, FileText, Check } from 'lucide-react';
+import { AchievementBoard } from '../components/AchievementBoard';
 import { Button } from '../components/Button';
 
 
@@ -58,6 +59,8 @@ export const MembershipPage = () => {
             <main className="container mx-auto px-6 py-12">
 
                 <h1 className="text-3xl font-display font-bold mb-8">Welcome back, Creator!</h1>
+
+                <AchievementBoard />
 
                 {/* Exclusive Resources (Available for All Paid) */}
                 <section className="mb-16">

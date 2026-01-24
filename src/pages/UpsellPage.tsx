@@ -1,16 +1,46 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { PayOSModal } from '../components/PayOSModal';
-import { Clock, ShieldCheck } from 'lucide-react';
+import { Clock, ShieldCheck, Star, Video } from 'lucide-react';
 import { Button } from '../components/Button';
 
 export const UpsellPage = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const { upgradeTier } = useAuth();
     const [timeLeft, setTimeLeft] = useState(600); // 10 minutes
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+
+    // Determine Upsell Context
+    const fromPlan = location.state?.fromPlan || 'starter'; // 'starter' or 'pro'
+    const isProToElite = fromPlan === 'pro';
+
+    // Dynamic Content Configuration
+    const content = isProToElite
+        ? {
+            title: "Ưu đãi VIP độc quyền",
+            desc: "Bạn đã chọn gói Pro. Tuy nhiên, các Creator thu nhập 9 con số đều sở hữu gói Elite để nhận Coaching 1-1.",
+            benefit: "Video Masterclass + 1:1 Support",
+            targetPlan: "Elite (VIP)",
+            basePrice: 999000,
+            paidAmount: 399000,
+            upgradePrice: 600000,
+            upgradeTierId: 'elite' as const,
+            icon: <Video className="w-12 h-12 text-brand-cyan mb-4 mx-auto" />
+        }
+        : {
+            title: "Ưu đãi độc quyền",
+            desc: "Bạn đã sở hữu gói Starter. Nhưng để bùng nổ traffic thực sự, bạn cần Full 1000+ Prompt của gói Pro.",
+            benefit: "Full 1000+ Prompt",
+            targetPlan: "Pro Creator",
+            basePrice: 399000,
+            paidAmount: 199000,
+            upgradePrice: 200000,
+            upgradeTierId: 'pro' as const,
+            icon: <Star className="w-12 h-12 text-yellow-400 mb-4 mx-auto" />
+        };
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -33,12 +63,18 @@ export const UpsellPage = () => {
     };
 
     const handleUpgradeSuccess = () => {
-        upgradeTier('pro');
+        upgradeTier(content.upgradeTierId);
         setIsPaymentOpen(false);
         navigate('/membership');
     };
 
     const handleSkip = () => {
+        // If skipping, they keep their originally selected tier
+        if (isProToElite) {
+            upgradeTier('pro');
+        } else {
+            upgradeTier('starter');
+        }
         navigate('/membership');
     };
 
@@ -58,29 +94,31 @@ export const UpsellPage = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="glass-panel p-8 md:p-12 rounded-3xl"
+                    className="glass-panel p-8 md:p-12 rounded-3xl relative"
                 >
+                    {content.icon}
+
                     <h1 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
                         Khoan đã! <br />
-                        <span className="text-brand-cyan">Ưu đãi độc quyền</span> dành cho bạn
+                        <span className="text-brand-cyan">{content.title}</span> dành cho bạn
                     </h1>
 
                     <p className="text-gray-400 text-lg mb-8">
-                        Bạn đã sở hữu gói Starter. Nhưng để bùng nổ traffic thực sự, bạn cần <b>Full 1000+ Prompt</b> của gói Pro.
+                        {content.desc}
                     </p>
 
                     <div className="bg-brand-cyan/5 border border-brand-cyan/20 p-6 rounded-xl mb-8 text-left">
                         <div className="flex justify-between items-center mb-4 border-b border-brand-cyan/10 pb-4">
-                            <span className="text-gray-400">Gói Pro Creator</span>
-                            <span className="text-2xl font-bold text-white">399k</span>
+                            <span className="text-gray-400">{content.targetPlan}</span>
+                            <span className="text-2xl font-bold text-white">{content.basePrice.toLocaleString()}đ</span>
                         </div>
                         <div className="flex justify-between items-center mb-1">
-                            <span className="text-gray-400">Bạn đã trả (Starter)</span>
-                            <span className="text-red-400 font-mono">-199k</span>
+                            <span className="text-gray-400">Bạn đã trả ({isProToElite ? 'Pro' : 'Starter'})</span>
+                            <span className="text-red-400 font-mono">-{content.paidAmount.toLocaleString()}đ</span>
                         </div>
                         <div className="flex justify-between items-center text-brand-cyan font-bold text-xl mt-4 pt-4 border-t border-brand-cyan/20">
                             <span>Nâng cấp ngay chỉ:</span>
-                            <span>200k</span>
+                            <span>{content.upgradePrice.toLocaleString()}đ</span>
                         </div>
                     </div>
 
@@ -90,13 +128,13 @@ export const UpsellPage = () => {
                             className="w-full py-6 text-lg"
                             onClick={() => setIsPaymentOpen(true)}
                         >
-                            Nâng cấp ngay - Chỉ 200k
+                            Nâng cấp ngay - Chỉ {content.upgradePrice.toLocaleString()}đ
                         </Button>
                         <button
                             onClick={handleSkip}
                             className="text-gray-500 hover:text-white text-sm underline decoration-gray-700 underline-offset-4"
                         >
-                            Không cảm ơn, tôi sẽ dùng gói Starter
+                            Không cảm ơn, tôi sẽ dùng gói {isProToElite ? 'Pro' : 'Starter'}
                         </button>
                     </div>
 
@@ -110,8 +148,8 @@ export const UpsellPage = () => {
             <PayOSModal
                 isOpen={isPaymentOpen}
                 onClose={() => setIsPaymentOpen(false)}
-                planName="Upgrade to Pro"
-                amount={200000}
+                planName={`Upgrade to ${content.targetPlan}`}
+                amount={content.upgradePrice}
                 onSuccess={handleUpgradeSuccess}
             />
         </div>

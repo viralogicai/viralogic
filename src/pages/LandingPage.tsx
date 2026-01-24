@@ -5,6 +5,8 @@ import { FAQSection } from '../components/FAQSection';
 import { DemoPreview } from '../components/DemoPreview';
 import { ArrowRight, Zap, Video, Calendar, Tag, CreditCard } from 'lucide-react';
 
+import { AchievementBoard } from '../components/AchievementBoard';
+
 export const LandingPage = () => {
     return (
         <Layout>
@@ -18,6 +20,7 @@ export const LandingPage = () => {
             </div>
 
             <HeroSection />
+            <AchievementBoard />
 
             {/* Problem/Solution Section */}
             <section className="relative z-10 max-w-5xl mx-auto mb-24 px-6 md:px-0">

@@ -45,8 +45,8 @@ export const PricingSection = () => {
             if (selectedPlan.id === 'elite') upgradeTier('elite');
 
             // Routing Logic
-            if (selectedPlan.id === 'starter') {
-                navigate('/upsell');
+            if (selectedPlan.id === 'pro') {
+                navigate('/upsell', { state: { fromPlan: 'pro' } });
             } else {
                 navigate('/membership');
             }
@@ -64,12 +64,12 @@ export const PricingSection = () => {
                     <p className="text-gray-400">Nhận link tải tự động ngay sau khi thanh toán.</p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8 items-start">
-                    {plans.map((plan) => (
+                <div className="grid md:grid-cols-2 gap-8 items-start max-w-4xl mx-auto">
+                    {plans.filter(p => p.id !== 'elite').map((plan) => (
                         <motion.div
                             key={plan.id}
                             whileHover={{ y: -10 }}
-                            className={`relative p-8 rounded-2xl border backdrop-blur-sm ${plan.highlight ? 'bg-brand-navy/60 border-brand-cyan/50 shadow-[0_0_40px_rgba(6,182,212,0.15)]' : 'bg-white/5 border-white/10 hover:bg-white/10'} transition-all`}
+                            className={`relative p-8 rounded-2xl border backdrop-blur-sm ${plan.highlight ? 'bg-brand-navy/60 border-brand-cyan/50 shadow-[0_0_40px_rgba(6,182,212,0.15)] col-span-1 md:scale-105' : 'bg-white/5 border-white/10 hover:bg-white/10'} transition-all`}
                         >
                             {plan.highlight && (
                                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-cyan via-brand-purple to-brand-pink text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
