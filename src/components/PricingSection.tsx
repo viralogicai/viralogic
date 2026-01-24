@@ -9,25 +9,25 @@ import { useAuth } from '../context/AuthContext';
 const plans = [
     {
         id: 'starter',
-        name: 'Starter',
+        name: 'Starter — Bắt đầu đúng',
         price: 199000,
-        features: ['300 Prompt cơ bản', 'Hướng dẫn sử dụng PDF', 'Định dạng Notion/Excel'],
+        features: ['Bộ hướng dẫn AI nền tảng', 'Viết kịch bản ngắn & Hook', 'Đủ để hiểu hệ thống hoạt động', 'Không lan man, không quá tải'],
         highlight: false
     },
     {
         id: 'pro',
-        name: 'Pro Creator',
+        name: 'Pro Creator — Hệ thống',
         price: 399000,
         originalPrice: 999000,
-        features: ['Full 1000+ Prompt', 'Template Content Calendar', 'Prompt chỉnh sửa Caption', 'Cập nhật miễn phí trọn đời'],
+        features: ['Toàn bộ 1000+ kịch bản AI', 'PDF Guide: Quy trình xây kênh', 'Từ ý tưởng → Hook → Script', 'Mỗi video là một lần test'],
         highlight: true,
         tag: 'Best Seller'
     },
     {
         id: 'elite',
-        name: 'Elite (VIP)',
+        name: 'Elite (VIP) — Đi nhanh',
         price: 999000,
-        features: ['Mọi quyền lợi gói Pro', 'Bonus: Hook Generator Pack', 'Bonus: Sales Script Pack', 'Support 1-1 ưu tiên', 'Access Video Masterclass'],
+        features: ['Toàn bộ quyền lợi gói Pro', '3-5 Video Masterclass độc quyền', 'Membership Area riêng Updates', 'Công cụ lọc kịch bản song ngữ'],
         highlight: false
     }
 ];
@@ -59,12 +59,15 @@ export const PricingSection = () => {
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-                        Đầu tư một lần, <span className="text-brand-cyan">dùng trọn đời</span>
+                        ViraLogic AI được chia thành <span className="text-brand-cyan">3 cấp độ</span>
                     </h2>
-                    <p className="text-gray-400">Nhận link tải tự động ngay sau khi thanh toán.</p>
+                    <p className="text-gray-400 max-w-2xl mx-auto">
+                        ViraLogic AI không bán “nhiều hay ít prompt”. <br className="hidden md:block" />
+                        Chúng tôi bán đúng thứ bạn cần ở đúng thời điểm.
+                    </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-8 items-start max-w-4xl mx-auto">
+                <div className="grid md:grid-cols-2 gap-8 items-start max-w-4xl mx-auto mb-12">
                     {plans.filter(p => p.id !== 'elite').map((plan) => (
                         <motion.div
                             key={plan.id}
@@ -103,6 +106,13 @@ export const PricingSection = () => {
                             </Button>
                         </motion.div>
                     ))}
+                </div>
+
+                <div className="text-center max-w-2xl mx-auto bg-white/5 border border-white/10 p-6 rounded-xl">
+                    <p className="text-gray-300 italic font-medium">
+                        "Bạn có thể mua kịch bản ở bất kỳ đâu. <br />
+                        Nhưng thứ tự sử dụng & cách ra quyết định chỉ tồn tại trong một hệ thống."
+                    </p>
                 </div>
             </div>
 
