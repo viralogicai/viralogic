@@ -4,6 +4,8 @@ import { PricingSection } from '../components/PricingSection';
 import { FAQSection } from '../components/FAQSection';
 import { DemoPreview } from '../components/DemoPreview';
 import { ArrowRight, Zap, Video, Calendar, Tag, CreditCard } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ScrollReveal } from '../components/ScrollReveal';
 
 import { AchievementBoard } from '../components/AchievementBoard';
 
@@ -24,55 +26,57 @@ export const LandingPage = () => {
 
             {/* Problem/Solution Section */}
             <section className="relative z-10 max-w-5xl mx-auto mb-24 px-6 md:px-0 pt-16">
-                <div className="text-center mb-12">
-                    <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-2">
-                        VẤN ĐỀ / INSIGHT
-                    </h2>
-                    <p className="text-brand-purple-light font-medium uppercase tracking-wider text-sm">
-                        (TẠI SAO BẠN ĐANG BÍ?)
-                    </p>
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-6">
-                    <div className="glass-panel p-6 rounded-2xl transition-transform hover:-translate-y-1">
-                        <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center text-red-400 mb-4">
-                            <span className="text-xl">😓</span>
-                        </div>
-                        <h3 className="text-lg font-medium text-white mb-2">Bí Idea, Hook nhạt</h3>
-                        <p className="text-sm text-gray-400 mb-4">Ngồi cả tiếng không ra kịch bản, 3 giây đầu bị lướt qua ngay lập tức.</p>
-                        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-4"></div>
-                        <div className="flex items-center gap-2 text-emerald-400 text-sm">
-                            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                            <span>Hook giữ chân 90%</span>
-                        </div>
+                <ScrollReveal width="100%">
+                    <div className="text-center mb-12">
+                        <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-2">
+                            VẤN ĐỀ / INSIGHT
+                        </h2>
+                        <p className="text-brand-purple-light font-medium uppercase tracking-wider text-sm">
+                            (TẠI SAO BẠN ĐANG BÍ?)
+                        </p>
                     </div>
 
-                    <div className="glass-panel p-6 rounded-2xl transition-transform hover:-translate-y-1">
-                        <div className="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-400 mb-4">
-                            <span className="text-xl">⏳</span>
+                    <div className="grid md:grid-cols-3 gap-6">
+                        <div className="glass-panel p-6 rounded-2xl transition-transform hover:-translate-y-1">
+                            <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center text-red-400 mb-4">
+                                <span className="text-xl">😓</span>
+                            </div>
+                            <h3 className="text-lg font-medium text-white mb-2">Bí Idea, Hook nhạt</h3>
+                            <p className="text-sm text-gray-400 mb-4">Ngồi cả tiếng không ra kịch bản, 3 giây đầu bị lướt qua ngay lập tức.</p>
+                            <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-4"></div>
+                            <div className="flex items-center gap-2 text-emerald-400 text-sm">
+                                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                <span>Hook giữ chân 90%</span>
+                            </div>
                         </div>
-                        <h3 className="text-lg font-medium text-white mb-2">Script lan man</h3>
-                        <p className="text-sm text-gray-400 mb-4">Viết dài dòng, không đúng tâm lý người xem, retention thấp.</p>
-                        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-4"></div>
-                        <div className="flex items-center gap-2 text-emerald-400 text-sm">
-                            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                            <span>Cấu trúc Viral 30s</span>
-                        </div>
-                    </div>
 
-                    <div className="glass-panel p-6 rounded-2xl transition-transform hover:-translate-y-1">
-                        <div className="w-10 h-10 rounded-full bg-gray-500/10 flex items-center justify-center text-gray-400 mb-4">
-                            <span className="text-xl">📉</span>
+                        <div className="glass-panel p-6 rounded-2xl transition-transform hover:-translate-y-1">
+                            <div className="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-400 mb-4">
+                                <span className="text-xl">⏳</span>
+                            </div>
+                            <h3 className="text-lg font-medium text-white mb-2">Script lan man</h3>
+                            <p className="text-sm text-gray-400 mb-4">Viết dài dòng, không đúng tâm lý người xem, retention thấp.</p>
+                            <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-4"></div>
+                            <div className="flex items-center gap-2 text-emerald-400 text-sm">
+                                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                <span>Cấu trúc Viral 30s</span>
+                            </div>
                         </div>
-                        <h3 className="text-lg font-medium text-white mb-2">Làm nhiều, View ít</h3>
-                        <p className="text-sm text-gray-400 mb-4">Đăng video đều đặn nhưng mãi lẹt đẹt vài trăm view, không chuyển đổi.</p>
-                        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-4"></div>
-                        <div className="flex items-center gap-2 text-emerald-400 text-sm">
-                            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                            <span>CTA tăng conversion</span>
+
+                        <div className="glass-panel p-6 rounded-2xl transition-transform hover:-translate-y-1">
+                            <div className="w-10 h-10 rounded-full bg-gray-500/10 flex items-center justify-center text-gray-400 mb-4">
+                                <span className="text-xl">📉</span>
+                            </div>
+                            <h3 className="text-lg font-medium text-white mb-2">Làm nhiều, View ít</h3>
+                            <p className="text-sm text-gray-400 mb-4">Đăng video đều đặn nhưng mãi lẹt đẹt vài trăm view, không chuyển đổi.</p>
+                            <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-4"></div>
+                            <div className="flex items-center gap-2 text-emerald-400 text-sm">
+                                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                <span>CTA tăng conversion</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </ScrollReveal>
             </section>
 
             <DemoPreview />
@@ -145,29 +149,31 @@ export const LandingPage = () => {
 
             {/* USP Grid */}
             <section className="relative z-10 max-w-6xl mx-auto mb-32 px-6">
-                <h2 className="text-3xl font-semibold text-white mb-10 text-center">Bộ Kit này có gì?</h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="glass-panel p-5 rounded-xl hover:bg-white/5 transition-colors">
-                        <Zap className="text-yellow-400 w-8 h-8 mb-3" />
-                        <h4 className="font-medium text-white mb-1">500+ Hooks</h4>
-                        <p className="text-xs text-gray-400">Giữ chân người xem ngay lập tức.</p>
+                <ScrollReveal width="100%">
+                    <h2 className="text-3xl font-semibold text-white mb-10 text-center">Bộ Kit này có gì?</h2>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div className="glass-panel p-5 rounded-xl hover:bg-white/5 transition-colors">
+                            <Zap className="text-yellow-400 w-8 h-8 mb-3" />
+                            <h4 className="font-medium text-white mb-1">500+ Hooks</h4>
+                            <p className="text-xs text-gray-400">Giữ chân người xem ngay lập tức.</p>
+                        </div>
+                        <div className="glass-panel p-5 rounded-xl hover:bg-white/5 transition-colors">
+                            <Video className="text-red-400 w-8 h-8 mb-3" />
+                            <h4 className="font-medium text-white mb-1">Viral Scripts</h4>
+                            <p className="text-xs text-gray-400">Cấu trúc kể chuyện Storytelling.</p>
+                        </div>
+                        <div className="glass-panel p-5 rounded-xl hover:bg-white/5 transition-colors">
+                            <Calendar className="text-brand-cyan w-8 h-8 mb-3" />
+                            <h4 className="font-medium text-white mb-1">Content Plan</h4>
+                            <p className="text-xs text-gray-400">Lịch đăng bài 30 ngày tự động.</p>
+                        </div>
+                        <div className="glass-panel p-5 rounded-xl hover:bg-white/5 transition-colors">
+                            <Tag className="text-violet-400 w-8 h-8 mb-3" />
+                            <h4 className="font-medium text-white mb-1">SEO & Hashtag</h4>
+                            <p className="text-xs text-gray-400">Tối ưu tìm kiếm trên TikTok.</p>
+                        </div>
                     </div>
-                    <div className="glass-panel p-5 rounded-xl hover:bg-white/5 transition-colors">
-                        <Video className="text-red-400 w-8 h-8 mb-3" />
-                        <h4 className="font-medium text-white mb-1">Viral Scripts</h4>
-                        <p className="text-xs text-gray-400">Cấu trúc kể chuyện Storytelling.</p>
-                    </div>
-                    <div className="glass-panel p-5 rounded-xl hover:bg-white/5 transition-colors">
-                        <Calendar className="text-brand-cyan w-8 h-8 mb-3" />
-                        <h4 className="font-medium text-white mb-1">Content Plan</h4>
-                        <p className="text-xs text-gray-400">Lịch đăng bài 30 ngày tự động.</p>
-                    </div>
-                    <div className="glass-panel p-5 rounded-xl hover:bg-white/5 transition-colors">
-                        <Tag className="text-violet-400 w-8 h-8 mb-3" />
-                        <h4 className="font-medium text-white mb-1">SEO & Hashtag</h4>
-                        <p className="text-xs text-gray-400">Tối ưu tìm kiếm trên TikTok.</p>
-                    </div>
-                </div>
+                </ScrollReveal>
             </section>
 
             <PricingSection />

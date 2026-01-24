@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { PayOSModal } from './PayOSModal';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { ScrollReveal } from './ScrollReveal';
 
 const plans = [
     {
@@ -56,65 +57,67 @@ export const PricingSection = () => {
 
     return (
         <section id="pricing" className="py-24 px-4 bg-brand-dark relative z-10">
-            <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-                        ViraLogic AI được chia thành <span className="text-brand-cyan">3 cấp độ</span>
-                    </h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        ViraLogic AI không bán “nhiều hay ít prompt”. <br className="hidden md:block" />
-                        Chúng tôi bán đúng thứ bạn cần ở đúng thời điểm.
-                    </p>
-                </div>
+            <ScrollReveal width="100%">
+                <div className="max-w-7xl mx-auto">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
+                            ViraLogic AI được chia thành <span className="text-brand-cyan">3 cấp độ</span>
+                        </h2>
+                        <p className="text-gray-400 max-w-2xl mx-auto">
+                            ViraLogic AI không bán “nhiều hay ít prompt”. <br className="hidden md:block" />
+                            Chúng tôi bán đúng thứ bạn cần ở đúng thời điểm.
+                        </p>
+                    </div>
 
-                <div className="grid md:grid-cols-2 gap-8 items-start max-w-4xl mx-auto mb-12">
-                    {plans.filter(p => p.id !== 'elite').map((plan) => (
-                        <motion.div
-                            key={plan.id}
-                            whileHover={{ y: -10 }}
-                            className={`relative p-8 rounded-2xl border backdrop-blur-sm ${plan.highlight ? 'bg-brand-navy/60 border-brand-cyan/50 shadow-[0_0_40px_rgba(6,182,212,0.15)] col-span-1 md:scale-105' : 'bg-white/5 border-white/10 hover:bg-white/10'} transition-all`}
-                        >
-                            {plan.highlight && (
-                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-cyan via-brand-purple to-brand-pink text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
-                                    {plan.tag}
-                                </div>
-                            )}
-
-                            <h3 className="text-xl font-medium text-white mb-2">{plan.name}</h3>
-                            <div className="flex items-baseline gap-2 mb-6">
-                                <span className="text-3xl font-bold text-white">{plan.price.toLocaleString()}đ</span>
-                                {plan.originalPrice && (
-                                    <span className="text-sm text-gray-500 line-through">{plan.originalPrice.toLocaleString()}đ</span>
-                                )}
-                            </div>
-
-                            <ul className="space-y-4 mb-8">
-                                {plan.features.map((feature, idx) => (
-                                    <li key={idx} className="flex items-start gap-3 text-sm text-gray-300">
-                                        <Check className={`w-5 h-5 ${plan.highlight ? 'text-brand-cyan' : 'text-gray-500'} shrink-0`} />
-                                        <span>{feature}</span>
-                                    </li>
-                                ))}
-                            </ul>
-
-                            <Button
-                                variant={plan.highlight ? 'primary' : 'outline'}
-                                className="w-full"
-                                onClick={() => setSelectedPlan(plan)}
+                    <div className="grid md:grid-cols-2 gap-8 items-start max-w-4xl mx-auto mb-12">
+                        {plans.filter(p => p.id !== 'elite').map((plan) => (
+                            <motion.div
+                                key={plan.id}
+                                whileHover={{ y: -10 }}
+                                className={`relative p-8 rounded-2xl border backdrop-blur-sm ${plan.highlight ? 'bg-brand-navy/60 border-brand-cyan/50 shadow-[0_0_40px_rgba(6,182,212,0.15)] col-span-1 md:scale-105' : 'bg-white/5 border-white/10 hover:bg-white/10'} transition-all`}
                             >
-                                {plan.highlight ? 'Sở hữu ngay' : 'Chọn gói này'}
-                            </Button>
-                        </motion.div>
-                    ))}
-                </div>
+                                {plan.highlight && (
+                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-cyan via-brand-purple to-brand-pink text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
+                                        {plan.tag}
+                                    </div>
+                                )}
 
-                <div className="text-center max-w-2xl mx-auto bg-white/5 border border-white/10 p-6 rounded-xl">
-                    <p className="text-gray-300 italic font-medium">
-                        "Bạn có thể mua kịch bản ở bất kỳ đâu. <br />
-                        Nhưng thứ tự sử dụng & cách ra quyết định chỉ tồn tại trong một hệ thống."
-                    </p>
+                                <h3 className="text-xl font-medium text-white mb-2">{plan.name}</h3>
+                                <div className="flex items-baseline gap-2 mb-6">
+                                    <span className="text-3xl font-bold text-white">{plan.price.toLocaleString()}đ</span>
+                                    {plan.originalPrice && (
+                                        <span className="text-sm text-gray-500 line-through">{plan.originalPrice.toLocaleString()}đ</span>
+                                    )}
+                                </div>
+
+                                <ul className="space-y-4 mb-8">
+                                    {plan.features.map((feature, idx) => (
+                                        <li key={idx} className="flex items-start gap-3 text-sm text-gray-300">
+                                            <Check className={`w-5 h-5 ${plan.highlight ? 'text-brand-cyan' : 'text-gray-500'} shrink-0`} />
+                                            <span>{feature}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                <Button
+                                    variant={plan.highlight ? 'primary' : 'outline'}
+                                    className="w-full"
+                                    onClick={() => setSelectedPlan(plan)}
+                                >
+                                    {plan.highlight ? 'Sở hữu ngay' : 'Chọn gói này'}
+                                </Button>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    <div className="text-center max-w-2xl mx-auto bg-white/5 border border-white/10 p-6 rounded-xl">
+                        <p className="text-gray-300 italic font-medium">
+                            "Bạn có thể mua kịch bản ở bất kỳ đâu. <br />
+                            Nhưng thứ tự sử dụng & cách ra quyết định chỉ tồn tại trong một hệ thống."
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </ScrollReveal>
 
             <PayOSModal
                 isOpen={!!selectedPlan}
