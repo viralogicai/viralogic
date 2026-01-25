@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle, AlertCircle, ExternalLink, Mail } from 'lucide-react';
@@ -274,7 +276,7 @@ export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSucces
                                         </p>
 
                                         {/* Dev simulate button - only show in development */}
-                                        {import.meta.env.DEV && (
+                                        {process.env.NODE_ENV === 'development' && (
                                             <div className="mt-4 pt-4 border-t border-white/5">
                                                 <Button
                                                     variant="primary"

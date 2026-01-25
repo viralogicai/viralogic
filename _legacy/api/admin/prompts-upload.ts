@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import jwt from 'jsonwebtoken';
 import * as XLSX from 'xlsx';
-import prisma from '../lib/prisma';
+import prisma from '../_lib/prisma';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'viralogic-admin-secret-key-2026';
 

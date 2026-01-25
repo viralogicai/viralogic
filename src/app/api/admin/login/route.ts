@@ -1,43 +1,36 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import prisma from '../lib/prisma';
+import prisma from '@/lib/prisma';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'viralogic-admin-secret-key-2026';
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
-    }
-
+export async function POST(request: Request) {
     try {
-        const { email, password } = req.body;
+        const body = await request.json();
+        const { email, password } = body;
 
         if (!email || !password) {
-            return res.status(400).json({ error: 'Email and password are required' });
+            return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
         }
 
-        // Find user
         const user = await prisma.user.findUnique({
             where: { email }
         });
 
         if (!user) {
-            return res.status(401).json({ error: 'Invalid credentials' });
+            return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
         }
 
-        // Check if user is admin
         if (user.role !== 'ADMIN') {
-            return res.status(403).json({ error: 'Access denied. Admin only.' });
+            return NextResponse.json({ error: 'Access denied. Admin only.' }, { status: 403 });
         }
 
-        // Verify password
         const isValid = await bcrypt.compare(password, user.password);
         if (!isValid) {
-            return res.status(401).json({ error: 'Invalid credentials' });
+            return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
         }
 
-        // Generate JWT token
         const token = jwt.sign(
             {
                 userId: user.id,
@@ -48,7 +41,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             { expiresIn: '24h' }
         );
 
-        return res.status(200).json({
+        return NextResponse.json({
             success: true,
             data: {
                 token,
@@ -63,6 +56,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     } catch (error) {
         console.error('Admin login error:', error);
-        return res.status(500).json({ error: 'Internal server error' });
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }

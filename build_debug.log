@@ -1,0 +1,20 @@
+
+> viralogic-ai@0.1.0 build
+> next build
+
+▲ Next.js 16.1.4 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.6s
+  Running TypeScript ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/19) ...
+Error occurred prerendering page "/admin/dashboard". Read more: https://nextjs.org/docs/messages/prerender-error
+ReferenceError: localStorage is not defined
+    at <unknown> (C:\SMIZXE PERSONAL FOLDER\project code kiem tien\ViraLogic AI\.next\server\chunks\ssr\[root-of-the-server]__165b5b64._.js:1:601)
+    at <unknown> (C:\SMIZXE PERSONAL FOLDER\project code kiem tien\ViraLogic AI\.next\server\chunks\ssr\[root-of-the-server]__165b5b64._.js:1:558) {
+  digest: '3628321354'
+}
+Export encountered an error on /admin/(authenticated)/dashboard/page: /admin/dashboard, exiting the build.
+⨯ Next.js build worker exited with code: 1 and signal: null

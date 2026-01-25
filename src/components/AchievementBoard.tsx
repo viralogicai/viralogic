@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { Trophy, Users, Video, TrendingUp } from 'lucide-react';
 
