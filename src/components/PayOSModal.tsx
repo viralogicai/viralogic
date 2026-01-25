@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react';
+import { X, CheckCircle, AlertCircle, ExternalLink, Mail } from 'lucide-react';
 import { Button } from './Button';
 import { createPaymentLink, pollPaymentStatus, generateOrderCode } from '../lib/payos';
 import type { PaymentResponse } from '../lib/payos';
@@ -14,18 +14,32 @@ interface PayOSModalProps {
     onSuccess: () => void;
 }
 
-type PaymentState = 'loading' | 'ready' | 'polling' | 'success' | 'error';
+type PaymentState = 'input_email' | 'loading' | 'ready' | 'polling' | 'success' | 'error';
 
 export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSuccess }: PayOSModalProps) => {
-    const [paymentState, setPaymentState] = useState<PaymentState>('loading');
+    const [paymentState, setPaymentState] = useState<PaymentState>('input_email');
     const [paymentData, setPaymentData] = useState<PaymentResponse | null>(null);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [orderCode, setOrderCode] = useState<number>(0);
+    const [email, setEmail] = useState('');
     const [stopPolling, setStopPolling] = useState<(() => void) | null>(null);
 
-    // Initialize payment when modal opens
-    const initPayment = useCallback(async () => {
-        if (!isOpen) return;
+    // Initialize state when modal opens
+    useEffect(() => {
+        if (isOpen) {
+            setPaymentState('input_email');
+            setErrorMessage('');
+            setEmail('');
+        }
+    }, [isOpen]);
+
+    const handleCreatePayment = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!email || !email.includes('@')) {
+            setErrorMessage('Vui lòng nhập email hợp lệ');
+            return;
+        }
 
         setPaymentState('loading');
         setErrorMessage('');
@@ -37,8 +51,10 @@ export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSucces
             const response = await createPaymentLink({
                 orderCode: newOrderCode,
                 amount,
-                description: `ViraLogic AI - ${planName}`,
-                planId
+                // Use Order Code for description as requested
+                description: `${newOrderCode}`,
+                planId,
+                buyerEmail: email
             });
 
             setPaymentData(response);
@@ -67,20 +83,16 @@ export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSucces
             setErrorMessage(error instanceof Error ? error.message : 'Không thể tạo link thanh toán');
             setPaymentState('error');
         }
-    }, [isOpen, amount, planName, planId, onSuccess]);
+    };
 
     useEffect(() => {
-        if (isOpen) {
-            initPayment();
-        }
-
         return () => {
             // Cleanup polling on unmount
             if (stopPolling) {
                 stopPolling();
             }
         };
-    }, [isOpen, initPayment]);
+    }, [stopPolling]);
 
     // Handle close
     const handleClose = () => {
@@ -126,6 +138,39 @@ export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSucces
                                 </p>
                             </div>
 
+                            {/* Email Input Step */}
+                            {paymentState === 'input_email' && (
+                                <form onSubmit={handleCreatePayment} className="space-y-6">
+                                    <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                                            Email của bạn (để nhận thông báo)
+                                        </label>
+                                        <div className="relative">
+                                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+                                            <input
+                                                type="email"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                className="w-full pl-10 pr-4 py-3 bg-brand-dark border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-brand-cyan transition-colors"
+                                                placeholder="name@example.com"
+                                                required
+                                                autoFocus
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {errorMessage && (
+                                        <p className="text-red-400 text-sm text-center bg-red-500/10 p-2 rounded-lg">
+                                            {errorMessage}
+                                        </p>
+                                    )}
+
+                                    <Button type="submit" variant="primary" className="w-full py-4 text-lg">
+                                        Tiếp tục thanh toán
+                                    </Button>
+                                </form>
+                            )}
+
                             {/* Loading State */}
                             {paymentState === 'loading' && (
                                 <div className="flex flex-col items-center justify-center py-12">
@@ -139,7 +184,7 @@ export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSucces
                                 <div className="flex flex-col items-center justify-center py-12">
                                     <AlertCircle className="w-16 h-16 text-red-400 mb-4" />
                                     <p className="text-red-400 text-center mb-4">{errorMessage}</p>
-                                    <Button variant="primary" onClick={initPayment}>
+                                    <Button variant="primary" onClick={() => setPaymentState('input_email')}>
                                         Thử lại
                                     </Button>
                                 </div>

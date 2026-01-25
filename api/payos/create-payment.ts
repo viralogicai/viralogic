@@ -59,11 +59,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const cancelUrl = `${baseUrl}/#pricing`;
         const returnUrl = `${baseUrl}/payment-success?orderCode=${orderCode}&planId=${planId}`;
 
+        // Truncate description to max 25 chars
+        const truncatedDescription = description.substring(0, 25);
+
         // Generate signature
         const signatureData = {
             amount,
             cancelUrl,
-            description,
+            description: truncatedDescription,
             orderCode,
             returnUrl
         };
@@ -73,7 +76,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const payosBody = {
             orderCode,
             amount,
-            description,
+            description: truncatedDescription,
             cancelUrl,
             returnUrl,
             signature,

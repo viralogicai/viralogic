@@ -1,5 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import 'dotenv/config';
+
+if (!process.env.DATABASE_URL) {
+    console.error('❌ DATABASE_URL is missing from environment variables');
+    process.exit(1);
+}
 
 const prisma = new PrismaClient();
 
