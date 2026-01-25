@@ -123,6 +123,7 @@ export const PricingSection = () => {
                 isOpen={!!selectedPlan}
                 onClose={() => setSelectedPlan(null)}
                 planName={selectedPlan?.name || ''}
+                planId={selectedPlan?.id || ''}
                 amount={selectedPlan?.price || 0}
                 onSuccess={handleSuccess}
             />

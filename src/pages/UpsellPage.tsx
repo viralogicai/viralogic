@@ -205,6 +205,7 @@ export const UpsellPage = () => {
                 isOpen={isPaymentOpen}
                 onClose={() => setIsPaymentOpen(false)}
                 planName={`Upgrade to ${content.targetPlan}`}
+                planId={content.targetPlan.toLowerCase()}
                 amount={content.upgradePrice}
                 onSuccess={handleUpgradeSuccess}
             />
