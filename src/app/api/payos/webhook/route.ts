@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import prisma from '@/lib/prisma';
+import { syncCustomerToGetResponse } from '@/lib/getresponse';
 
 interface WebhookData {
     code: string;
@@ -38,8 +40,39 @@ export async function POST(request: Request) {
 
             console.log(`Payment successful: Order ${orderCode}, Amount ${amount}, PaymentLink ${paymentLinkId}`);
 
-            // TODO: Update database
-            // await prisma.payment.update(...)
+            // Update database and sync to GetResponse
+            try {
+                const payment = await prisma.payment.findUnique({
+                    where: { orderCode: String(orderCode) }
+                });
+
+                if (payment) {
+                    await prisma.payment.update({
+                        where: { id: payment.id },
+                        data: {
+                            status: 'PAID',
+                            updatedAt: new Date()
+                        }
+                    });
+
+                    // Sync to GetResponse
+                    const paymentData = payment.paymentData as { buyerEmail?: string } | null;
+                    if (paymentData?.buyerEmail) {
+                        await syncCustomerToGetResponse(
+                            paymentData.buyerEmail,
+                            payment.planId,
+                            'Customer' // We might want to pass real name if available
+                        );
+                    } else {
+                        console.warn(`[Webhook] No buyer email found for order ${orderCode}, skipping GetResponse sync`);
+                    }
+                } else {
+                    console.error(`[Webhook] Payment record not found for order ${orderCode}`);
+                }
+            } catch (dbError) {
+                console.error('[Webhook] Database/Sync error:', dbError);
+                // Continue to return success to PayOS so they don't retry indefinitely for a logic error
+            }
         }
 
         return NextResponse.json({

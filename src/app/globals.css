@@ -120,3 +120,19 @@
 .animate-pulse-glow {
   animation: pulse-glow 4s ease-in-out infinite;
 }
+
+@keyframes float-fast {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-10px, 10px);
+  }
+}
+
+.animate-float-fast {
+  animation: float-fast 4s ease-in-out infinite;
+}

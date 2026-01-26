@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
+import prisma from '@/lib/prisma';
 
 const PAYOS_API_URL = 'https://api-merchant.payos.vn/v2/payment-requests';
 
@@ -62,6 +63,28 @@ export async function POST(request: Request) {
             returnUrl
         };
         const signature = generateSignature(signatureData, checksumKey);
+
+        // Save payment intention to database
+        try {
+            await prisma.payment.create({
+                data: {
+                    orderCode: String(orderCode),
+                    amount,
+                    planId,
+                    status: 'PENDING',
+                    paymentData: {
+                        buyerEmail,
+                        description,
+                        createdAt: new Date().toISOString()
+                    }
+                }
+            });
+        } catch (dbError) {
+            console.error('Failed to save payment record:', dbError);
+            // We continue even if DB save fails? 
+            // Better to fail here so we don't have dangling payments
+            return NextResponse.json({ error: 'Failed to initialize order' }, { status: 500 });
+        }
 
         const payosBody = {
             orderCode,

@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle, AlertCircle, ExternalLink, Mail } from 'lucide-react';
 import { Button } from './Button';
+import { QRCodeSVG } from 'qrcode.react';
+import NextImage from 'next/image';
 import { createPaymentLink, pollPaymentStatus, generateOrderCode } from '../lib/payos';
 import type { PaymentResponse } from '../lib/payos';
 
@@ -217,15 +219,14 @@ export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSucces
                                             <div className="absolute top-0 left-0 w-full h-1 bg-brand-cyan shadow-[0_0_15px_rgba(0,240,255,0.8)] animate-[scan_2s_ease-in-out_infinite] z-10"></div>
 
                                             {paymentData.qrCode ? (
-                                                <img
-                                                    src={`https://img.vietqr.io/image/${paymentData.accountNumber}-qr.png?amount=${paymentData.amount}&addInfo=${encodeURIComponent(paymentData.description)}`}
-                                                    alt="QR Code"
-                                                    className="w-40 h-40 object-contain"
-                                                    onError={(e) => {
-                                                        // Fallback to text if image fails
-                                                        (e.target as HTMLImageElement).style.display = 'none';
-                                                    }}
-                                                />
+                                                <div className="bg-white p-2 rounded-lg">
+                                                    <QRCodeSVG
+                                                        value={paymentData.qrCode}
+                                                        size={160}
+                                                        level="M"
+                                                        includeMargin={true}
+                                                    />
+                                                </div>
                                             ) : (
                                                 <div className="text-center">
                                                     <p className="text-xs text-gray-600 mb-2">Chuyển khoản đến:</p>

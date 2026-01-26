@@ -9,6 +9,7 @@ import { ArrowRight, Zap, Video, Calendar, Tag, CreditCard } from 'lucide-react'
 import { ScrollReveal } from '@/components/ScrollReveal';
 
 import { AchievementBoard } from '@/components/AchievementBoard';
+import { TestimonialSection } from '@/components/TestimonialSection';
 
 export default function Home() {
   return (
@@ -90,17 +91,17 @@ export default function Home() {
             <div className="glass-panel p-5 rounded-xl hover:bg-white/5 transition-colors">
               <Zap className="text-yellow-400 w-8 h-8 mb-3" />
               <h4 className="font-medium text-white mb-1">500+ Hooks</h4>
-              <p className="text-xs text-gray-400">Giữ chân người xem ngay lập tức.</p>
+              <p className="text-xs text-gray-400">Giữ chân người xem ngay lập tức (Tested & Proven).</p>
             </div>
             <div className="glass-panel p-5 rounded-xl hover:bg-white/5 transition-colors">
               <Video className="text-red-400 w-8 h-8 mb-3" />
               <h4 className="font-medium text-white mb-1">Viral Scripts</h4>
-              <p className="text-xs text-gray-400">Cấu trúc kể chuyện Storytelling.</p>
+              <p className="text-xs text-gray-400">Cấu trúc kể chuyện đã được chứng minh hiệu quả.</p>
             </div>
             <div className="glass-panel p-5 rounded-xl hover:bg-white/5 transition-colors">
               <Calendar className="text-brand-cyan w-8 h-8 mb-3" />
               <h4 className="font-medium text-white mb-1">Content Plan</h4>
-              <p className="text-xs text-gray-400">Lịch đăng bài 30 ngày tự động.</p>
+              <p className="text-xs text-gray-400">Gợi ý chủ đề & thứ tự nội dung (không phải auto-post).</p>
             </div>
             <div className="glass-panel p-5 rounded-xl hover:bg-white/5 transition-colors">
               <Tag className="text-violet-400 w-8 h-8 mb-3" />
@@ -111,6 +112,7 @@ export default function Home() {
         </ScrollReveal>
       </section>
 
+      <TestimonialSection />
       <PricingSection />
       <FAQSection />
 

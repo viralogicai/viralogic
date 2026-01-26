@@ -7,21 +7,21 @@ const stats = [
     {
         icon: Video,
         value: "1,200+",
-        label: "AI Videos Created",
+        label: "Videos AI Đã Tạo",
         color: "text-brand-cyan",
         bg: "bg-brand-cyan/10"
     },
     {
         icon: Users,
         value: "500+",
-        label: "Elite Members",
+        label: "Thành Viên VIP",
         color: "text-brand-purple",
         bg: "bg-brand-purple/10"
     },
     {
         icon: TrendingUp,
         value: "85%",
-        label: "Retention Rate",
+        label: "Tỷ Lệ Hài Lòng",
         color: "text-brand-pink",
         bg: "bg-brand-pink/10"
     }

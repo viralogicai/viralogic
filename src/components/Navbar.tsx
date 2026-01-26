@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Rocket } from 'lucide-react';
+import { Rocket } from 'lucide-react';
 import { Button } from './Button';
 import { cn } from '../lib/utils';
 
 export const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -43,34 +42,26 @@ export const Navbar = () => {
                     <a href="#pricing" className="text-sm text-gray-400 hover:text-brand-cyan transition-colors">Pricing</a>
                 </div>
 
-                {/* CTA */}
-                <div className="hidden md:block">
-                    <Button variant="primary" size="sm" onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}>
-                        <Rocket className="w-4 h-4" />
-                        Start Viral
-                    </Button>
-                </div>
+                {/* CTA - Visible on Mobile and Desktop now, but styled differently if needed */}
+                <div className="flex items-center gap-4">
+                    <div className="hidden md:block">
+                        <Button variant="primary" size="sm" onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}>
+                            <Rocket className="w-4 h-4" />
+                            Start Viral
+                        </Button>
+                    </div>
 
-                {/* Mobile Menu Toggle */}
-                <button
-                    className="md:hidden text-white"
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                >
-                    {isMobileMenuOpen ? <X /> : <Menu />}
-                </button>
+                    {/* Mobile CTA - replaces Hamburger */}
+                    <div className="md:hidden">
+                        <Button variant="primary" size="sm" onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}>
+                            <Rocket className="w-4 h-4" />
+                            Start Viral
+                        </Button>
+                    </div>
+                </div>
             </div>
 
-            {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-                <div className="absolute top-full left-0 right-0 bg-brand-dark border-b border-white/10 p-4 md:hidden flex flex-col gap-4">
-                    <a href="#features" className="text-gray-400 hover:text-brand-cyan" onClick={() => setIsMobileMenuOpen(false)}>Features</a>
-                    <a href="#demo" className="text-gray-400 hover:text-brand-cyan" onClick={() => setIsMobileMenuOpen(false)}>Demo</a>
-                    <a href="#pricing" className="text-gray-400 hover:text-brand-cyan" onClick={() => setIsMobileMenuOpen(false)}>Pricing</a>
-                    <Button variant="primary" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
-                        Get Access
-                    </Button>
-                </div>
-            )}
+
         </nav>
     );
 };

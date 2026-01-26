@@ -13,7 +13,9 @@ const plans = [
         name: 'Starter — Bắt đầu đúng',
         price: 199000,
         features: ['Bộ hướng dẫn AI nền tảng', 'Viết kịch bản ngắn & Hook', 'Đủ để hiểu hệ thống hoạt động', 'Không lan man, không quá tải'],
-        highlight: false
+        highlight: false,
+        note: "Starter tập trung giúp bạn làm đúng thứ tự ban đầu.\nKhông bao gồm pipeline sản xuất & scaling.",
+        ctaNote: "Bắt đầu với Starter để làm đúng thứ tự.\nSau khi rõ quy trình, bạn có thể nâng cấp Pro để sản xuất & mở rộng nội dung."
     },
     {
         id: 'pro',
@@ -98,6 +100,20 @@ export const PricingSection = () => {
                                         </li>
                                     ))}
                                 </ul>
+
+                                {(plan as any).note && (
+                                    <div className="mb-6 p-3 bg-white/5 rounded-lg border border-white/5">
+                                        <p className="text-xs text-gray-400 leading-relaxed whitespace-pre-line">
+                                            ⚠️ {(plan as any).note}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {(plan as any).ctaNote && (
+                                    <p className="text-[10px] text-gray-500 mb-2 whitespace-pre-line text-center">
+                                        {(plan as any).ctaNote}
+                                    </p>
+                                )}
 
                                 <Button
                                     variant={plan.highlight ? 'primary' : 'outline'}
