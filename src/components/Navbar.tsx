@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Rocket } from 'lucide-react';
 import { Button } from './Button';
 import { cn } from '../lib/utils';
@@ -27,8 +28,14 @@ export const Navbar = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-cyan via-brand-purple to-brand-pink flex items-center justify-center text-white font-bold font-display group-hover:animate-pulse shadow-lg shadow-brand-purple/20">
-                        V
+                    <div className="relative w-10 h-10 group-hover:scale-105 transition-transform duration-300 rounded-full overflow-hidden">
+                        <Image
+                            src="/logo.png"
+                            alt="ViraLogic AI Logo"
+                            fill
+                            className="object-contain"
+                            priority
+                        />
                     </div>
                     <span className="font-display font-bold text-white tracking-wider">
                         ViraLogic <span className="text-gradient-brand">AI</span>
