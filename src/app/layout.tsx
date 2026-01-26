@@ -19,11 +19,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(
-        inter.variable,
-        spaceGrotesk.variable,
-        "bg-brand-dark text-slate-50 font-sans antialiased"
-      )}>
+      <body
+        suppressHydrationWarning={true}
+        className={cn(
+          inter.variable,
+          spaceGrotesk.variable,
+          "bg-brand-dark text-slate-50 font-sans antialiased"
+        )}>
         <AuthProvider>
           {children}
         </AuthProvider>

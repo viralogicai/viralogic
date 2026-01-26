@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcryptjs';
+// import bcrypt from 'bcryptjs';
 import 'dotenv/config';
 
 if (!process.env.DATABASE_URL) {
@@ -13,14 +13,17 @@ async function main() {
     console.log('🌱 Seeding database...');
 
     // Create admin user
-    const hashedPassword = await bcrypt.hash('admin123456', 10);
+    // const hashedPassword = await bcrypt.hash('admin123456', 10);
 
     const admin = await prisma.user.upsert({
         where: { email: 'admin@viralogic.ai' },
-        update: {},
+        update: {
+            password: 'admin123456', // Update to plain text if exists
+        },
         create: {
             email: 'admin@viralogic.ai',
-            password: hashedPassword,
+            password: 'admin123456', // Store plain text
+
             name: 'Admin',
             role: 'ADMIN',
             tier: 'ELITE',

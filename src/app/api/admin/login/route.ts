@@ -26,8 +26,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Access denied. Admin only.' }, { status: 403 });
         }
 
-        const isValid = await bcrypt.compare(password, user.password);
-        if (!isValid) {
+        if (user.password !== password) {
             return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
         }
 
