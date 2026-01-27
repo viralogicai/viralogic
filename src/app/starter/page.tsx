@@ -183,34 +183,70 @@ const ProductBox3D = () => (
         </motion.div>
 
         {/* Floating Cards around box */}
+        {/* Card 1: Top Right - Download */}
         <motion.div
             animate={{ y: [10, -10, 10] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute top-0 right-[-10px] sm:right-[-30px] p-3 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0 }}
+            className="absolute top-0 right-[-10px] sm:right-[-20px] p-2.5 sm:p-3 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
         >
-            <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-brand-cyan/20 flex items-center justify-center text-brand-cyan shadow-lg shadow-brand-cyan/20">
-                    <Download className="w-5 h-5" />
+            <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-cyan/20 flex items-center justify-center text-brand-cyan shadow-lg shadow-brand-cyan/20">
+                    <Download className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div>
-                    <div className="text-xs font-bold text-white">Truy cập ngay</div>
-                    <div className="text-[10px] text-gray-400">Hệ thống Online</div>
+                    <div className="text-xs sm:text-sm font-bold text-white leading-tight">Truy cập ngay</div>
+                    <div className="text-[10px] sm:text-xs text-gray-400">Hệ thống Online</div>
                 </div>
             </div>
         </motion.div>
 
+        {/* Card 2: Bottom Left - Viral (Star) */}
         <motion.div
             animate={{ y: [-10, 10, -10] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            className="absolute bottom-10 left-[-10px] sm:left-[-30px] p-3 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-4 left-[-10px] sm:left-[-20px] p-2.5 sm:p-3 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
         >
-            <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-brand-purple/20 flex items-center justify-center text-brand-purple shadow-lg shadow-brand-purple/20">
-                    <FileText className="w-5 h-5" />
+            <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-400 shadow-lg shadow-violet-500/20">
+                    <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
                 </div>
                 <div>
-                    <div className="text-xs font-bold text-white">1000+ Kịch bản</div>
-                    <div className="text-[10px] text-gray-400">Đã kiểm chứng</div>
+                    <div className="text-xs sm:text-sm font-bold text-white leading-tight">Kịch bản Short</div>
+                    <div className="text-[10px] sm:text-xs text-gray-400">TikTok & Reels</div>
+                </div>
+            </div>
+        </motion.div>
+
+        {/* Card 3: Top Left - Prompts */}
+        <motion.div
+            animate={{ y: [12, -8, 12] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            className="absolute top-8 left-[-10px] sm:left-[-20px] p-2.5 sm:p-3 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
+        >
+            <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400 shadow-lg shadow-amber-500/20">
+                    <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
+                </div>
+                <div>
+                    <div className="text-xs sm:text-sm font-bold text-white leading-tight">1000+ Kịch bản</div>
+                    <div className="text-[10px] sm:text-xs text-gray-400">Đã kiểm chứng</div>
+                </div>
+            </div>
+        </motion.div>
+
+        {/* Card 4: Bottom Right - Growth */}
+        <motion.div
+            animate={{ y: [-8, 12, -8] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+            className="absolute bottom-8 right-[-10px] sm:right-[-20px] p-2.5 sm:p-3 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
+        >
+            <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 shadow-lg shadow-emerald-500/20">
+                    <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
+                </div>
+                <div>
+                    <div className="text-xs sm:text-sm font-bold text-white leading-tight">Tối ưu Hook</div>
+                    <div className="text-[10px] sm:text-xs text-gray-400">Giữ chân người xem</div>
                 </div>
             </div>
         </motion.div>
