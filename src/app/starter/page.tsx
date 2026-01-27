@@ -303,14 +303,17 @@ export default function StarterPage() {
                                 <AlertTriangle className="w-7 h-7" />
                             </div>
                             <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">VẤN ĐỀ DUY NHẤT</h2>
-                            <p className="text-xl text-gray-400 max-w-2xl mx-auto">Bạn không thiếu ý tưởng. Bạn thiếu <span className="text-white font-bold border-b-2 border-brand-cyan">thứ tự</span>.</p>
+                            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                                Bạn không thiếu ý tưởng. <br />
+                                <span className="text-white font-bold border-b-2 border-brand-cyan uppercase block mt-2 text-2xl md:text-3xl">BẠN THIẾU THỨ TỰ.</span>
+                            </p>
                         </div>
 
                         {/* FLOW LAYOUT CONTAINER */}
                         <div className="relative flex flex-col items-center">
 
-                            {/* Central Vertical Line */}
-                            <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-12 w-0.5 bg-gradient-to-b from-transparent via-brand-purple/50 to-brand-cyan/50 hidden md:block"></div>
+                            {/* Central Vertical Line (Now visible on mobile) */}
+                            <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-12 w-0.5 bg-gradient-to-b from-transparent via-brand-purple/50 to-brand-cyan/50"></div>
 
                             {/* Problem Items */}
                             <div className="w-full space-y-12 md:space-y-0 relative mb-16">
@@ -319,29 +322,29 @@ export default function StarterPage() {
                                     { text: "Mai đổi niche", align: "right" },
                                     { text: "Video flop không biết sửa gì", align: "left" }
                                 ].map((item, idx) => (
-                                    <div key={idx} className={`flex items-center w-full ${item.align === 'left' ? 'md:justify-start' : 'md:justify-end'} relative`}>
+                                    <div key={idx} className={`flex items-center w-full ${item.align === 'left' ? 'justify-start md:justify-start' : 'justify-end md:justify-end'} relative`}>
 
-                                        {/* Connector Dot on Center Line (Desktop only) */}
-                                        <div className="hidden md:block absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-brand-dark border-2 border-brand-purple z-10 shadow-[0_0_10px_rgba(168,85,247,0.5)]"></div>
+                                        {/* Connector Dot on Center Line */}
+                                        <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-brand-dark border-2 border-brand-purple z-10 shadow-[0_0_10px_rgba(168,85,247,0.5)]"></div>
 
                                         {/* Content Card */}
                                         <motion.div
-                                            initial={{ opacity: 0, x: item.align === 'left' ? -50 : 50 }}
+                                            initial={{ opacity: 0, x: item.align === 'left' ? -30 : 30 }}
                                             whileInView={{ opacity: 1, x: 0 }}
                                             viewport={{ once: true, margin: "-100px" }}
                                             transition={{ duration: 0.5, delay: idx * 0.2 }}
                                             className={`
-                                                relative w-full md:w-[45%] p-6 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm 
+                                                relative w-[42%] md:w-[45%] p-4 md:p-6 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm 
                                                 hover:bg-white/10 hover:border-white/10 transition-all cursor-default group
-                                                ${item.align === 'left' ? 'md:mr-auto' : 'md:ml-auto'}
+                                                ${item.align === 'left' ? 'mr-auto text-right md:text-left pr-8 md:pr-6' : 'ml-auto text-left pl-8 md:pl-6'}
                                             `}
                                         >
-                                            {/* Connector Line to Center (Desktop only) */}
-                                            <div className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-[11%] h-px bg-brand-purple/30 ${item.align === 'left' ? '-right-[11%]' : '-left-[11%]'} `}></div>
+                                            {/* Connector Line to Center */}
+                                            <div className={`absolute top-1/2 -translate-y-1/2 w-[20%] md:w-[11%] h-px bg-brand-purple/30 ${item.align === 'left' ? '-right-[20%] md:-right-[11%]' : '-left-[20%] md:-left-[11%]'} `}></div>
 
-                                            <div className="flex items-center gap-4">
-                                                <div className="w-2 h-2 rounded-full bg-red-400 group-hover:shadow-[0_0_10px_rgba(248,113,113,0.5)] transition-shadow" />
-                                                <p className="text-lg text-gray-300 group-hover:text-white transition-colors">{item.text}</p>
+                                            <div className={`flex items-center gap-3 md:gap-4 ${item.align === 'left' ? 'flex-row-reverse md:flex-row' : ''}`}>
+                                                <div className="hidden md:block w-2 h-2 rounded-full bg-red-400 group-hover:shadow-[0_0_10px_rgba(248,113,113,0.5)] transition-shadow flex-shrink-0" />
+                                                <p className="text-sm md:text-lg text-gray-300 group-hover:text-white transition-colors">{item.text}</p>
                                             </div>
                                         </motion.div>
                                     </div>
@@ -426,16 +429,20 @@ export default function StarterPage() {
                                 <div className="relative z-10 max-w-3xl mx-auto">
                                     <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-brand-purple/20 to-brand-pink/20 border border-brand-purple/30 text-white text-sm font-bold mb-8 shadow-lg">
                                         <Rocket className="w-4 h-4 text-brand-pink" />
-                                        OFFER DUY NHẤT (DỄ TEST ADS)
+                                        OFFER DUY NHẤT
                                     </div>
 
                                     <h3 className="text-4xl md:text-5xl font-display font-bold mb-6">ViraLogic AI – Starter</h3>
                                     <p className="text-gray-400 mb-10 text-lg">Bộ khởi động giúp bạn hiểu hệ thống và bắt đầu đúng hướng <br /> (phù hợp nếu bạn mới hoặc đang bí ý tưởng)</p>
 
-                                    <div className="flex items-center justify-center gap-4 mb-12">
-                                        <div className="bg-white/5 px-6 py-3 rounded-2xl border border-white/10 backdrop-blur-sm">
-                                            <span className="text-gray-500 line-through text-xl mr-3">399.000đ</span>
-                                            <span className="text-5xl font-bold text-white tracking-tight">199.000đ</span>
+                                    <div className="flex flex-col items-center justify-center gap-4 mb-8 md:mb-12">
+                                        <div className="bg-white/5 px-6 py-4 rounded-2xl border border-white/10 backdrop-blur-sm flex flex-col md:flex-row items-center gap-2 md:gap-4">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-gray-400 text-sm md:text-base font-medium">Gốc:</span>
+                                                <span className="text-gray-500 line-through text-xl md:text-2xl">399.000đ</span>
+                                            </div>
+                                            <span className="hidden md:block w-px h-8 bg-white/10"></span>
+                                            <span className="text-4xl md:text-6xl font-display font-bold text-white tracking-tight text-gradient-brand">199.000đ</span>
                                         </div>
                                     </div>
 
