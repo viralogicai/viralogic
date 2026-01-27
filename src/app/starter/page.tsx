@@ -297,7 +297,7 @@ export default function StarterPage() {
                     {/* Decorative background element for section */}
                     <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-                    <div className="container max-w-5xl mx-auto px-6 relative z-10">
+                    <div className="container max-w-4xl mx-auto px-6 relative z-10">
                         <div className="text-center mb-20">
                             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500/20 to-red-500/20 text-orange-500 mb-6 shadow-lg border border-orange-500/20">
                                 <AlertTriangle className="w-7 h-7" />
@@ -306,34 +306,54 @@ export default function StarterPage() {
                             <p className="text-xl text-gray-400 max-w-2xl mx-auto">Bạn không thiếu ý tưởng. Bạn thiếu <span className="text-white font-bold border-b-2 border-brand-cyan">thứ tự</span>.</p>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-12 items-center">
-                            <div className="space-y-6">
+                        {/* FLOW LAYOUT CONTAINER */}
+                        <div className="relative flex flex-col items-center">
+
+                            {/* Central Vertical Line */}
+                            <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-12 w-0.5 bg-gradient-to-b from-transparent via-brand-purple/50 to-brand-cyan/50 hidden md:block"></div>
+
+                            {/* Problem Items */}
+                            <div className="w-full space-y-12 md:space-y-0 relative mb-16">
                                 {[
-                                    "Hôm nay test hook",
-                                    "Mai đổi niche",
-                                    "Video flop không biết sửa gì"
+                                    { text: "Hôm nay test hook", align: "left" },
+                                    { text: "Mai đổi niche", align: "right" },
+                                    { text: "Video flop không biết sửa gì", align: "left" }
                                 ].map((item, idx) => (
-                                    <motion.div
-                                        key={idx}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: idx * 0.1 }}
-                                        className="p-6 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-white/10 transition-all cursor-default group"
-                                    >
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-2 h-2 rounded-full bg-red-400 group-hover:shadow-[0_0_10px_rgba(248,113,113,0.5)] transition-shadow" />
-                                            <p className="text-lg text-gray-300 group-hover:text-white transition-colors">{item}</p>
-                                        </div>
-                                    </motion.div>
+                                    <div key={idx} className={`flex items-center w-full ${item.align === 'left' ? 'md:justify-start' : 'md:justify-end'} relative`}>
+
+                                        {/* Connector Dot on Center Line (Desktop only) */}
+                                        <div className="hidden md:block absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-brand-dark border-2 border-brand-purple z-10 shadow-[0_0_10px_rgba(168,85,247,0.5)]"></div>
+
+                                        {/* Content Card */}
+                                        <motion.div
+                                            initial={{ opacity: 0, x: item.align === 'left' ? -50 : 50 }}
+                                            whileInView={{ opacity: 1, x: 0 }}
+                                            viewport={{ once: true, margin: "-100px" }}
+                                            transition={{ duration: 0.5, delay: idx * 0.2 }}
+                                            className={`
+                                                relative w-full md:w-[45%] p-6 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm 
+                                                hover:bg-white/10 hover:border-white/10 transition-all cursor-default group
+                                                ${item.align === 'left' ? 'md:mr-auto' : 'md:ml-auto'}
+                                            `}
+                                        >
+                                            {/* Connector Line to Center (Desktop only) */}
+                                            <div className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-[11%] h-px bg-brand-purple/30 ${item.align === 'left' ? '-right-[11%]' : '-left-[11%]'} `}></div>
+
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-2 h-2 rounded-full bg-red-400 group-hover:shadow-[0_0_10px_rgba(248,113,113,0.5)] transition-shadow" />
+                                                <p className="text-lg text-gray-300 group-hover:text-white transition-colors">{item.text}</p>
+                                            </div>
+                                        </motion.div>
+                                    </div>
                                 ))}
                             </div>
 
+                            {/* Final Solution Card - Centered at Bottom */}
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                className="relative p-10 rounded-3xl bg-gradient-to-br from-brand-purple/20 via-brand-dark to-brand-cyan/10 border border-brand-purple/30 text-center shadow-2xl overflow-hidden group"
+                                className="relative w-full max-w-2xl p-10 rounded-3xl bg-gradient-to-br from-brand-purple/20 via-brand-dark to-brand-cyan/10 border border-brand-purple/30 text-center shadow-2xl overflow-hidden group z-20"
                             >
                                 <div className="absolute inset-0 bg-brand-purple/10 blur-[50px] group-hover:bg-brand-purple/20 transition-colors duration-700" />
                                 <div className="relative z-10">
