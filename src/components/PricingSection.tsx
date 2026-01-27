@@ -86,9 +86,9 @@ export const PricingSection = () => {
 
                                 <h3 className="text-xl font-medium text-white mb-2">{plan.name}</h3>
                                 <div className="flex items-baseline gap-2 mb-6">
-                                    <span className="text-3xl font-bold text-white">{plan.price.toLocaleString()}đ</span>
+                                    <span className="text-3xl font-bold text-white">{plan.price.toLocaleString('vi-VN')}đ</span>
                                     {plan.originalPrice && (
-                                        <span className="text-sm text-gray-500 line-through">{plan.originalPrice.toLocaleString()}đ</span>
+                                        <span className="text-sm text-gray-500 line-through">{plan.originalPrice.toLocaleString('vi-VN')}đ</span>
                                     )}
                                 </div>
 

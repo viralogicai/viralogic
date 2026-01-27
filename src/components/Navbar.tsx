@@ -28,7 +28,7 @@ export const Navbar = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
-                    <div className="relative w-10 h-10 group-hover:scale-105 transition-transform duration-300 rounded-full overflow-hidden">
+                    <div className="relative w-10 h-10 group-hover:scale-105 transition-transform duration-300 rounded-lg overflow-hidden">
                         <Image
                             src="/logo.png"
                             alt="ViraLogic AI Logo"
