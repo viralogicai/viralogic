@@ -233,7 +233,7 @@ export default function StarterPage() {
             <PremiumBackground />
             <SimpleNavbar onCtaClick={openPayment} />
 
-            <main className="flex-grow pt-32 pb-20">
+            <main className="flex-grow pt-32">
 
                 {/* 1. HERO */}
                 <section className="container max-w-7xl mx-auto px-6 mb-32">
@@ -482,8 +482,10 @@ export default function StarterPage() {
                     </div>
                 </section>
 
-                <Footer />
+
             </main>
+
+            <Footer />
 
             <PayOSModal
                 isOpen={isPaymentOpen}
@@ -493,6 +495,6 @@ export default function StarterPage() {
                 amount={199000}
                 onSuccess={handlePaymentSuccess}
             />
-        </div>
+        </div >
     );
 }
