@@ -182,12 +182,12 @@ const ProductBox3D = () => (
             />
         </motion.div>
 
-        {/* Floating Cards around box */}
+        {/* Floating Cards around box - Tightened Spacing */}
         {/* Card 1: Top Right - Download */}
         <motion.div
             animate={{ y: [10, -10, 10] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0 }}
-            className="absolute top-0 right-[-10px] sm:right-[-20px] p-2.5 sm:p-3 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
+            className="absolute top-4 right-[0px] sm:right-[-5px] p-2 sm:p-2.5 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
         >
             <div className="flex items-center gap-2 sm:gap-3">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-cyan/20 flex items-center justify-center text-brand-cyan shadow-lg shadow-brand-cyan/20">
@@ -204,7 +204,7 @@ const ProductBox3D = () => (
         <motion.div
             animate={{ y: [-10, 10, -10] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-4 left-[-10px] sm:left-[-20px] p-2.5 sm:p-3 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
+            className="absolute bottom-8 left-[0px] sm:left-[-5px] p-2 sm:p-2.5 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
         >
             <div className="flex items-center gap-2 sm:gap-3">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-400 shadow-lg shadow-violet-500/20">
@@ -221,7 +221,7 @@ const ProductBox3D = () => (
         <motion.div
             animate={{ y: [12, -8, 12] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            className="absolute top-8 left-[-10px] sm:left-[-20px] p-2.5 sm:p-3 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
+            className="absolute top-12 left-[0px] sm:left-[-5px] p-2 sm:p-2.5 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
         >
             <div className="flex items-center gap-2 sm:gap-3">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400 shadow-lg shadow-amber-500/20">
@@ -238,7 +238,7 @@ const ProductBox3D = () => (
         <motion.div
             animate={{ y: [-8, 12, -8] }}
             transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-            className="absolute bottom-8 right-[-10px] sm:right-[-20px] p-2.5 sm:p-3 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
+            className="absolute bottom-12 right-[0px] sm:right-[-5px] p-2 sm:p-2.5 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-xl z-20"
         >
             <div className="flex items-center gap-2 sm:gap-3">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 shadow-lg shadow-emerald-500/20">
