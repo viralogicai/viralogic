@@ -26,30 +26,62 @@ const UpsellContent = () => {
             // PRO -> VIP MASTERCLASS
             title: <>Bạn đã có công cụ.<br />Nhưng bạn có chắc mình đang đi nhanh nhất?</>,
             desc: (
-                <div className="space-y-4 text-left">
-                    <div className="p-4 bg-white/5 rounded-lg border border-white/10">
-                        <p className="font-bold text-white mb-2">Gói Pro giúp bạn:</p>
-                        <ul className="list-disc list-inside space-y-1 text-gray-300">
-                            <li>Có đủ prompt</li>
-                            <li>Có quy trình rõ ràng</li>
-                            <li>Không làm TikTok theo cảm hứng nữa</li>
+                <div className="space-y-8 text-left">
+                    {/* Pro Level Card */}
+                    <div className="p-6 bg-white/5 rounded-2xl border border-white/10 relative overflow-hidden group">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-gray-500" />
+                        <h4 className="font-bold text-gray-200 mb-4 flex items-center gap-2 text-lg">
+                            <span className="p-1.5 rounded-md bg-gray-500/20 text-gray-400"><CheckCircle className="w-4 h-4" /></span>
+                            Gói Pro bạn vừa chọn:
+                        </h4>
+                        <ul className="grid sm:grid-cols-2 gap-3 text-gray-400">
+                            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-gray-500" /> Có đủ prompt</li>
+                            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-gray-500" /> Có quy trình rõ ràng</li>
+                            <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-gray-500" /> Không làm theo cảm hứng</li>
                         </ul>
                     </div>
 
-                    <div>
-                        <p className="font-bold text-lg text-white">Nhưng có một sự thật là:</p>
-                        <p className="text-brand-pink font-bold text-xl my-2">👉 Có công cụ ≠ đi nhanh.</p>
-                        <p className="mb-2 text-gray-300">Phần lớn người dùng Pro vẫn: Tự test, Tự đoán, Tự sắp xếp lại thứ tự...</p>
-                        <p className="italic text-gray-400">Và điều đó tốn thời gian hơn bạn nghĩ.</p>
+                    {/* The Gap / Problem */}
+                    <div className="relative py-2 pl-6 border-l-2 border-red-500/50">
+                        <p className="font-bold text-xl text-white mb-2">Nhưng có một <span className="text-red-400">sự thật</span> là:</p>
+                        <div className="text-3xl md:text-4xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400 mb-4 animate-pulse-slow">
+                            👉 Có công cụ ≠ đi nhanh.
+                        </div>
+                        <p className="text-lg text-gray-300 leading-relaxed">
+                            Phần lớn người dùng Pro vẫn: <span className="text-white">Tự test, Tự đoán, Tự sắp xếp lại thứ tự...</span> <br />
+                            <span className="italic text-gray-400 text-sm">Và điều đó tốn thời gian hơn bạn nghĩ.</span>
+                        </p>
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-white/10">
-                        <p className="font-bold text-brand-cyan mb-2 uppercase text-sm">Vip Masterclass ĐƯỢC TẠO RA CHO AI?</p>
-                        <ul className="space-y-2 text-gray-300">
-                            <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-brand-purple shrink-0 mt-1" /> Bạn không muốn tự mò nữa</li>
-                            <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-brand-purple shrink-0 mt-1" /> Bạn muốn biết chính xác nên làm gì trước – sau</li>
-                            <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-brand-purple shrink-0 mt-1" /> Bạn muốn rút ngắn vài tháng thử–sai</li>
-                        </ul>
+                    {/* VIP Solution */}
+                    <div className="p-6 bg-gradient-to-br from-brand-purple/20 to-brand-cyan/10 rounded-2xl border border-brand-cyan/30 shadow-lg relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/20 rounded-full blur-[50px] -translate-y-1/2 translate-x-1/2" />
+
+                        <div className="relative z-10">
+                            <p className="font-bold text-brand-cyan mb-4 uppercase text-sm tracking-widest border-b border-brand-cyan/20 pb-2 inline-block">
+                                VIP Masterclass dành cho ai?
+                            </p>
+                            <ul className="space-y-3">
+                                <li className="flex items-start gap-3">
+                                    <div className="p-1 rounded-full bg-brand-cyan/20 mt-0.5">
+                                        <CheckCircle className="w-4 h-4 text-brand-cyan" />
+                                    </div>
+                                    <span className="text-gray-200">Bạn <span className="text-white font-bold">không muốn tự mò</span> nữa</span>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <div className="p-1 rounded-full bg-brand-cyan/20 mt-0.5">
+                                        <CheckCircle className="w-4 h-4 text-brand-cyan" />
+                                    </div>
+                                    <span className="text-gray-200">Bạn muốn biết <span className="text-white font-bold">chính xác</span> nên làm gì trước – sau</span>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <div className="p-1 rounded-full bg-brand-cyan/20 mt-0.5">
+                                        <CheckCircle className="w-4 h-4 text-brand-cyan" />
+                                    </div>
+                                    <span className="text-gray-200">Bạn muốn <span className="text-white font-bold">rút ngắn vài tháng</span> thử–sai</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             ),
