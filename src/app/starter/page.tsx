@@ -294,6 +294,13 @@ export default function StarterPage() {
                                 <span className="text-gradient-brand">hãy tạo đúng video trước</span>
                             </h1>
 
+                            {/* ITEM 3: Testimonial */}
+                            <div className="mb-10 p-4 border-l-2 border-brand-cyan/50 bg-brand-cyan/5 rounded-r-lg max-w-lg">
+                                <div className="flex text-yellow-500 mb-2">{'⭐'.repeat(5)}</div>
+                                <p className="text-gray-300 italic mb-2">"Mình từng đăng video rối rắm 3 tháng – Starter giúp biết nên làm gì mỗi ngày."</p>
+                                <p className="text-sm font-bold text-white">– Minh (@minh.creator)</p>
+                            </div>
+
                             <p className="text-lg text-gray-400 mb-10 leading-relaxed max-w-xl">
                                 Hệ thống AI giúp bạn biết nên làm gì trước, làm gì sau để video không bị lướt qua ngay 3 giây đầu.
                             </p>
@@ -340,9 +347,12 @@ export default function StarterPage() {
                                 <AlertTriangle className="w-7 h-7" />
                             </div>
                             <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">VẤN ĐỀ DUY NHẤT</h2>
+                            {/* ITEM 6: Copy Change */}
                             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                                Bạn không thiếu ý tưởng. <br />
-                                <span className="text-white font-bold border-b-2 border-brand-cyan uppercase block mt-2 text-2xl md:text-3xl">BẠN THIẾU THỨ TỰ.</span>
+                                Không phải thiếu ý tưởng… <br />
+                                <span className="text-white font-bold block mt-2 text-2xl md:text-3xl">
+                                    Mà là làm sai thứ tự <span className="text-red-400">→ video flop</span> <span className="text-red-400">→ tốn thời gian.</span>
+                                </span>
                             </p>
                         </div>
 
@@ -435,7 +445,10 @@ export default function StarterPage() {
                                         <item.icon className="w-7 h-7" />
                                     </div>
                                     <div className="absolute top-8 right-8 text-6xl font-display font-bold text-white/5 pointer-events-none select-none">0{idx + 1}</div>
-                                    <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
+                                    {/* ITEM 2: Enhance Start Here Block */}
+                                    <h3 className="text-2xl font-bold text-white mb-3 flex items-center gap-2">
+                                        {item.title}
+                                    </h3>
                                     <p className="text-gray-400 leading-relaxed">{item.desc}</p>
                                 </motion.div>
                             ))}
@@ -464,13 +477,26 @@ export default function StarterPage() {
                                 <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-brand-cyan/10 blur-[80px] rounded-full translate-y-1/2 -translate-x-1/2" />
 
                                 <div className="relative z-10 max-w-3xl mx-auto">
-                                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-brand-purple/20 to-brand-pink/20 border border-brand-purple/30 text-white text-sm font-bold mb-8 shadow-lg">
+                                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-brand-purple/20 to-brand-pink/20 border border-brand-purple/30 text-white text-sm font-bold mb-4 shadow-lg">
                                         <Rocket className="w-4 h-4 text-brand-pink" />
                                         OFFER DUY NHẤT
                                     </div>
 
+                                    {/* ITEM 1: Disclaimer Top */}
+                                    <p className="text-red-400 font-bold text-sm uppercase tracking-wide mb-6 bg-red-500/10 inline-block px-3 py-1 rounded">
+                                        ⚠️ Không cam kết viral, không cam kết thu nhập
+                                    </p>
+
                                     <h3 className="text-4xl md:text-5xl font-display font-bold mb-6">ViraLogic AI – Starter</h3>
-                                    <p className="text-gray-400 mb-10 text-lg">Bộ khởi động giúp bạn hiểu hệ thống và bắt đầu đúng hướng <br /> (phù hợp nếu bạn mới hoặc đang bí ý tưởng)</p>
+                                    <p className="text-gray-400 mb-2 text-lg">
+                                        Giúp bạn làm đúng thứ tự nội dung từ đầu <br />
+                                        (phù hợp nếu muốn hệ thống trước khi quay)
+                                    </p>
+
+                                    {/* ITEM 5: Suitability */}
+                                    <p className="text-sm text-brand-cyan mb-10 italic">
+                                        *ViraLogic AI Starter phù hợp nếu muốn hệ thống trước khi quay video
+                                    </p>
 
                                     <div className="flex flex-col items-center justify-center gap-4 mb-8 md:mb-12">
                                         <div className="bg-white/5 px-6 py-4 rounded-2xl border border-white/10 backdrop-blur-sm flex flex-col md:flex-row items-center gap-2 md:gap-4">
@@ -483,11 +509,15 @@ export default function StarterPage() {
                                         </div>
                                     </div>
 
-                                    <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                                        <Button size="lg" className="w-full sm:w-auto min-w-[240px] shadow-xl shadow-brand-cyan/20 group text-lg" onClick={openPayment}>
-                                            Truy cập ngay
+                                    {/* ITEM 4: CTA & Short Disclaimer */}
+                                    <div className="flex flex-col items-center justify-center gap-4">
+                                        <Button size="lg" className="w-full sm:w-auto min-w-[280px] shadow-xl shadow-brand-cyan/20 group text-lg py-6" onClick={openPayment}>
+                                            Tôi muốn làm đúng thứ tự
                                             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                                         </Button>
+                                        <p className="text-[10px] text-gray-500 max-w-xs mx-auto">
+                                            *Starter chỉ giúp bạn làm đúng thứ tự cơ bản, không đảm bảo kết quả.
+                                        </p>
                                     </div>
 
                                     <p className="mt-8 text-sm text-gray-500">
