@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Tier {
+  FREE
+  STARTER
+  PRO
+  ELITE
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      Role     @default(USER)
+  tier      Tier     @default(FREE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Prompt {
+  id          String   @id @default(cuid())
+  title       String
+  content     String   @db.Text
+  category    String
+  tier        Tier     @default(PRO)
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Resource {
+  id          String   @id @default(cuid())
+  month       String   // Format: "2026-01"
+  title       String
+  description String?  @db.Text
+  type        String   // "video", "pdf", "link", "excel"
+  url         String
+  tier        Tier     @default(PRO)
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Payment {
+  id          String   @id @default(cuid())
+  orderCode   String   @unique
+  userId      String?
+  planId      String
+  amount      Int
+  status      String   @default("PENDING") // PENDING, PAID, CANCELLED, EXPIRED
+  paymentData Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

@@ -1,108 +1,73 @@
-// PayOS API Integration
+export interface PaymentResponse {
+    checkoutUrl: string;
+    accountNumber: string;
+    accountName: string;
+    totalAmount: number;
+    description: string;
+    qrCode: string;
+    amount: number;
+}
 
-export interface PaymentData {
+export const generateOrderCode = () => {
+    return Number(String(Date.now()).slice(-6));
+};
+
+export const createPaymentLink = async (data: {
     orderCode: number;
     amount: number;
     description: string;
     planId: string;
-    buyerEmail?: string;
-}
-
-export interface PaymentResponse {
-    checkoutUrl: string;
-    qrCode: string;
-    accountNumber: string;
-    accountName: string;
-    amount: number;
-    description: string;
-    orderCode: number;
-    paymentLinkId: string;
-}
-
-export interface PaymentStatusResponse {
-    orderCode: number;
-    status: 'PENDING' | 'PAID' | 'CANCELLED' | 'EXPIRED';
-    amount: number;
-    amountPaid: number;
-    amountRemaining: number;
-}
-
-// Create a payment link via our backend API
-export const createPaymentLink = async (data: PaymentData): Promise<PaymentResponse> => {
+    buyerEmail: string;
+}): Promise<PaymentResponse> => {
     const response = await fetch('/api/payos/create-payment', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
     });
 
-    const result = await response.json();
-
-    if (!response.ok || !result.success) {
-        throw new Error(result.error || 'Failed to create payment link');
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to create payment link');
     }
 
+    const result = await response.json();
     return result.data;
 };
 
-// Check payment status via our backend API
-export const checkPaymentStatus = async (orderCode: number): Promise<PaymentStatusResponse> => {
-    const response = await fetch(`/api/payos/check-status?orderCode=${orderCode}`, {
-        method: 'GET'
-    });
-
-    const result = await response.json();
-
-    if (!response.ok || !result.success) {
-        throw new Error(result.error || 'Failed to check payment status');
-    }
-
-    return result.data;
-};
-
-// Poll for payment completion
 export const pollPaymentStatus = (
     orderCode: number,
     onSuccess: () => void,
-    onError: (error: Error) => void,
-    intervalMs: number = 3000,
-    maxAttempts: number = 60 // 3 minutes max polling
-): () => void => {
+    onError: (error: Error) => void
+) => {
     let attempts = 0;
+    const maxAttempts = 60; // 5 minutes (5s interval)
 
-    const intervalId = setInterval(async () => {
+    const interval = setInterval(async () => {
         attempts++;
-
         if (attempts > maxAttempts) {
-            clearInterval(intervalId);
+            clearInterval(interval);
             onError(new Error('Payment timeout'));
             return;
         }
 
         try {
-            const status = await checkPaymentStatus(orderCode);
+            const response = await fetch(`/api/payos/check-status?orderCode=${orderCode}`);
+            const data = await response.json();
 
-            if (status.status === 'PAID') {
-                clearInterval(intervalId);
+            if (data.success && data.data.status === 'PAID') {
+                clearInterval(interval);
                 onSuccess();
-            } else if (status.status === 'CANCELLED' || status.status === 'EXPIRED') {
-                clearInterval(intervalId);
-                onError(new Error(`Payment ${status.status.toLowerCase()}`));
+            } else if (data.success && data.data.status === 'CANCELLED') {
+                clearInterval(interval);
+                onError(new Error('Payment cancelled'));
             }
-            // If PENDING, continue polling
         } catch (error) {
-            console.error('Error checking payment status:', error);
-            // Don't stop polling on network errors, just log
+            console.error('Polling error:', error);
+            // Continue polling even if one request fails
         }
-    }, intervalMs);
+    }, 5000);
 
-    // Return cleanup function
-    return () => clearInterval(intervalId);
-};
-
-// Generate a unique order code
-export const generateOrderCode = (): number => {
-    // Use timestamp + random to ensure uniqueness
-    return Math.floor(Date.now() / 1000) * 1000 + Math.floor(Math.random() * 1000);
+    return () => clearInterval(interval);
 };

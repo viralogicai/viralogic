@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Download, PlayCircle, Star } from 'lucide-react';
+import { Download, PlayCircle, Star, FileText, TrendingUp } from 'lucide-react';
 import { Button } from './Button';
 
 export const HeroSection = () => {
@@ -44,6 +44,15 @@ export const HeroSection = () => {
                         Từ ý tưởng → hook → kịch bản → CTA — tất cả đã được sắp xếp sẵn để bạn chỉ việc triển khai.
                     </p>
 
+                    {/* Disclaimer */}
+                    <div className="mb-8 p-3 rounded-lg border border-white/5 bg-white/5 max-w-md">
+                        <p className="text-[10px] text-gray-500 leading-relaxed">
+                            * Kết quả phụ thuộc vào thị trường, nội dung và cách triển khai.
+                            <br />
+                            ViraLogic AI là công cụ hỗ trợ quy trình, không cam kết lượt xem hay thu nhập cố định.
+                        </p>
+                    </div>
+
                     {/* Mobile 3D Product (Visible on Mobile Only) */}
                     <div className="lg:hidden relative w-[280px] h-[280px] mx-auto mb-10">
                         <div className="absolute inset-0 bg-brand-cyan/20 blur-[40px] rounded-full -z-10" />
@@ -60,7 +69,58 @@ export const HeroSection = () => {
                                 className="w-full h-full object-contain drop-shadow-[0_0_30px_rgba(0,240,255,0.3)]"
                             />
                         </motion.div>
-                        {/* Cleaned up floating badges as requested */}
+                        {/* Floating Badges - Restored & Enhanced for Mobile */}
+                        {/* Card 1: Top Right - Download */}
+                        <div className="absolute top-[-10px] right-[-10px] p-2.5 glass-panel rounded-xl animate-float-slow scale-75 origin-top-right z-20" style={{ animationDelay: '0s' }}>
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-full bg-brand-cyan/20 flex items-center justify-center text-brand-cyan shadow-lg shadow-brand-cyan/20">
+                                    <Download className="w-4 h-4" />
+                                </div>
+                                <div>
+                                    <div className="text-xs font-bold text-white leading-tight">Truy cập ngay</div>
+                                    <div className="text-[9px] text-gray-400">Hệ thống Online</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Card 2: Bottom Left - Viral */}
+                        <div className="absolute bottom-4 left-[-15px] p-2.5 glass-panel rounded-xl animate-float-medium scale-75 origin-bottom-left z-20" style={{ animationDelay: '1.5s' }}>
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-400 shadow-lg shadow-violet-500/20">
+                                    <Star className="w-4 h-4 fill-current" />
+                                </div>
+                                <div>
+                                    <div className="text-xs font-bold text-white leading-tight">Kịch bản Short</div>
+                                    <div className="text-[9px] text-gray-400">TikTok & Reels</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Card 3: Top Left - Prompts */}
+                        <div className="absolute top-[20px] left-[-15px] p-2.5 glass-panel rounded-xl animate-float-fast scale-75 origin-top-left z-20" style={{ animationDelay: '0.5s' }}>
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400 shadow-lg shadow-amber-500/20">
+                                    <FileText className="w-4 h-4" />
+                                </div>
+                                <div>
+                                    <div className="text-xs font-bold text-white leading-tight">1000+ Kịch bản</div>
+                                    <div className="text-[9px] text-gray-400">Đã kiểm chứng</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Card 4: Bottom Right - Growth */}
+                        <div className="absolute bottom-[20px] right-[-20px] p-2.5 glass-panel rounded-xl animate-float-slow scale-75 origin-bottom-right z-20" style={{ animationDelay: '2.5s' }}>
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 shadow-lg shadow-emerald-500/20">
+                                    <TrendingUp className="w-4 h-4" />
+                                </div>
+                                <div>
+                                    <div className="text-xs font-bold text-white leading-tight">Tối ưu Hook</div>
+                                    <div className="text-[9px] text-gray-400">Giữ chân người xem</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-4 mb-10">
@@ -95,7 +155,7 @@ export const HeroSection = () => {
                     </div>
                 </motion.div>
 
-                {/* Right Content - 3D Product */}
+                {/* Right Content - 3D Product (Desktop) */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -110,33 +170,61 @@ export const HeroSection = () => {
                             className="w-full h-full object-contain drop-shadow-[0_0_50px_rgba(0,240,255,0.3)] transform transition-transform duration-500 hover:scale-110"
                         />
 
-                        {/* Floating Elements */}
-                        <div className="absolute top-10 right-0 p-4 glass-panel rounded-xl animate-float-medium" style={{ animationDelay: '1s' }}>
+                        {/* Floating Elements - Desktop Enhanced */}
+                        {/* Card 1 */}
+                        <div className="absolute top-10 right-[-20px] p-4 glass-panel rounded-xl animate-float-medium" style={{ animationDelay: '1s' }}>
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-brand-cyan/20 flex items-center justify-center text-brand-cyan">
+                                <div className="w-10 h-10 rounded-full bg-brand-cyan/20 flex items-center justify-center text-brand-cyan shadow-lg shadow-brand-cyan/20">
                                     <Download className="w-5 h-5" />
                                 </div>
                                 <div>
-                                    <div className="text-sm font-bold text-white">Download</div>
-                                    <div className="text-xs text-gray-400">Ready instantly</div>
+                                    <div className="text-sm font-bold text-white">Truy cập ngay</div>
+                                    <div className="text-xs text-gray-400">Hệ thống Online</div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="absolute bottom-20 left-0 p-4 glass-panel rounded-xl animate-float-medium" style={{ animationDelay: '2s' }}>
+                        {/* Card 2 */}
+                        <div className="absolute bottom-20 left-[-20px] p-4 glass-panel rounded-xl animate-float-medium" style={{ animationDelay: '2s' }}>
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-400">
+                                <div className="w-10 h-10 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-400 shadow-lg shadow-violet-500/20">
                                     <Star className="w-5 h-5 fill-current" />
                                 </div>
                                 <div>
-                                    <div className="text-sm font-bold text-white">Viral Ready</div>
+                                    <div className="text-sm font-bold text-white">Kịch bản Short</div>
                                     <div className="text-xs text-gray-400">TikTok & Reels</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Card 3 */}
+                        <div className="absolute top-20 left-[-10px] p-4 glass-panel rounded-xl animate-float-fast" style={{ animationDelay: '0.5s' }}>
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400 shadow-lg shadow-amber-500/20">
+                                    <FileText className="w-5 h-5" />
+                                </div>
+                                <div>
+                                    <div className="text-sm font-bold text-white">1000+ Kịch bản</div>
+                                    <div className="text-xs text-gray-400">Đã kiểm chứng</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Card 4 */}
+                        <div className="absolute bottom-10 right-[-10px] p-4 glass-panel rounded-xl animate-float-slow" style={{ animationDelay: '2.5s' }}>
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 shadow-lg shadow-emerald-500/20">
+                                    <TrendingUp className="w-5 h-5" />
+                                </div>
+                                <div>
+                                    <div className="text-sm font-bold text-white">Tối ưu Hook</div>
+                                    <div className="text-xs text-gray-400">Giữ chân người xem</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </motion.div>
             </div>
-        </section>
+        </section >
     );
 };

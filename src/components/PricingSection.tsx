@@ -3,7 +3,7 @@ import { Check } from 'lucide-react';
 import { Button } from './Button';
 import { motion } from 'framer-motion';
 import { PayOSModal } from './PayOSModal';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
 import { ScrollReveal } from './ScrollReveal';
 
@@ -13,7 +13,9 @@ const plans = [
         name: 'Starter — Bắt đầu đúng',
         price: 199000,
         features: ['Bộ hướng dẫn AI nền tảng', 'Viết kịch bản ngắn & Hook', 'Đủ để hiểu hệ thống hoạt động', 'Không lan man, không quá tải'],
-        highlight: false
+        highlight: false,
+        note: "Starter tập trung giúp bạn làm đúng thứ tự ban đầu.\nKhông bao gồm pipeline sản xuất & scaling.",
+        ctaNote: "Bắt đầu với Starter để làm đúng thứ tự.\nSau khi rõ quy trình, bạn có thể nâng cấp Pro để sản xuất & mở rộng nội dung."
     },
     {
         id: 'pro',
@@ -35,7 +37,7 @@ const plans = [
 
 export const PricingSection = () => {
     const [selectedPlan, setSelectedPlan] = useState<typeof plans[0] | null>(null);
-    const navigate = useNavigate();
+    const router = useRouter();
     const { upgradeTier } = useAuth();
 
     const handleSuccess = () => {
@@ -47,9 +49,9 @@ export const PricingSection = () => {
 
             // Routing Logic
             if (selectedPlan.id === 'pro') {
-                navigate('/upsell', { state: { fromPlan: 'pro' } });
+                router.push('/upsell?fromPlan=pro');
             } else {
-                navigate('/membership');
+                router.push('/membership');
             }
             setSelectedPlan(null);
         }
@@ -84,9 +86,9 @@ export const PricingSection = () => {
 
                                 <h3 className="text-xl font-medium text-white mb-2">{plan.name}</h3>
                                 <div className="flex items-baseline gap-2 mb-6">
-                                    <span className="text-3xl font-bold text-white">{plan.price.toLocaleString()}đ</span>
+                                    <span className="text-3xl font-bold text-white">{plan.price.toLocaleString('vi-VN')}đ</span>
                                     {plan.originalPrice && (
-                                        <span className="text-sm text-gray-500 line-through">{plan.originalPrice.toLocaleString()}đ</span>
+                                        <span className="text-sm text-gray-500 line-through">{plan.originalPrice.toLocaleString('vi-VN')}đ</span>
                                     )}
                                 </div>
 
@@ -98,6 +100,20 @@ export const PricingSection = () => {
                                         </li>
                                     ))}
                                 </ul>
+
+                                {(plan as any).note && (
+                                    <div className="mb-6 p-3 bg-white/5 rounded-lg border border-white/5">
+                                        <p className="text-xs text-gray-400 leading-relaxed whitespace-pre-line">
+                                            ⚠️ {(plan as any).note}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {(plan as any).ctaNote && (
+                                    <p className="text-[10px] text-gray-500 mb-2 whitespace-pre-line text-center">
+                                        {(plan as any).ctaNote}
+                                    </p>
+                                )}
 
                                 <Button
                                     variant={plan.highlight ? 'primary' : 'outline'}

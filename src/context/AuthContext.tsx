@@ -1,3 +1,4 @@
+'use client';
 import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 
@@ -12,12 +13,21 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [userTier, setUserTier] = useState<UserTier>(() => {
-        return (localStorage.getItem('viralogic_tier') as UserTier) || 'guest';
-    });
+    const [userTier, setUserTier] = useState<UserTier>('guest');
 
     useEffect(() => {
-        localStorage.setItem('viralogic_tier', userTier);
+        if (typeof window !== 'undefined') {
+            const stored = localStorage.getItem('viralogic_tier') as UserTier;
+            if (stored) {
+                setUserTier(stored);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('viralogic_tier', userTier);
+        }
     }, [userTier]);
 
     const upgradeTier = (tier: UserTier) => {

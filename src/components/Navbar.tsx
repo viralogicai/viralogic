@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, Rocket } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Rocket } from 'lucide-react';
 import { Button } from './Button';
 import { cn } from '../lib/utils';
 
 export const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -27,9 +27,15 @@ export const Navbar = () => {
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
                 {/* Logo */}
-                <Link to="/" className="flex items-center gap-2 group">
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-cyan via-brand-purple to-brand-pink flex items-center justify-center text-white font-bold font-display group-hover:animate-pulse shadow-lg shadow-brand-purple/20">
-                        V
+                <Link href="/" className="flex items-center gap-2 group">
+                    <div className="relative w-10 h-10 group-hover:scale-105 transition-transform duration-300 rounded-lg overflow-hidden">
+                        <Image
+                            src="/logo.png"
+                            alt="ViraLogic AI Logo"
+                            fill
+                            className="object-contain"
+                            priority
+                        />
                     </div>
                     <span className="font-display font-bold text-white tracking-wider">
                         ViraLogic <span className="text-gradient-brand">AI</span>
@@ -43,34 +49,26 @@ export const Navbar = () => {
                     <a href="#pricing" className="text-sm text-gray-400 hover:text-brand-cyan transition-colors">Pricing</a>
                 </div>
 
-                {/* CTA */}
-                <div className="hidden md:block">
-                    <Button variant="primary" size="sm" onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}>
-                        <Rocket className="w-4 h-4" />
-                        Start Viral
-                    </Button>
-                </div>
+                {/* CTA - Visible on Mobile and Desktop now, but styled differently if needed */}
+                <div className="flex items-center gap-4">
+                    <div className="hidden md:block">
+                        <Button variant="primary" size="sm" onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}>
+                            <Rocket className="w-4 h-4" />
+                            Start Viral
+                        </Button>
+                    </div>
 
-                {/* Mobile Menu Toggle */}
-                <button
-                    className="md:hidden text-white"
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                >
-                    {isMobileMenuOpen ? <X /> : <Menu />}
-                </button>
+                    {/* Mobile CTA - replaces Hamburger */}
+                    <div className="md:hidden">
+                        <Button variant="primary" size="sm" onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}>
+                            <Rocket className="w-4 h-4" />
+                            Start Viral
+                        </Button>
+                    </div>
+                </div>
             </div>
 
-            {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-                <div className="absolute top-full left-0 right-0 bg-brand-dark border-b border-white/10 p-4 md:hidden flex flex-col gap-4">
-                    <a href="#features" className="text-gray-400 hover:text-brand-cyan" onClick={() => setIsMobileMenuOpen(false)}>Features</a>
-                    <a href="#demo" className="text-gray-400 hover:text-brand-cyan" onClick={() => setIsMobileMenuOpen(false)}>Demo</a>
-                    <a href="#pricing" className="text-gray-400 hover:text-brand-cyan" onClick={() => setIsMobileMenuOpen(false)}>Pricing</a>
-                    <Button variant="primary" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
-                        Get Access
-                    </Button>
-                </div>
-            )}
+
         </nav>
     );
 };
