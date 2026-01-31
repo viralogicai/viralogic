@@ -114,8 +114,7 @@ function PaymentSuccessContent() {
 
                             {isSkipped && (
                                 <p className="text-gray-400 mb-6">
-                                    Bạn đã chọn giữ nguyên gói <span className="text-white font-bold uppercase">{planId || 'Starter'}</span>. <br />
-                                    Đừng lo, bạn vẫn có thể nâng cấp bất cứ lúc nào trong Membership Area.
+                                    Bạn đã chọn giữ nguyên gói <span className="text-white font-bold uppercase">{planId || 'Starter'}</span>.
                                 </p>
                             )}
 
