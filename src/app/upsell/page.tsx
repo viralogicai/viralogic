@@ -9,7 +9,7 @@ import { Clock, ShieldCheck, Star, Video, CheckCircle, ArrowRight } from 'lucide
 import { Button } from '@/components/Button';
 import Image from 'next/image';
 
-function UpsellContent() {
+const UpsellContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { upgradeTier } = useAuth();
@@ -23,34 +23,87 @@ function UpsellContent() {
     // Dynamic Content
     const content = isProToElite
         ? {
-            title: "Ưu đãi VIP độc quyền",
-            desc: "Bạn đã chọn gói Pro. Tuy nhiên, các Creator thu nhập 9 con số đều sở hữu gói VIP Mentorship để nhận Coaching 1-1.",
-            targetPlan: "VIP Mentorship",
-            basePrice: 999000,
-            paidAmount: 399000,
-            upgradePrice: 600000,
+            // PRO -> VIP MASTERCLASS
+            title: <>Bạn đã có công cụ.<br />Nhưng bạn có chắc mình đang đi nhanh nhất?</>,
+            desc: (
+                <div className="space-y-4 text-left">
+                    <div className="p-4 bg-white/5 rounded-lg border border-white/10">
+                        <p className="font-bold text-white mb-2">Gói Pro giúp bạn:</p>
+                        <ul className="list-disc list-inside space-y-1 text-gray-300">
+                            <li>Có đủ prompt</li>
+                            <li>Có quy trình rõ ràng</li>
+                            <li>Không làm TikTok theo cảm hứng nữa</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <p className="font-bold text-lg text-white">Nhưng có một sự thật là:</p>
+                        <p className="text-brand-pink font-bold text-xl my-2">👉 Có công cụ ≠ đi nhanh.</p>
+                        <p className="mb-2 text-gray-300">Phần lớn người dùng Pro vẫn: Tự test, Tự đoán, Tự sắp xếp lại thứ tự...</p>
+                        <p className="italic text-gray-400">Và điều đó tốn thời gian hơn bạn nghĩ.</p>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t border-white/10">
+                        <p className="font-bold text-brand-cyan mb-2 uppercase text-sm">Vip Masterclass ĐƯỢC TẠO RA CHO AI?</p>
+                        <ul className="space-y-2 text-gray-300">
+                            <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-brand-purple shrink-0 mt-1" /> Bạn không muốn tự mò nữa</li>
+                            <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-brand-purple shrink-0 mt-1" /> Bạn muốn biết chính xác nên làm gì trước – sau</li>
+                            <li className="flex gap-2"><CheckCircle className="w-4 h-4 text-brand-purple shrink-0 mt-1" /> Bạn muốn rút ngắn vài tháng thử–sai</li>
+                        </ul>
+                    </div>
+                </div>
+            ),
+            targetPlan: "Vip Masterclass",
+            basePrice: 2999000,
+            upgradePrice: 1999000,
             upgradeTierId: 'vip_mentorship' as const,
             features: [
-                "3–5 Video Masterclass (Bee trực tiếp chia sẻ)",
-                "Membership Area riêng & Tool lọc kịch bản song ngữ",
-                "Cập nhật định kỳ Tool AI & Cách dùng mới",
-                "Support 1-1 trực tiếp từ đội ngũ"
-            ]
+                "Toàn bộ quyền lợi gói Pro",
+                "3–5 Video Masterclass (Đi đúng thứ tự & Giải thích tại sao)",
+                "Membership Area riêng (Xem video trực tiếp, không lan man)",
+                "Bonus: Danh sách công cụ AI & Update định kỳ",
+                "👉 Vip Masterclass loại bỏ việc thừa"
+            ],
+            ctaText: "Nâng cấp lên Vip Masterclass – 1.999.000đ",
+            skipText: "Bạn có thể tiếp tục với Pro. Vip Masterclass chỉ dành cho người muốn đi nhanh hơn."
         }
         : {
-            title: "Ưu đãi đặc biệt",
-            desc: "Gói Starter là khởi đầu tốt. Nhưng để bùng nổ traffic thực sự, bạn cần Full 1000+ Prompt của gói Pro Creator.",
+            // STARTER -> PRO UPSELL
+            title: <>Bạn đã bắt đầu đúng thứ tự.<br />Muốn đi nhanh hơn không?</>,
+            desc: (
+                <div className="space-y-4 text-left">
+                    <p>Bạn vừa quyết định không làm TikTok theo cảm hứng nữa. Đó là bước khó nhất.</p>
+                    <div className="p-4 bg-white/5 rounded-lg border border-white/10">
+                        <p className="font-bold text-white mb-2">Gói Starter giúp bạn:</p>
+                        <ul className="list-disc list-inside space-y-1 text-gray-300">
+                            <li>Gỡ rối</li>
+                            <li>Làm đúng thứ tự</li>
+                            <li>Không mò mẫm như trước</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p className="mb-2">Nhưng nếu bạn muốn:</p>
+                        <ul className="list-disc list-inside space-y-1 text-gray-300">
+                            <li>Không muốn tự sắp xếp lại mọi thứ</li>
+                            <li>Muốn có đủ kịch bản cho từng mục tiêu</li>
+                            <li>Triển khai nhanh hơn thay vì thử – sai</li>
+                        </ul>
+                    </div>
+                    <p className="font-bold text-brand-cyan">👉 Phiên bản Pro được tạo ra cho giai đoạn đó.</p>
+                </div>
+            ),
             targetPlan: "Pro Creator",
-            basePrice: 399000,
-            paidAmount: 199000,
-            upgradePrice: 200000,
+            basePrice: 999000,
+            upgradePrice: 699000,
             upgradeTierId: 'pro' as const,
             features: [
-                "Truy cập 1000+ Prompt Viral",
-                "Update Prompt mới hàng tuần",
-                "Mở khóa Case Study phân tích sâu",
-                "Tham gia cộng đồng Pro Creator"
-            ]
+                "100+ Prompt độc quyền (Tăng view, Follow, Bán hàng)",
+                "PDF Guide: Quy trình xây kênh từ A–Z",
+                "Không dắt tay từng ngày - Không học lan man",
+                "👉 Chỉ tập trung vào triển khai nhanh & đúng"
+            ],
+            ctaText: "Nâng cấp lên Pro – 699.000đ",
+            skipText: "Không sao cả. Bạn vẫn có thể bắt đầu với Starter và nâng cấp sau."
         };
 
     useEffect(() => {
@@ -115,21 +168,19 @@ function UpsellContent() {
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/30 text-red-500 font-mono font-bold animate-pulse mb-6">
                         <Clock className="w-4 h-4" />
-                        Ưu đãi kết thúc sau: {formatTime(timeLeft)}
+                        Ưu đãi sẽ đóng lại sau: {formatTime(timeLeft)}
                     </div>
 
                     <h1 className="text-3xl md:text-5xl font-display font-bold text-white mb-6">
-                        Khoan đã! Đừng bỏ lỡ <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-brand-purple to-brand-pink">
-                            Cơ hội nâng cấp duy nhất này
-                        </span>
+                        {content.title}
                     </h1>
-                    <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+
+                    <div className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">
                         {content.desc}
-                    </p>
+                    </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="grid md:grid-cols-2 gap-8 items-start">
                     {/* Left: Product Value */}
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
@@ -144,7 +195,7 @@ function UpsellContent() {
                             <ul className="space-y-4">
                                 {content.features.map((feature, i) => (
                                     <li key={i} className="flex items-start gap-3">
-                                        <CheckCircle className="w-6 h-6 text-brand-cyan shrink-0" />
+                                        <CheckCircle className="w-6 h-6 text-brand-cyan shrink-0 mt-0.5" />
                                         <span className="text-gray-300">{feature}</span>
                                     </li>
                                 ))}
@@ -158,35 +209,34 @@ function UpsellContent() {
                         animate={{ opacity: 1, x: 0 }}
                         className="bg-brand-navy border border-brand-cyan/30 rounded-2xl p-8 relative shadow-2xl shadow-brand-cyan/10"
                     >
-                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-cyan to-brand-purple text-white px-6 py-1 rounded-full text-sm font-bold shadow-lg">
-                            TIẾT KIỆM 40% NGAY HÔM NAY
-                        </div>
-
                         <div className="text-center mb-8 mt-4">
-                            <div className="text-gray-400 line-through text-lg">{content.basePrice.toLocaleString()}đ</div>
-                            <div className="text-4xl font-bold text-white mb-2">
-                                Chỉ thêm: <span className="text-brand-cyan">{content.upgradePrice.toLocaleString()}đ</span>
+                            <div className="text-gray-500 mb-1">Giá thông thường</div>
+                            <div className="text-gray-400 line-through text-xl">{content.basePrice.toLocaleString()}đ</div>
+                            <div className="mt-4">
+                                <span className="text-gray-300">Giá đặc biệt hôm nay:</span>
+                                <div className="text-5xl font-bold text-brand-cyan mt-2">
+                                    {content.upgradePrice.toLocaleString()}đ
+                                </div>
                             </div>
-                            <p className="text-sm text-gray-500">
-                                (Đã trừ {content.paidAmount.toLocaleString()}đ bạn vừa thanh toán)
-                            </p>
                         </div>
 
                         <div className="space-y-4">
                             <Button
                                 variant="cyber"
-                                className="w-full py-6 text-lg uppercase tracking-wide font-bold shadow-lg shadow-brand-cyan/20 animate-pulse-glow"
+                                className="w-full py-6 text-lg tracking-wide font-bold shadow-lg shadow-brand-cyan/20 animate-pulse-glow"
                                 onClick={() => setIsPaymentOpen(true)}
                             >
-                                Đồng ý nâng cấp ngay
+                                {content.ctaText}
                                 <ArrowRight className="w-5 h-5 ml-2" />
                             </Button>
 
+                            <p className="text-xs text-center text-gray-500 mb-4">(Truy cập đầy đủ ngay lập tức)</p>
+
                             <button
                                 onClick={handleSkip}
-                                className="w-full text-center text-gray-500 hover:text-white text-sm hover:underline transition-colors py-2"
+                                className="w-full text-center text-gray-500 hover:text-white text-sm hover:underline transition-colors py-2 px-4"
                             >
-                                Không cảm ơn, tôi sẽ giữ gói {fromPlan}
+                                {content.skipText}
                             </button>
                         </div>
                     </motion.div>
