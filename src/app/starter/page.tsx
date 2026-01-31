@@ -259,7 +259,8 @@ export default function StarterPage() {
 
     const handlePaymentSuccess = () => {
         setIsPaymentOpen(false);
-        router.push('/membership'); // Or a specific thank you page
+        // Redirect to upsell page to offer Pro upgrade
+        router.push('/upsell?fromPlan=starter');
     };
 
     const openPayment = () => setIsPaymentOpen(true);
