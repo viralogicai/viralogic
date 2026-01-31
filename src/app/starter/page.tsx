@@ -350,8 +350,9 @@ export default function StarterPage() {
                             {/* ITEM 6: Copy Change */}
                             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
                                 Không phải thiếu ý tưởng… <br />
-                                <span className="text-white font-bold block mt-2 text-2xl md:text-3xl">
-                                    Mà là làm sai thứ tự <span className="text-red-400">→ video flop</span> <span className="text-red-400">→ tốn thời gian.</span>
+                                <span className="text-white font-bold block mt-2 text-2xl md:text-3xl leading-tight">
+                                    Mà là làm sai thứ tự <br className="block md:hidden" />
+                                    <span className="text-red-400">→ video flop → tốn thời gian.</span>
                                 </span>
                             </p>
                         </div>
