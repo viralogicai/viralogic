@@ -2,7 +2,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 
-type UserTier = 'guest' | 'starter' | 'pro' | 'elite';
+type UserTier = 'guest' | 'starter' | 'pro' | 'vip_mentorship';
 
 interface AuthContextType {
     userTier: UserTier;
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const checkAccess = (requiredTier: UserTier) => {
-        const tiers: UserTier[] = ['guest', 'starter', 'pro', 'elite'];
+        const tiers: UserTier[] = ['guest', 'starter', 'pro', 'vip_mentorship'];
         const currentLevel = tiers.indexOf(userTier);
         const requiredLevel = tiers.indexOf(requiredTier);
         return currentLevel >= requiredLevel;

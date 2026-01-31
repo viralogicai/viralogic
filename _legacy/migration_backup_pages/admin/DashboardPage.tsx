@@ -110,3 +110,5 @@ export const DashboardPage = () => {
         </AdminLayout>
     );
 };
+
+export default DashboardPage;

@@ -9,7 +9,7 @@ export async function GET(request: Request) {
         const month = searchParams.get('month');
 
         // Validate tier
-        const validTiers = ['FREE', 'STARTER', 'PRO', 'ELITE'];
+        const validTiers = ['FREE', 'STARTER', 'PRO', 'VIP_MENTORSHIP'];
         const requestedTier = (tier as string)?.toUpperCase() || 'FREE';
 
         if (!validTiers.includes(requestedTier)) {

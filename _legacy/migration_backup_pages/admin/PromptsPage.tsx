@@ -10,7 +10,8 @@ import {
     FileSpreadsheet,
     Loader2,
     CheckCircle,
-    AlertCircle
+    AlertCircle,
+    Download
 } from 'lucide-react';
 import { Button } from '../../components/Button';
 
@@ -19,14 +20,14 @@ interface Prompt {
     title: string;
     content: string;
     category: string;
-    tier: 'FREE' | 'STARTER' | 'PRO' | 'ELITE';
+    tier: 'FREE' | 'STARTER' | 'PRO' | 'VIP_MENTORSHIP';
     isActive: boolean;
     order: number;
     createdAt: string;
 }
 
-const TIERS = ['FREE', 'STARTER', 'PRO', 'ELITE'] as const;
-const CATEGORIES = ['Hook', 'Script', 'CTA', 'Storytelling', 'Trend', 'Other'];
+const TIERS = ['FREE', 'STARTER', 'PRO', 'VIP_MENTORSHIP'] as const;
+const CATEGORIES = ['AI News', 'Content Creation', 'Side Hustles', 'Wealth & Personal Finance', 'Other'];
 
 export const PromptsPage = () => {
     const [prompts, setPrompts] = useState<Prompt[]>([]);
@@ -38,12 +39,12 @@ export const PromptsPage = () => {
         title: string;
         content: string;
         category: string;
-        tier: 'FREE' | 'STARTER' | 'PRO' | 'ELITE';
+        tier: 'FREE' | 'STARTER' | 'PRO' | 'VIP_MENTORSHIP';
         isActive: boolean;
     }>({
         title: '',
         content: '',
-        category: 'Hook',
+        category: 'Content Creation',
         tier: 'PRO',
         isActive: true
     });
@@ -180,7 +181,7 @@ export const PromptsPage = () => {
                     variant="primary"
                     onClick={() => {
                         setEditingPrompt(null);
-                        setFormData({ title: '', content: '', category: 'Hook', tier: 'PRO', isActive: true });
+                        setFormData({ title: '', content: '', category: 'Content Creation', tier: 'PRO', isActive: true });
                         setIsModalOpen(true);
                     }}
                 >
@@ -191,6 +192,12 @@ export const PromptsPage = () => {
                     <Upload className="w-4 h-4 mr-2" />
                     Upload Excel
                 </Button>
+                <a href="/prompts-template.xlsx" download>
+                    <Button variant="outline">
+                        <Download className="w-4 h-4 mr-2" />
+                        Download Template
+                    </Button>
+                </a>
             </div>
 
             {/* Prompts Table */}
@@ -224,7 +231,7 @@ export const PromptsPage = () => {
                                             </span>
                                         </td>
                                         <td className="p-4">
-                                            <span className={`px-2 py-1 rounded text-sm ${prompt.tier === 'ELITE' ? 'bg-amber-500/20 text-amber-400' :
+                                            <span className={`px-2 py-1 rounded text-sm ${prompt.tier === 'VIP_MENTORSHIP' ? 'bg-amber-500/20 text-amber-400' :
                                                 prompt.tier === 'PRO' ? 'bg-violet-500/20 text-violet-400' :
                                                     prompt.tier === 'STARTER' ? 'bg-brand-cyan/20 text-brand-cyan' :
                                                         'bg-gray-500/20 text-gray-400'
@@ -420,3 +427,5 @@ export const PromptsPage = () => {
         </AdminLayout>
     );
 };
+
+export default PromptsPage;

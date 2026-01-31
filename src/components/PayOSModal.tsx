@@ -121,11 +121,11 @@ export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSucces
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.95 }}
-                        className="w-full max-w-lg bg-brand-navy border border-brand-primary/20 rounded-2xl overflow-hidden relative shadow-2xl shadow-brand-purple/20"
+                        className="w-full max-w-lg bg-brand-navy border border-brand-primary/20 rounded-2xl overflow-hidden relative shadow-2xl shadow-brand-purple/20 max-h-[90vh] overflow-y-auto"
                     >
                         <button
                             onClick={handleClose}
-                            className="absolute top-4 right-4 text-gray-400 hover:text-white z-10"
+                            className="absolute top-4 right-4 text-gray-400 hover:text-white z-50 p-2 bg-brand-navy/80 rounded-full backdrop-blur-sm"
                         >
                             <X className="w-6 h-6" />
                         </button>
@@ -277,20 +277,31 @@ export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSucces
                                         </p>
 
                                         {/* Dev simulate button - only show in development */}
-                                        {process.env.NODE_ENV === 'development' && (
-                                            <div className="mt-4 pt-4 border-t border-white/5">
-                                                <Button
-                                                    variant="primary"
-                                                    onClick={() => {
-                                                        setPaymentState('success');
-                                                        setTimeout(onSuccess, 1500);
-                                                    }}
-                                                    className="w-full"
-                                                >
-                                                    [DEV] Simulate Success
-                                                </Button>
-                                            </div>
-                                        )}
+                                        <div className="mt-4 pt-4 border-t border-white/5 bg-yellow-500/10 p-2 rounded-lg">
+                                            <p className="text-xs text-yellow-500 text-center mb-2">DEVELOPER MODE</p>
+                                            <Button
+                                                variant="outline"
+                                                onClick={async () => {
+                                                    try {
+                                                        const res = await fetch('/api/payos/simulate', {
+                                                            method: 'POST',
+                                                            headers: { 'Content-Type': 'application/json' },
+                                                            body: JSON.stringify({ orderCode })
+                                                        });
+                                                        const data = await res.json();
+                                                        console.log('Simulation result:', data);
+                                                    } catch (e) {
+                                                        console.error('Simulation failed:', e);
+                                                    }
+
+                                                    setPaymentState('success');
+                                                    setTimeout(onSuccess, 1000);
+                                                }}
+                                                className="w-full border-yellow-500/50 text-yellow-500 hover:bg-yellow-500/10"
+                                            >
+                                                🛠️ Simulate Payment Success
+                                            </Button>
+                                        </div>
                                     </div>
                                 </>
                             )}

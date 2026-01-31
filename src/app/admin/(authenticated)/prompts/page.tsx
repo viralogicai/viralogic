@@ -20,13 +20,13 @@ interface Prompt {
     title: string;
     content: string;
     category: string;
-    tier: 'FREE' | 'STARTER' | 'PRO' | 'ELITE';
+    tier: 'FREE' | 'STARTER' | 'PRO' | 'VIP_MENTORSHIP';
     isActive: boolean;
     order: number;
     createdAt: string;
 }
 
-const TIERS = ['FREE', 'STARTER', 'PRO', 'ELITE'] as const;
+const TIERS = ['FREE', 'STARTER', 'PRO', 'VIP_MENTORSHIP'] as const;
 const CATEGORIES = ['Hook', 'Script', 'CTA', 'Storytelling', 'Trend', 'Other'];
 
 export default function PromptsPage() {
@@ -39,7 +39,7 @@ export default function PromptsPage() {
         title: string;
         content: string;
         category: string;
-        tier: 'FREE' | 'STARTER' | 'PRO' | 'ELITE';
+        tier: 'FREE' | 'STARTER' | 'PRO' | 'VIP_MENTORSHIP';
         isActive: boolean;
     }>({
         title: '',
@@ -228,7 +228,7 @@ export default function PromptsPage() {
                                         </span>
                                     </td>
                                     <td className="p-4">
-                                        <span className={`px-2 py-1 rounded text-sm ${prompt.tier === 'ELITE' ? 'bg-amber-500/20 text-amber-400' :
+                                        <span className={`px-2 py-1 rounded text-sm ${prompt.tier === 'VIP_MENTORSHIP' ? 'bg-amber-500/20 text-amber-400' :
                                             prompt.tier === 'PRO' ? 'bg-violet-500/20 text-violet-400' :
                                                 prompt.tier === 'STARTER' ? 'bg-brand-cyan/20 text-brand-cyan' :
                                                     'bg-gray-500/20 text-gray-400'

@@ -23,7 +23,7 @@ async function main() {
             password: hashedPassword,
             name: 'Admin',
             role: 'ADMIN',
-            tier: 'ELITE',
+            tier: 'VIP_MENTORSHIP',
         },
     });
 

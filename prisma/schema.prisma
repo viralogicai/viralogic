@@ -20,7 +20,7 @@ enum Tier {
   FREE
   STARTER
   PRO
-  ELITE
+  VIP_MENTORSHIP
 }
 
 model User {

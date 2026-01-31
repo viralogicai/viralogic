@@ -26,7 +26,7 @@ async function main() {
 
             name: 'Admin',
             role: 'ADMIN',
-            tier: 'ELITE',
+            tier: 'VIP_MENTORSHIP',
         },
     });
 

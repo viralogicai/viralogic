@@ -55,6 +55,35 @@ export async function POST(request: Request) {
                         }
                     });
 
+                    // Handle VIP Membership User Creation
+                    const isVip = payment.planId.toLowerCase().includes('vip') || payment.planId.toLowerCase().includes('mentorship');
+                    const buyerEmail = (payment.paymentData as any)?.buyerEmail; // Use safe access
+
+                    if (isVip && buyerEmail) {
+                        try {
+                            // Upsert User: Create if new, Update tier if exists
+                            // Note: Password for new user is set to a placeholder that prevents login until setup
+                            // In a real app, generate a token for password setup email.
+                            await prisma.user.upsert({
+                                where: { email: buyerEmail },
+                                update: {
+                                    tier: 'VIP_MENTORSHIP',
+                                    role: 'USER' // Keep role as user, tier determines access
+                                },
+                                create: {
+                                    email: buyerEmail,
+                                    name: buyerEmail.split('@')[0],
+                                    password: '$2b$10$PLACEHOLDER_PENDING_SETUP', // Invalid hash to prevent login
+                                    tier: 'VIP_MENTORSHIP',
+                                    role: 'USER'
+                                }
+                            });
+                            console.log(`[Webhook] Upserted VIP User: ${buyerEmail}`);
+                        } catch (err) {
+                            console.error(`[Webhook] Failed to upsert user ${buyerEmail}:`, err);
+                        }
+                    }
+
                     // Sync to GetResponse
                     const paymentData = payment.paymentData as { buyerEmail?: string } | null;
                     if (paymentData?.buyerEmail) {

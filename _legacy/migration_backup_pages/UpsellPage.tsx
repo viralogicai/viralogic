@@ -1,33 +1,35 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
 import { PayOSModal } from '../components/PayOSModal';
 import { Clock, ShieldCheck, Star, Video } from 'lucide-react';
 import { Button } from '../components/Button';
 
 export const UpsellPage = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    // const location = useLocation(); // Replaced by searchParams
     const { upgradeTier } = useAuth();
     const [timeLeft, setTimeLeft] = useState(600); // 10 minutes
     const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 
     // Determine Upsell Context
-    const fromPlan = location.state?.fromPlan || 'starter'; // 'starter' or 'pro'
-    const isProToElite = fromPlan === 'pro';
+    const fromPlan = searchParams?.get('fromPlan') || 'starter'; // 'starter' or 'pro'
+    const isProToVIP = fromPlan === 'pro';
 
     // Dynamic Content Configuration
-    const content = isProToElite
+    const content = isProToVIP
         ? {
             title: "Ưu đãi VIP độc quyền",
-            desc: "Bạn đã chọn gói Pro. Tuy nhiên, các Creator thu nhập 9 con số đều sở hữu gói Elite để nhận Coaching 1-1.",
+            desc: "Bạn đã chọn gói Pro. Tuy nhiên, các Creator thu nhập 9 con số đều sở hữu gói VIP Mentorship để nhận Coaching 1-1.",
             benefit: "Video Masterclass + 1:1 Support",
-            targetPlan: "Elite (VIP)",
+            targetPlan: "VIP Mentorship",
             basePrice: 999000,
             paidAmount: 399000,
             upgradePrice: 600000,
-            upgradeTierId: 'elite' as const,
+            upgradeTierId: 'vip_mentorship' as const,
             icon: <Video className="w-12 h-12 text-brand-cyan mb-4 mx-auto" />
         }
         : {
@@ -47,14 +49,14 @@ export const UpsellPage = () => {
             setTimeLeft((prev) => {
                 if (prev <= 1) {
                     clearInterval(timer);
-                    navigate('/membership'); // Auto skip if time runs out
+                    router.push('/membership'); // Auto skip if time runs out
                     return 0;
                 }
                 return prev - 1;
             });
         }, 1000);
         return () => clearInterval(timer);
-    }, [navigate]);
+    }, [router.push]);
 
     const formatTime = (seconds: number) => {
         const m = Math.floor(seconds / 60);
@@ -65,17 +67,17 @@ export const UpsellPage = () => {
     const handleUpgradeSuccess = () => {
         upgradeTier(content.upgradeTierId);
         setIsPaymentOpen(false);
-        navigate('/membership');
+        router.push('/membership');
     };
 
     const handleSkip = () => {
         // If skipping, they keep their originally selected tier
-        if (isProToElite) {
+        if (isProToVIP) {
             upgradeTier('pro');
         } else {
             upgradeTier('starter');
         }
-        navigate('/membership');
+        router.push('/membership');
     };
 
     return (
@@ -86,7 +88,7 @@ export const UpsellPage = () => {
             <div className="relative z-10 max-w-3xl w-full text-center my-12">
 
                 {/* Anchor Text - Mental Anchor */}
-                {isProToElite && (
+                {isProToVIP && (
                     <div className="mb-8 text-sm text-gray-400 max-w-lg mx-auto bg-black/40 backdrop-blur px-4 py-2 rounded-full border border-white/10">
                         Bạn đã có đầy đủ công cụ để triển khai. <br className="md:hidden" /> Phần dưới đây chỉ dành cho người muốn đi nhanh hơn.
                     </div>
@@ -103,14 +105,14 @@ export const UpsellPage = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="glass-panel p-8 md:p-10 rounded-3xl relative text-left"
                 >
-                    {isProToElite ? (
+                    {isProToVIP ? (
                         <>
                             <h1 className="text-2xl md:text-3xl font-display font-bold text-white mb-2 text-center">
-                                Elite không giúp bạn làm nhiều hơn. <br />
-                                <span className="text-brand-cyan">Elite giúp bạn biết sửa đúng chỗ.</span>
+                                VIP Mentorship không giúp bạn làm nhiều hơn. <br />
+                                <span className="text-brand-cyan">VIP Mentorship giúp bạn biết sửa đúng chỗ.</span>
                             </h1>
                             <p className="text-gray-400 text-center mb-8 max-w-xl mx-auto text-sm md:text-base">
-                                Bạn vừa mua Pro — đủ để làm bài bản. Elite tồn tại cho những lúc video không giữ người, kênh đứng view mà bạn không biết sửa ở đâu.
+                                Bạn vừa mua Pro — đủ để làm bài bản. VIP Mentorship tồn tại cho những lúc video không giữ người, kênh đứng view mà bạn không biết sửa ở đâu.
                             </p>
 
                             <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -163,7 +165,7 @@ export const UpsellPage = () => {
                             <span className="text-2xl font-bold text-white">{content.basePrice.toLocaleString()}đ</span>
                         </div>
                         <div className="flex justify-between items-center mb-1">
-                            <span className="text-gray-400">Bạn đã trả ({isProToElite ? 'Pro' : 'Starter'})</span>
+                            <span className="text-gray-400">Bạn đã trả ({isProToVIP ? 'Pro' : 'Starter'})</span>
                             <span className="text-red-400 font-mono">-{content.paidAmount.toLocaleString()}đ</span>
                         </div>
                         <div className="flex justify-between items-center text-brand-cyan font-bold text-xl mt-4 pt-4 border-t border-brand-cyan/20">
@@ -178,19 +180,19 @@ export const UpsellPage = () => {
                             className="w-full py-6 text-lg uppercase tracking-wide font-bold"
                             onClick={() => setIsPaymentOpen(true)}
                         >
-                            {isProToElite ? 'Mở quyền truy cập ELITE ngay bây giờ' : `Nâng cấp ngay - Chỉ ${content.upgradePrice.toLocaleString()}đ`}
+                            {isProToVIP ? 'Mở quyền truy cập VIP MENTORSHIP ngay bây giờ' : `Nâng cấp ngay - Chỉ ${content.upgradePrice.toLocaleString()}đ`}
                         </Button>
                         <button
                             onClick={handleSkip}
                             className="block mx-auto text-gray-500 hover:text-white text-sm underline decoration-gray-700 underline-offset-4 transition-colors text-center"
                         >
-                            {isProToElite ? 'Không phải lúc này? Bạn vẫn có thể triển khai đầy đủ với gói Pro.' : 'Không cảm ơn, tôi sẽ dùng gói Starter'}
+                            {isProToVIP ? 'Không phải lúc này? Bạn vẫn có thể triển khai đầy đủ với gói Pro.' : 'Không cảm ơn, tôi sẽ dùng gói Starter'}
                         </button>
                     </div>
 
                     <div className="mt-8 text-center text-xs text-gray-500 italic">
-                        {isProToElite ? (
-                            "Bạn có thể tự mò và sẽ học được. Elite chỉ giúp bạn trả giá bằng tiền thay vì thời gian."
+                        {isProToVIP ? (
+                            "Bạn có thể tự mò và sẽ học được. VIP Mentorship chỉ giúp bạn trả giá bằng tiền thay vì thời gian."
                         ) : (
                             <span className="flex items-center justify-center gap-2">
                                 <ShieldCheck className="w-4 h-4" />
@@ -212,3 +214,5 @@ export const UpsellPage = () => {
         </div>
     );
 };
+
+export default UpsellPage;

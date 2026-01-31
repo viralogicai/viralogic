@@ -21,9 +21,10 @@ function verifyAdmin(req: VercelRequest): boolean {
 }
 
 interface ExcelPromptRow {
-    title: string;
-    content: string;
-    category: string;
+    'Prompt Category': string;
+    'Prompt Title': string;
+    'What the Prompt Does': string;
+    'Complete Prompt': string;
     tier?: string;
 }
 
@@ -68,15 +69,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         for (let i = 0; i < rows.length; i++) {
             const row = rows[i];
 
+            // Extract data from Excel columns
+            const title = row['Prompt Title'];
+            const content = row['Complete Prompt'];
+            const category = row['Prompt Category'];
+            const description = row['What the Prompt Does'];
+
             // Validate required fields
-            if (!row.title || !row.content || !row.category) {
+            if (!title || !content || !category) {
                 results.failed++;
-                results.errors.push(`Row ${i + 2}: Missing required fields (title, content, category)`);
+                results.errors.push(`Row ${i + 2}: Missing required fields (Prompt Title, Complete Prompt, Prompt Category)`);
                 continue;
             }
 
             // Validate tier if provided
-            const validTiers = ['FREE', 'STARTER', 'PRO', 'ELITE'];
+            const validTiers = ['FREE', 'STARTER', 'PRO', 'VIP_MENTORSHIP'];
             const tier = row.tier?.toUpperCase() || 'PRO';
             if (!validTiers.includes(tier)) {
                 results.failed++;
@@ -87,9 +94,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             try {
                 await prisma.prompt.create({
                     data: {
-                        title: row.title,
-                        content: row.content,
-                        category: row.category,
+                        title: title,
+                        content: content,
+                        category: category,
                         tier: tier as any,
                         isActive: true,
                         order: i

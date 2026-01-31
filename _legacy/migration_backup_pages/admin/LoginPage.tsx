@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import { Lock, Mail, AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from '../../components/Button';
 
 export const AdminLoginPage = () => {
-    const navigate = useNavigate();
+    const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -34,7 +34,7 @@ export const AdminLoginPage = () => {
             localStorage.setItem('adminUser', JSON.stringify(data.data.user));
 
             // Redirect to admin dashboard
-            navigate('/admin/dashboard');
+            router.push('/admin/dashboard');
 
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Login failed');
@@ -125,3 +125,5 @@ export const AdminLoginPage = () => {
         </div>
     );
 };
+
+export default AdminLoginPage;

@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 
 import { Layout } from '@/components/Layout';
 import { HeroSection } from '@/components/HeroSection';
@@ -12,6 +13,8 @@ import { AchievementBoard } from '@/components/AchievementBoard';
 import { TestimonialSection } from '@/components/TestimonialSection';
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <Layout>
       {/* Background Grid & Shapes - Global for Landing Page */}
@@ -113,7 +116,7 @@ export default function Home() {
       </section>
 
       <TestimonialSection />
-      <PricingSection />
+      <PricingSection onModalOpenChange={setIsModalOpen} />
       <FAQSection />
 
       {/* Final CTA */}
@@ -130,7 +133,7 @@ export default function Home() {
       </section>
 
       {/* Sticky Mobile CTA */}
-      <div className="fixed bottom-4 left-4 right-4 z-50 md:hidden">
+      <div className={`fixed bottom-4 left-4 right-4 z-40 md:hidden transition-all duration-300 ${isModalOpen ? 'translate-y-[150%] opacity-0' : 'translate-y-0 opacity-100'}`}>
         <div
           onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
           className="flex items-center justify-between bg-white text-black p-4 rounded-xl shadow-2xl border border-white/20 glow-effect cursor-pointer"

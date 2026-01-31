@@ -21,13 +21,13 @@ interface Resource {
     description: string | null;
     type: string;
     url: string;
-    tier: 'FREE' | 'STARTER' | 'PRO' | 'ELITE';
+    tier: 'FREE' | 'STARTER' | 'PRO' | 'VIP_MENTORSHIP';
     isActive: boolean;
     order: number;
     createdAt: string;
 }
 
-const TIERS = ['FREE', 'STARTER', 'PRO', 'ELITE'] as const;
+const TIERS = ['FREE', 'STARTER', 'PRO', 'VIP_MENTORSHIP'] as const;
 const TYPES = [
     { value: 'video', label: 'Video', icon: Video },
     { value: 'pdf', label: 'PDF', icon: FileText },
@@ -47,7 +47,7 @@ export const ResourcesPage = () => {
         description: string;
         type: string;
         url: string;
-        tier: 'FREE' | 'STARTER' | 'PRO' | 'ELITE';
+        tier: 'FREE' | 'STARTER' | 'PRO' | 'VIP_MENTORSHIP';
         isActive: boolean;
     }>({
         month: new Date().toISOString().slice(0, 7),
@@ -240,7 +240,7 @@ export const ResourcesPage = () => {
                                     <p className="text-gray-400 text-sm mb-3 line-clamp-2">{resource.description}</p>
                                 )}
                                 <div className="flex items-center gap-2">
-                                    <span className={`px-2 py-1 rounded text-xs ${resource.tier === 'ELITE' ? 'bg-amber-500/20 text-amber-400' :
+                                    <span className={`px-2 py-1 rounded text-xs ${resource.tier === 'VIP_MENTORSHIP' ? 'bg-amber-500/20 text-amber-400' :
                                         resource.tier === 'PRO' ? 'bg-violet-500/20 text-violet-400' :
                                             resource.tier === 'STARTER' ? 'bg-brand-cyan/20 text-brand-cyan' :
                                                 'bg-gray-500/20 text-gray-400'
@@ -370,3 +370,5 @@ export const ResourcesPage = () => {
         </AdminLayout>
     );
 };
+
+export default ResourcesPage;

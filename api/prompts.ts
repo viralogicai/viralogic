@@ -10,7 +10,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const { tier, category } = req.query;
 
         // Validate tier
-        const validTiers = ['FREE', 'STARTER', 'PRO', 'ELITE'];
+        const validTiers = ['FREE', 'STARTER', 'PRO', 'VIP_MENTORSHIP'];
         const requestedTier = (tier as string)?.toUpperCase() || 'FREE';
 
         if (!validTiers.includes(requestedTier)) {

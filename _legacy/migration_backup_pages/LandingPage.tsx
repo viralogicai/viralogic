@@ -144,3 +144,5 @@ export const LandingPage = () => {
         </Layout>
     );
 };
+
+export default LandingPage;

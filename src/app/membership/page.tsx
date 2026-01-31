@@ -25,8 +25,12 @@ export default function MembershipPage() {
     const [copiedId, setCopiedId] = useState<number | null>(null);
 
     useEffect(() => {
-        if (userTier === 'guest') {
-            router.push('/');
+        // Enforce VIP Access Only
+        // Admin token check: if localStorage has 'admin_token', we allow access (optional, but good for testing)
+        // const isAdmin = typeof window !== 'undefined' && localStorage.getItem('adminToken');
+
+        if (userTier !== 'vip_mentorship') {
+            router.push('/membership/login');
         }
     }, [userTier, router]);
 
@@ -156,12 +160,12 @@ export default function MembershipPage() {
                 {/* Video Masterclass (Elite Only) */}
                 <section>
                     <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${checkAccess('elite') ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                        <div className={`w-2 h-2 rounded-full ${checkAccess('vip_mentorship') ? 'bg-green-500' : 'bg-red-500'}`}></div>
                         Video Masterclass
-                        {!checkAccess('elite') && <span className="text-xs font-normal text-gray-500 ml-2">(Locked: Elite Plan Only)</span>}
+                        {!checkAccess('vip_mentorship') && <span className="text-xs font-normal text-gray-500 ml-2">(Locked: Elite Plan Only)</span>}
                     </h2>
 
-                    {checkAccess('elite') ? (
+                    {checkAccess('vip_mentorship') ? (
                         <div className="grid md:grid-cols-2 gap-8">
                             <div className="glass-panel p-4 rounded-xl">
                                 <SecureVideoPlayer src="https://www.w3schools.com/html/mov_bbb.mp4" title="Module 1: The Viral Framework" />

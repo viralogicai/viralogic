@@ -2,123 +2,189 @@
 
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { CheckCircle, Loader2, Copy, ArrowRight } from 'lucide-react';
+import { CheckCircle, Loader2, Copy, ArrowRight, Mail, AlertTriangle, Download } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '@/components/Button';
+import { motion } from 'framer-motion';
 
 function PaymentSuccessContent() {
     const searchParams = useSearchParams();
-    const orderCode = searchParams.get('orderCode');
-    const planId = searchParams.get('planId');
+    const orderCode = searchParams?.get('orderCode');
+    const planId = searchParams?.get('planId');
     const [status, setStatus] = useState<'pending' | 'success' | 'error'>('pending');
     const [copied, setCopied] = useState(false);
-    const router = useRouter();
 
+    // Determine effective status
     useEffect(() => {
+        const statusParam = searchParams?.get('status');
+        if (statusParam === 'skipped') {
+            setStatus('success');
+            return;
+        }
+
         if (!orderCode) return;
 
-        // Poll for status or just check once
         const checkStatus = async () => {
             try {
                 const res = await fetch(`/api/payos/check-status?orderCode=${orderCode}`);
                 const data = await res.json();
-
-                if (data.success && data.data.status === 'PAID') {
+                if (data.success && (data.data.status === 'PAID')) {
                     setStatus('success');
-                    // Update user tier logic could be here or via webhook
-                } else if (data.success && data.data.status === 'CANCELLED') {
+                } else if (data.data.status === 'CANCELLED') {
                     setStatus('error');
                 } else {
-                    // Keep checking or show pending?
-                    // For now assume if they got redirected here, it might be successful or pending.
-                    // Let's rely on webhook for actual DB update, frontend just confirms.
+                    // Assume success if redirected here properly, or keep pending. 
+                    // For better UX, let's assume success if we arrived here via returnUrl but usually we check.
+                    // The user just 'Simulated' so it should be PAID.
                     if (data.data.status === 'PAID') setStatus('success');
-                    else setStatus('pending'); // User might need to wait
                 }
-            } catch (error) {
-                console.error('Check status error', error);
-                setStatus('error');
+            } catch (e) {
+                console.error(e);
             }
         };
 
         checkStatus();
-        // Check every 3 seconds
         const interval = setInterval(checkStatus, 3000);
         return () => clearInterval(interval);
+    }, [orderCode, searchParams]);
 
-    }, [orderCode]);
+    // Allow render if status is skipped even without orderCode
+    const isSkipped = searchParams?.get('status') === 'skipped';
 
-    if (!orderCode) {
+    if (!orderCode && !isSkipped) {
         return (
-            <div className="min-h-screen bg-brand-dark flex items-center justify-center p-4">
-                <div className="text-center text-white">
-                    <h1 className="text-2xl font-bold mb-4">Invalid Access</h1>
-                    <Link href="/" className="text-brand-cyan hover:underline">Go Home</Link>
-                </div>
+            <div className="min-h-screen bg-[#030712] flex items-center justify-center text-white">
+                <Link href="/" className="text-brand-cyan hover:underline">Return Home</Link>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-brand-dark flex items-center justify-center p-4 relative overflow-hidden">
-            <div className="absolute inset-0 bg-grid-cyberpunk opacity-50 pointer-events-none"></div>
+        <div className="min-h-screen bg-[#030712] flex items-center justify-center p-4 relative overflow-hidden">
+            {/* Ambient Background derived from Logo Colors */}
+            <div className="absolute inset-0 bg-grid-cyberpunk opacity-30 z-0"></div>
 
-            <div className="relative z-10 w-full max-w-lg">
-                <div className="glass-panel p-8 rounded-2xl text-center">
+            {/* Large blurred glows */}
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-cyan/20 rounded-full blur-[100px] pointer-events-none"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-brand-purple/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+            <div className="relative z-10 w-full max-w-2xl">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="glass-panel p-8 md:p-12 rounded-3xl text-center border-t border-brand-cyan/20 shadow-2xl shadow-brand-cyan/10"
+                >
+                    {/* Logo or Brand Element */}
+                    <div className="mb-8 flex justify-center">
+                        <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden border-2 border-white/10 shadow-lg shadow-brand-cyan/20">
+                            <Image
+                                src="/logo-app.png"
+                                alt="ViraLogic AI"
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
+                    </div>
+
                     {status === 'pending' && (
-                        <>
+                        <div className="py-12">
                             <Loader2 className="w-16 h-16 text-brand-cyan animate-spin mx-auto mb-6" />
-                            <h1 className="text-2xl font-bold text-white mb-2">Verifying Payment...</h1>
-                            <p className="text-gray-400">Please wait while we confirm your transaction.</p>
-                        </>
+                            <h2 className="text-2xl font-bold text-white mb-2">Đang xác nhận giao dịch...</h2>
+                            <p className="text-gray-400">Vui lòng đợi trong giây lát.</p>
+                        </div>
                     )}
 
                     {status === 'success' && (
                         <>
-                            <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <CheckCircle className="w-8 h-8 text-emerald-500" />
-                            </div>
-                            <h1 className="text-3xl font-display font-bold text-white mb-2">Payment Successful!</h1>
-                            <p className="text-gray-400 mb-6">Thank you for upgrading. Your account has been activated.</p>
-
-                            <div className="bg-white/5 p-4 rounded-xl mb-6">
-                                <div className="text-sm text-gray-400 mb-1">Order Code</div>
-                                <div className="flex items-center justify-center gap-2 font-mono text-xl text-white">
-                                    {orderCode}
-                                    <button
-                                        onClick={() => { navigator.clipboard.writeText(orderCode); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
-                                        className="text-gray-500 hover:text-white"
-                                    >
-                                        {copied ? <CheckCircle className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
-                                    </button>
-                                </div>
-                            </div>
-
-                            <Link
-                                href="/membership"
-                                className="inline-flex items-center gap-2 bg-brand-cyan text-black font-bold py-3 px-8 rounded-xl hover:bg-brand-cyan/90 transition-colors w-full justify-center"
+                            <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-8 ring-1 ring-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
                             >
-                                Go to Membership Area
-                                <ArrowRight className="w-5 h-5" />
-                            </Link>
+                                <CheckCircle className="w-10 h-10 text-emerald-400" />
+                            </motion.div>
+
+                            <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
+                                Cảm ơn bạn! <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-brand-purple to-brand-pink">
+                                    {isSkipped ? 'Đơn hàng đã được xác nhận' : 'Thanh toán thành công'}
+                                </span>
+                            </h1>
+
+                            {isSkipped && (
+                                <p className="text-gray-400 mb-6">
+                                    Bạn đã chọn giữ nguyên gói <span className="text-white font-bold uppercase">{planId || 'Starter'}</span>. <br />
+                                    Đừng lo, bạn vẫn có thể nâng cấp bất cứ lúc nào trong Membership Area.
+                                </p>
+                            )}
+
+                            <div className="bg-white/5 border border-white/10 rounded-xl p-6 mb-8 text-left max-w-lg mx-auto">
+                                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                                    <Mail className="w-5 h-5 text-brand-cyan" />
+                                    Hướng dẫn nhận tài liệu:
+                                </h3>
+                                <ul className="space-y-4 text-gray-300 text-sm">
+                                    <li className="flex gap-3">
+                                        <div className="w-6 h-6 rounded-full bg-brand-cyan/20 text-brand-cyan flex items-center justify-center text-xs font-bold shrink-0">1</div>
+                                        <span>
+                                            Hệ thống đã gửi email xác nhận và link truy cập gói
+                                            <span className="font-bold text-white mx-1 capitalize">{planId || 'Membership'}</span>
+                                            vào hộp thư của bạn.
+                                        </span>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <div className="w-6 h-6 rounded-full bg-brand-cyan/20 text-brand-cyan flex items-center justify-center text-xs font-bold shrink-0">2</div>
+                                        <span>
+                                            <span className="text-red-400 font-bold flex items-center gap-1">
+                                                <AlertTriangle className="w-3 h-3" /> Lưu ý quan trọng:
+                                            </span>
+                                            Nếu không thấy email trong Hộp thư đến, vui lòng kiểm tra mục <strong>Spam</strong> hoặc <strong>Quảng cáo</strong>.
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div className="space-y-4 max-w-md mx-auto">
+                                {(planId?.includes('vip') || planId?.includes('mentorship')) ? (
+                                    <Link href="/membership" className="block w-full">
+                                        <Button variant="cyber" className="w-full py-4 text-lg font-bold shadow-lg shadow-brand-cyan/25">
+                                            Truy cập Membership Area
+                                            <ArrowRight className="w-5 h-5 ml-2" />
+                                        </Button>
+                                    </Link>
+                                ) : (
+                                    <Link href="/" className="block w-full">
+                                        <Button variant="outline" className="w-full py-4 text-lg font-bold">
+                                            Quay về Trang chủ
+                                        </Button>
+                                    </Link>
+                                )}
+
+                                {orderCode && (
+                                    <p className="text-xs text-gray-500 pt-4 border-t border-white/5">
+                                        Mã đơn hàng: <span className="font-mono text-gray-400">{orderCode}</span>
+                                    </p>
+                                )}
+                            </div>
                         </>
                     )}
 
                     {status === 'error' && (
-                        <>
-                            <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <Loader2 className="w-8 h-8 text-red-500" />
+                        <div className="py-8">
+                            <div className="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6 ring-1 ring-red-500/30">
+                                <AlertTriangle className="w-10 h-10 text-red-500" />
                             </div>
-                            <h1 className="text-2xl font-bold text-white mb-2">Payment Failed or Cancelled</h1>
-                            <p className="text-gray-400 mb-6">We couldn't verify your payment. If you paid, please contact support.</p>
-                            <Link
-                                href="/#pricing"
-                                className="text-white hover:text-brand-cyan underline"
-                            >
-                                Try Again
+                            <h2 className="text-3xl font-bold text-white mb-2">Thanh toán thất bại</h2>
+                            <p className="text-gray-400 mb-8 max-w-sm mx-auto">
+                                Giao dịch đã bị hủy hoặc không thành công. Vui lòng thử lại hoặc liên hệ hỗ trợ.
+                            </p>
+                            <Link href="/#pricing">
+                                <Button variant="outline">Quay lại trang thanh toán</Button>
                             </Link>
-                        </>
+                        </div>
                     )}
-                </div>
+                </motion.div>
             </div>
         </div>
     );
@@ -126,7 +192,7 @@ function PaymentSuccessContent() {
 
 export default function PaymentSuccessPage() {
     return (
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-brand-dark text-white">Loading...</div>}>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#030712] text-white">Loading...</div>}>
             <PaymentSuccessContent />
         </Suspense>
     );

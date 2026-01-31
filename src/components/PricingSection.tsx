@@ -27,15 +27,19 @@ const plans = [
         tag: 'Best Seller'
     },
     {
-        id: 'elite',
-        name: 'Elite (VIP) — Đi nhanh',
+        id: 'vip_mentorship',
+        name: 'VIP Mentorship — Đi nhanh',
         price: 999000,
         features: ['Toàn bộ quyền lợi gói Pro', '3-5 Video Masterclass độc quyền', 'Membership Area riêng Updates', 'Công cụ lọc kịch bản song ngữ'],
         highlight: false
     }
 ];
 
-export const PricingSection = () => {
+interface PricingSectionProps {
+    onModalOpenChange?: (isOpen: boolean) => void;
+}
+
+export const PricingSection = ({ onModalOpenChange }: PricingSectionProps) => {
     const [selectedPlan, setSelectedPlan] = useState<typeof plans[0] | null>(null);
     const router = useRouter();
     const { upgradeTier } = useAuth();
@@ -45,7 +49,7 @@ export const PricingSection = () => {
             // Update Context
             if (selectedPlan.id === 'starter') upgradeTier('starter');
             if (selectedPlan.id === 'pro') upgradeTier('pro');
-            if (selectedPlan.id === 'elite') upgradeTier('elite');
+            if (selectedPlan.id === 'vip_mentorship') upgradeTier('vip_mentorship');
 
             // Routing Logic
             if (selectedPlan.id === 'pro') {
@@ -72,7 +76,7 @@ export const PricingSection = () => {
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-8 items-start max-w-4xl mx-auto mb-12">
-                        {plans.filter(p => p.id !== 'elite').map((plan) => (
+                        {plans.filter(p => p.id !== 'vip_mentorship').map((plan) => (
                             <motion.div
                                 key={plan.id}
                                 whileHover={{ y: -10 }}
@@ -118,7 +122,10 @@ export const PricingSection = () => {
                                 <Button
                                     variant={plan.highlight ? 'primary' : 'outline'}
                                     className="w-full"
-                                    onClick={() => setSelectedPlan(plan)}
+                                    onClick={() => {
+                                        setSelectedPlan(plan);
+                                        onModalOpenChange?.(true);
+                                    }}
                                 >
                                     {plan.highlight ? 'Sở hữu ngay' : 'Chọn gói này'}
                                 </Button>
@@ -137,7 +144,10 @@ export const PricingSection = () => {
 
             <PayOSModal
                 isOpen={!!selectedPlan}
-                onClose={() => setSelectedPlan(null)}
+                onClose={() => {
+                    setSelectedPlan(null);
+                    onModalOpenChange?.(false);
+                }}
                 planName={selectedPlan?.name || ''}
                 planId={selectedPlan?.id || ''}
                 amount={selectedPlan?.price || 0}

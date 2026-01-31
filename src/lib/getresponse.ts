@@ -52,13 +52,32 @@ export async function addContactToGetResponse(payload: AddContactPayload): Promi
         }),
     });
 
+    // Handle 409 Conflict (contact already exists) as success
+    if (response.status === 409) {
+        console.log(`[GetResponse] Contact already exists: ${payload.email}`);
+        return {
+            contactId: 'existing',
+            email: payload.email,
+            createdOn: new Date().toISOString()
+        };
+    }
+
     if (!response.ok) {
         const error = await response.json().catch(() => ({ message: response.statusText }));
         console.error('[GetResponse] API Error:', error);
         throw new Error(`GetResponse Error: ${error.message || error.httpStatus || response.statusText}`);
     }
 
-    return response.json();
+    const text = await response.text();
+    if (!text) {
+        // 202 Accepted or similar empty success
+        return {
+            contactId: 'queued',
+            email: payload.email,
+            createdOn: new Date().toISOString()
+        };
+    }
+    return JSON.parse(text);
 }
 
 /**

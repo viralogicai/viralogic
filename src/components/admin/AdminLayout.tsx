@@ -1,5 +1,6 @@
 import { type ReactNode, useEffect } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import {
     LayoutDashboard,
     FileText,
@@ -21,7 +22,8 @@ const navItems = [
 ];
 
 export const AdminLayout = ({ children, title }: AdminLayoutProps) => {
-    const navigate = useNavigate();
+    const router = useRouter();
+    const pathname = router.pathname;
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [user, setUser] = useState<{ name: string; email: string } | null>(null);
 
@@ -31,19 +33,19 @@ export const AdminLayout = ({ children, title }: AdminLayoutProps) => {
         const userData = localStorage.getItem('adminUser');
 
         if (!token) {
-            navigate('/admin/login');
+            router.push('/admin/login');
             return;
         }
 
         if (userData) {
             setUser(JSON.parse(userData));
         }
-    }, [navigate]);
+    }, [router]);
 
     const handleLogout = () => {
         localStorage.removeItem('adminToken');
         localStorage.removeItem('adminUser');
-        navigate('/admin/login');
+        router.push('/admin/login');
     };
 
     return (
@@ -64,23 +66,26 @@ export const AdminLayout = ({ children, title }: AdminLayoutProps) => {
 
                     {/* Navigation */}
                     <nav className="flex-1 p-4 space-y-1">
-                        {navItems.map((item) => (
-                            <NavLink
-                                key={item.path}
-                                to={item.path}
-                                onClick={() => setIsSidebarOpen(false)}
-                                className={({ isActive }) => `
-                                    flex items-center gap-3 px-4 py-3 rounded-lg transition-colors
-                                    ${isActive
-                                        ? 'bg-brand-cyan/10 text-brand-cyan'
-                                        : 'text-gray-400 hover:text-white hover:bg-white/5'
-                                    }
-                                `}
-                            >
-                                <item.icon className="w-5 h-5" />
-                                {item.label}
-                            </NavLink>
-                        ))}
+                        {navItems.map((item) => {
+                            const isActive = pathname === item.path;
+                            return (
+                                <Link
+                                    key={item.path}
+                                    href={item.path}
+                                    onClick={() => setIsSidebarOpen(false)}
+                                    className={`
+                                        flex items-center gap-3 px-4 py-3 rounded-lg transition-colors
+                                        ${isActive
+                                            ? 'bg-brand-cyan/10 text-brand-cyan'
+                                            : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                        }
+                                    `}
+                                >
+                                    <item.icon className="w-5 h-5" />
+                                    {item.label}
+                                </Link>
+                            );
+                        })}
                     </nav>
 
                     {/* User & Logout */}
