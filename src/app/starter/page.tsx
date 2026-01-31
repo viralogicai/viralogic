@@ -270,10 +270,10 @@ export default function StarterPage() {
             <PremiumBackground />
             <SimpleNavbar onCtaClick={openPayment} />
 
-            <main className="flex-grow pt-32">
+            <main className="flex-grow pt-24">
 
                 {/* 1. HERO */}
-                <section className="container max-w-7xl mx-auto px-6 mb-32">
+                <section className="container max-w-7xl mx-auto px-6 mb-16">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <motion.div
                             initial={{ opacity: 0, x: -50 }}
@@ -337,12 +337,12 @@ export default function StarterPage() {
                 </section>
 
                 {/* 2. PROBLEM */}
-                <section id="problem" className="py-24 relative overflow-hidden">
+                <section id="problem" className="py-12 relative overflow-hidden">
                     {/* Decorative background element for section */}
                     <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
                     <div className="container max-w-4xl mx-auto px-6 relative z-10">
-                        <div className="text-center mb-20">
+                        <div className="text-center mb-10">
                             <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500/20 to-red-500/20 text-orange-500 mb-6 shadow-lg border border-orange-500/20">
                                 <AlertTriangle className="w-7 h-7" />
                             </div>
@@ -363,7 +363,7 @@ export default function StarterPage() {
                             <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-12 w-0.5 bg-gradient-to-b from-transparent via-brand-purple/50 to-brand-cyan/50"></div>
 
                             {/* Problem Items */}
-                            <div className="w-full space-y-12 md:space-y-0 relative mb-16">
+                            <div className="w-full space-y-12 md:space-y-0 relative mb-8">
                                 {[
                                     { text: "Hôm nay test hook", align: "left" },
                                     { text: "Mai đổi niche", align: "right" },
@@ -420,9 +420,9 @@ export default function StarterPage() {
                 </section>
 
                 {/* 3. START HERE */}
-                <section className="py-32 relative">
+                <section className="py-16 relative">
                     <div className="container max-w-6xl mx-auto px-6 relative z-10">
-                        <div className="text-center mb-20">
+                        <div className="text-center mb-10">
                             <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">START HERE</h2>
                             <p className="text-xl text-gray-400">7 ngày đầu — chỉ cần làm đúng <span className="text-brand-cyan font-bold">3 việc</span></p>
                         </div>
@@ -454,7 +454,7 @@ export default function StarterPage() {
                             ))}
                         </div>
 
-                        <div className="mt-16 text-center">
+                        <div className="mt-10 text-center">
                             <div className="inline-block p-4 rounded-xl bg-gradient-to-r from-brand-cyan/10 to-brand-purple/10 border border-brand-cyan/20">
                                 <p className="text-lg text-white font-medium flex items-center gap-2">
                                     <Star className="w-5 h-5 text-yellow-400 fill-current" />
@@ -466,7 +466,7 @@ export default function StarterPage() {
                 </section>
 
                 {/* 4. OFFER */}
-                <section id="offer" className="py-24 relative">
+                <section id="offer" className="py-12 relative">
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-brand-purple/5 pointer-events-none" />
 
                     <div className="container max-w-5xl mx-auto px-6 relative z-10">
@@ -530,7 +530,7 @@ export default function StarterPage() {
                 </section>
 
                 {/* 5. TRUST LINE */}
-                <section className="py-20 border-t border-white/5 bg-brand-dark/50">
+                <section className="py-10 border-t border-white/5 bg-brand-dark/50">
                     <div className="container max-w-5xl mx-auto px-6">
                         <div className="grid md:grid-cols-3 gap-8 text-center">
                             {[

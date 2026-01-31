@@ -29,7 +29,7 @@ export const HeroSection = () => {
                         AI Content Workflow for Short-Form Creators
                     </div>
 
-                    <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
+                    <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6">
                         Bật chế độ viral bằng AI — <br />
                         <span className="text-gradient-brand drop-shadow-lg">với hệ thống tạo nội dung đúng thứ tự</span>
                     </h1>
