@@ -145,99 +145,104 @@ const UpsellContent = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#030712] relative overflow-hidden flex flex-col items-center justify-center p-4">
-            {/* Background Branding */}
-            <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-grid-cyberpunk opacity-40"></div>
-                {/* Logo Watermark */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-5 pointer-events-none">
-                    <Image
-                        src="/logo-app.png"
-                        alt="Background Logo"
-                        fill
-                        className="object-contain grayscale"
-                    />
-                </div>
-                {/* Glows */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/10 rounded-full blur-[120px]"></div>
-                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-purple/10 rounded-full blur-[120px]"></div>
+        <div className="min-h-screen bg-[#030712] relative overflow-hidden flex flex-col items-center justify-center p-4 font-body">
+            {/* Background Dynamics */}
+            <div className="absolute inset-0 z-0 select-none pointer-events-none">
+                <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-20 mask-gradient" />
+                <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-brand-purple/20 rounded-full blur-[150px] animate-pulse-slow" />
+                <div className="absolute bottom-[-20%] left-[-10%] w-[800px] h-[800px] bg-brand-cyan/10 rounded-full blur-[150px] animate-pulse-slow delay-1000" />
             </div>
 
-            <div className="relative z-10 w-full max-w-4xl">
-                {/* Header Status */}
-                <div className="text-center mb-8">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/30 text-red-500 font-mono font-bold animate-pulse mb-6">
-                        <Clock className="w-4 h-4" />
-                        Ưu đãi sẽ đóng lại sau: {formatTime(timeLeft)}
-                    </div>
-
-                    <h1 className="text-3xl md:text-5xl font-display font-bold text-white mb-6">
-                        {content.title}
-                    </h1>
-
-                    <div className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">
-                        {content.desc}
+            <div className="relative z-10 w-full max-w-5xl">
+                {/* Timer Badge */}
+                <div className="flex justify-center mb-8">
+                    <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-red-500/10 border border-red-500/20 shadow-[0_0_20px_rgba(239,68,68,0.2)] backdrop-blur-md animate-pulse">
+                        <Clock className="w-5 h-5 text-red-400" />
+                        <span className="font-mono text-xl font-bold text-red-400 tracking-widest">{formatTime(timeLeft)}</span>
                     </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-8 items-start">
-                    {/* Left: Product Value */}
+                <div className="grid lg:grid-cols-5 gap-0 lg:gap-8 items-stretch">
+                    {/* LEFT COLUMN - CONTENT (Span 3) */}
                     <motion.div
-                        initial={{ opacity: 0, x: -20 }}
+                        initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="space-y-6"
+                        transition={{ duration: 0.6 }}
+                        className="lg:col-span-3 flex flex-col justify-center"
                     >
-                        <div className="glass-panel p-8 rounded-2xl border-l-4 border-l-brand-cyan relative overflow-hidden group">
-                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                <Star className="w-24 h-24 text-brand-cyan" />
+                        <div className="mb-8 text-center lg:text-left">
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight drop-shadow-lg">
+                                {content.title}
+                            </h1>
+                            <div className="text-gray-300 text-lg leading-relaxed">
+                                {content.desc}
                             </div>
-                            <h3 className="text-2xl font-bold text-white mb-6">{content.targetPlan} bao gồm:</h3>
-                            <ul className="space-y-4">
-                                {content.features.map((feature, i) => (
-                                    <li key={i} className="flex items-start gap-3">
-                                        <CheckCircle className="w-6 h-6 text-brand-cyan shrink-0 mt-0.5" />
-                                        <span className="text-gray-300">{feature}</span>
-                                    </li>
-                                ))}
-                            </ul>
+                        </div>
+
+                        {/* Feature Highlight Piks */}
+                        <div className="grid sm:grid-cols-2 gap-4">
+                            {content.features.map((feature, i) => (
+                                <div key={i} className="group p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-brand-purple/10 hover:border-brand-purple/30 transition-all duration-300">
+                                    <div className="flex items-start gap-3">
+                                        <CheckCircle className="w-5 h-5 text-brand-pink shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                                        <span className="text-gray-300 text-sm font-medium group-hover:text-white transition-colors">{feature}</span>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </motion.div>
 
-                    {/* Right: Pricing & Action */}
+                    {/* RIGHT COLUMN - OFFER CARD (Span 2) */}
                     <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="bg-brand-navy border border-brand-cyan/30 rounded-2xl p-8 relative shadow-2xl shadow-brand-cyan/10"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="lg:col-span-2 mt-12 lg:mt-0"
                     >
-                        <div className="text-center mb-8 mt-4">
-                            <div className="text-gray-500 mb-1">Giá thông thường</div>
-                            <div className="text-gray-400 line-through text-xl">{content.basePrice.toLocaleString()}đ</div>
-                            <div className="mt-4">
-                                <span className="text-gray-300">Giá đặc biệt hôm nay:</span>
-                                <div className="text-5xl font-bold text-brand-cyan mt-2">
-                                    {content.upgradePrice.toLocaleString()}đ
+                        <div className="relative h-full bg-brand-dark/80 backdrop-blur-2xl border border-brand-purple/30 rounded-3xl p-8 flex flex-col justify-between shadow-2xl shadow-brand-purple/20 overflow-hidden group">
+                            {/* Decor Glow */}
+                            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-gradient-to-br from-brand-pink/20 to-brand-purple/20 blur-[60px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:opacity-75 transition-opacity duration-700" />
+
+                            <div className="relative z-10 text-center">
+                                <div className="inline-block px-4 py-1 rounded-full bg-gradient-to-r from-brand-cyan/20 to-brand-purple/20 border border-brand-cyan/30 text-brand-cyan text-xs font-bold uppercase tracking-wider mb-6">
+                                    Special Upgrade Offer
                                 </div>
+
+                                <div className="space-y-1 mb-8">
+                                    <div className="text-gray-500 text-sm font-medium uppercase tracking-wide">Giá gốc</div>
+                                    <div className="text-2xl text-gray-500 line-through decoration-red-500/50 decoration-2">{content.basePrice.toLocaleString('vi-VN')}đ</div>
+
+                                    <div className="h-px w-20 bg-white/10 mx-auto my-4" />
+
+                                    <div className="text-white text-sm font-bold mb-1">CHỈ CÒN</div>
+                                    <div className="text-5xl md:text-6xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-brand-purple to-brand-pink drop-shadow-md">
+                                        {content.upgradePrice.toLocaleString('vi-VN')}
+                                        <span className="text-2xl ml-1 text-brand-pink">đ</span>
+                                    </div>
+                                </div>
+
+                                <Button
+                                    variant="cyber"
+                                    className="w-full py-6 text-lg font-bold shadow-xl shadow-brand-purple/20 hover:shadow-brand-purple/40 hover:scale-[1.02] transition-all duration-300 group-hover:animate-pulse-slow"
+                                    onClick={() => setIsPaymentOpen(true)}
+                                >
+                                    {content.ctaText}
+                                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                                </Button>
+
+                                <p className="mt-4 text-[10px] text-gray-400 font-medium tracking-wide opacity-70">
+                                    ⚡ Kích hoạt ngay lập tức sau khi thanh toán
+                                </p>
                             </div>
-                        </div>
 
-                        <div className="space-y-4">
-                            <Button
-                                variant="cyber"
-                                className="w-full py-6 text-lg tracking-wide font-bold shadow-lg shadow-brand-cyan/20 animate-pulse-glow"
-                                onClick={() => setIsPaymentOpen(true)}
-                            >
-                                {content.ctaText}
-                                <ArrowRight className="w-5 h-5 ml-2" />
-                            </Button>
-
-                            <p className="text-xs text-center text-gray-500 mb-4">(Truy cập đầy đủ ngay lập tức)</p>
-
-                            <button
-                                onClick={handleSkip}
-                                className="w-full text-center text-gray-500 hover:text-white text-sm hover:underline transition-colors py-2 px-4"
-                            >
-                                {content.skipText}
-                            </button>
+                            <div className="relative z-10 mt-8 pt-6 border-t border-white/5 text-center">
+                                <button
+                                    onClick={handleSkip}
+                                    className="text-gray-500 hover:text-white text-sm transition-colors hover:underline decoration-brand-cyan/50 underline-offset-4"
+                                >
+                                    {content.skipText}
+                                </button>
+                            </div>
                         </div>
                     </motion.div>
                 </div>
