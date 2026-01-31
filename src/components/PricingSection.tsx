@@ -51,11 +51,14 @@ export const PricingSection = ({ onModalOpenChange }: PricingSectionProps) => {
             if (selectedPlan.id === 'pro') upgradeTier('pro');
             if (selectedPlan.id === 'vip_mentorship') upgradeTier('vip_mentorship');
 
-            // Routing Logic
-            if (selectedPlan.id === 'pro') {
-                router.push('/upsell?fromPlan=pro');
+            // Routing Logic:
+            // - Starter & Pro: Go to upsell page to offer upgrade
+            // - VIP Mentorship: Go directly to payment success (no more upsell)
+            if (selectedPlan.id === 'starter' || selectedPlan.id === 'pro') {
+                router.push(`/upsell?fromPlan=${selectedPlan.id}`);
             } else {
-                router.push('/membership');
+                // VIP Mentorship - final tier, go to success page
+                router.push(`/payment-success?planId=${selectedPlan.id}&status=paid`);
             }
             setSelectedPlan(null);
         }
