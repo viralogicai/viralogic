@@ -48,8 +48,8 @@ export const Navbar = () => {
                     <a href="#pricing" className="text-sm text-gray-400 hover:text-brand-cyan transition-colors">Pricing</a>
                 </div>
 
-                {/* CTA - Visible on Mobile and Desktop now, but styled differently if needed */}
-                <div className="flex items-center gap-4">
+                {/* CTA */}
+                <div className="flex items-center">
                     <div className="hidden md:block">
                         <Button variant="primary" size="sm" onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}>
                             <Rocket className="w-4 h-4" />
@@ -57,7 +57,6 @@ export const Navbar = () => {
                         </Button>
                     </div>
 
-                    {/* Mobile CTA - replaces Hamburger */}
                     <div className="md:hidden">
                         <Button variant="primary" size="sm" onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}>
                             <Rocket className="w-4 h-4" />
