@@ -289,9 +289,9 @@ export default function StarterPage() {
                                 Đừng tạo video rác nữa
                             </div>
 
-                            <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight mb-8">
-                                Đừng tạo thêm video nữa <br />
-                                <span className="text-gradient-brand">hãy tạo đúng video trước</span>
+                            <h1 className="text-4xl md:text-6xl font-display font-bold leading-tight mb-8">
+                                Bạn làm TikTok mấy tháng mà vẫn rối? <br className="hidden lg:block" />
+                                <span className="text-gradient-brand block mt-2">Không phải thiếu AI — bạn làm sai thứ tự.</span>
                             </h1>
 
                             {/* ITEM 3: Testimonial */}

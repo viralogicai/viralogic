@@ -321,10 +321,10 @@ const UpsellContent = () => {
                                 </p>
                             </div>
 
-                            <div className="relative z-10 mt-8 pt-6 border-t border-white/5 text-center">
+                            <div className="relative z-10 mt-6 pt-4 border-t border-white/5 text-center">
                                 <button
                                     onClick={handleSkip}
-                                    className="text-gray-500 hover:text-white text-sm transition-colors hover:underline decoration-brand-cyan/50 underline-offset-4"
+                                    className="text-gray-500 hover:text-white text-xs font-bold underline decoration-gray-600 hover:decoration-white underline-offset-4 transition-all uppercase tracking-wider"
                                 >
                                     {content.skipText}
                                 </button>
