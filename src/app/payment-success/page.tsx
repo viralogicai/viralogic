@@ -119,13 +119,25 @@ function PaymentSuccessContent() {
                             )}
 
                             <div className="bg-white/5 border border-white/10 rounded-xl p-6 mb-8 text-left max-w-lg mx-auto">
-                                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                                    <Mail className="w-5 h-5 text-brand-cyan" />
-                                    Hướng dẫn nhận tài liệu:
-                                </h3>
-                                <ul className="space-y-4 text-gray-300 text-sm">
+                                <h3 className="text-xl font-bold text-white mb-6">🎉 Chào mừng bạn đến với ViraLogic AI</h3>
+
+                                <div className="bg-brand-purple/20 border border-brand-purple/40 rounded-lg p-4 mb-6">
+                                    <p className="font-bold text-brand-purple-light flex items-center gap-2 mb-2">
+                                        👉 BƯỚC 1 (QUAN TRỌNG):
+                                    </p>
+                                    <p className="text-gray-200 text-sm mb-3">
+                                        Trước khi mở prompt, hãy bắt đầu ở đây để không đi sai thứ tự.
+                                    </p>
+                                    <Link href="/start-here">
+                                        <Button size="sm" className="w-full bg-brand-purple hover:bg-brand-purple/80 text-white font-bold">
+                                            [ START HERE – 7 NGÀY ĐẦU ] <ArrowRight className="w-4 h-4 ml-1" />
+                                        </Button>
+                                    </Link>
+                                </div>
+
+                                <ul className="space-y-4 text-gray-300 text-sm pt-4 border-t border-white/5">
                                     <li className="flex gap-3">
-                                        <div className="w-6 h-6 rounded-full bg-brand-cyan/20 text-brand-cyan flex items-center justify-center text-xs font-bold shrink-0">1</div>
+                                        <div className="w-6 h-6 rounded-full bg-brand-cyan/20 text-brand-cyan flex items-center justify-center text-xs font-bold shrink-0">2</div>
                                         <span>
                                             Hệ thống đã gửi email xác nhận và link truy cập gói
                                             <span className="font-bold text-white mx-1 capitalize">{planId || 'Membership'}</span>
@@ -133,12 +145,12 @@ function PaymentSuccessContent() {
                                         </span>
                                     </li>
                                     <li className="flex gap-3">
-                                        <div className="w-6 h-6 rounded-full bg-brand-cyan/20 text-brand-cyan flex items-center justify-center text-xs font-bold shrink-0">2</div>
+                                        <div className="w-6 h-6 rounded-full bg-brand-cyan/20 text-brand-cyan flex items-center justify-center text-xs font-bold shrink-0">3</div>
                                         <span>
                                             <span className="text-red-400 font-bold flex items-center gap-1">
-                                                <AlertTriangle className="w-3 h-3" /> Lưu ý quan trọng:
+                                                <AlertTriangle className="w-3 h-3" /> Lưu ý:
                                             </span>
-                                            Nếu không thấy email trong Hộp thư đến, vui lòng kiểm tra mục <strong>Spam</strong> hoặc <strong>Quảng cáo</strong>.
+                                            Kiểm tra mục <strong>Spam</strong> hoặc <strong>Quảng cáo</strong> nếu không thấy email.
                                         </span>
                                     </li>
                                 </ul>
