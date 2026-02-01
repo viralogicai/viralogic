@@ -121,19 +121,21 @@ function PaymentSuccessContent() {
                             <div className="bg-white/5 border border-white/10 rounded-xl p-6 mb-8 text-left max-w-lg mx-auto">
                                 <h3 className="text-xl font-bold text-white mb-6">🎉 Chào mừng bạn đến với ViraLogic AI</h3>
 
-                                <div className="bg-brand-purple/20 border border-brand-purple/40 rounded-lg p-4 mb-6">
-                                    <p className="font-bold text-brand-purple-light flex items-center gap-2 mb-2">
-                                        👉 BƯỚC 1 (QUAN TRỌNG):
-                                    </p>
-                                    <p className="text-gray-200 text-sm mb-3">
-                                        Trước khi mở prompt, hãy bắt đầu ở đây để không đi sai thứ tự.
-                                    </p>
-                                    <Link href="/start-here">
-                                        <Button size="sm" className="w-full bg-brand-purple hover:bg-brand-purple/80 text-white font-bold">
-                                            [ START HERE – 7 NGÀY ĐẦU ] <ArrowRight className="w-4 h-4 ml-1" />
-                                        </Button>
-                                    </Link>
-                                </div>
+                                {(!planId || planId === 'starter') && (
+                                    <div className="bg-brand-purple/20 border border-brand-purple/40 rounded-lg p-4 mb-6">
+                                        <p className="font-bold text-brand-purple-light flex items-center gap-2 mb-2">
+                                            👉 BƯỚC 1 (QUAN TRỌNG):
+                                        </p>
+                                        <p className="text-gray-200 text-sm mb-3">
+                                            Trước khi mở prompt, hãy bắt đầu ở đây để không đi sai thứ tự.
+                                        </p>
+                                        <Link href="/start-here">
+                                            <Button size="sm" className="w-full bg-brand-purple hover:bg-brand-purple/80 text-white font-bold">
+                                                [ START HERE – 7 NGÀY ĐẦU ] <ArrowRight className="w-4 h-4 ml-1" />
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                )}
 
                                 <ul className="space-y-4 text-gray-300 text-sm pt-4 border-t border-white/5">
                                     <li className="flex gap-3">
