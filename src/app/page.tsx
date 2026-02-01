@@ -21,7 +21,6 @@ export default function Home() {
       <div className="fixed inset-0 z-0 pointer-events-none bg-grid-cyberpunk opacity-50"></div>
 
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[10%] right-[10%] w-32 h-32 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm animate-float-slow opacity-60" style={{ animationDelay: '0s' }}></div>
         <div className="absolute bottom-[20%] left-[5%] w-64 h-64 rounded-full border border-dashed border-violet-500/20 animate-rotate-slow opacity-40"></div>
         <div className="absolute top-[40%] left-[15%] w-16 h-16 rounded-2xl border border-white/5 bg-gradient-to-br from-violet-500/10 to-transparent backdrop-blur-md animate-float-medium opacity-50" style={{ animationDelay: '1s' }}></div>
       </div>

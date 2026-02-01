@@ -8,7 +8,7 @@ export const HeroSection = () => {
     };
 
     return (
-        <section className="relative pt-32 pb-32 overflow-hidden px-6">
+        <section className="relative pt-20 lg:pt-32 pb-32 overflow-hidden px-6">
             {/* Background Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-cyan/20 blur-[120px] rounded-full -z-10 animate-pulse-glow" />
             <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-brand-purple/20 blur-[100px] rounded-full -z-10 animate-pulse-glow delay-700" />
