@@ -1,12 +1,23 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Layout } from '@/components/Layout';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import { BookOpen, Calendar, HelpCircle, AlertTriangle, CheckCircle, ArrowRight, Video, Target, Clock, RefreshCw } from 'lucide-react';
+import { BookOpen, Calendar, HelpCircle, AlertTriangle, CheckCircle, ArrowRight, Video, Target, Clock, RefreshCw, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { PayOSModal } from '@/components/PayOSModal';
+import { Button } from '@/components/Button';
 
 export default function StartHerePage() {
+    const router = useRouter();
+    const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+
+    const handlePaymentSuccess = () => {
+        setIsPaymentOpen(false);
+        router.push('/payment-success?orderCode=UPGRADE_PRO&planId=pro');
+    };
+
     return (
         <Layout>
             <div className="relative min-h-screen pb-24">
@@ -289,14 +300,31 @@ export default function StartHerePage() {
 
                             <div className="pt-8">
                                 <p className="text-sm text-gray-500 mb-4">Khi bạn đã sẵn sàng đi nhanh hơn:</p>
-                                <a href="/membership" className="inline-flex items-center gap-2 text-brand-cyan font-bold hover:underline">
-                                    Truy cập Hệ Thống Membership <ArrowRight className="w-4 h-4" />
-                                </a>
+                                <Button
+                                    variant="cyber"
+                                    onClick={() => setIsPaymentOpen(true)}
+                                    className="w-full md:w-auto py-4 px-8 text-lg font-bold shadow-xl shadow-brand-purple/20 animate-pulse-slow"
+                                >
+                                    <Zap className="w-5 h-5 mr-2" />
+                                    Nâng cấp lên Pro System (699k)
+                                </Button>
+                                <p className="text-xs text-gray-500 mt-2">
+                                    *Dành cho người muốn có quy trình & prompt sẵn
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <PayOSModal
+                isOpen={isPaymentOpen}
+                onClose={() => setIsPaymentOpen(false)}
+                planName="Pro Creator System"
+                planId="pro"
+                amount={699000}
+                onSuccess={handlePaymentSuccess}
+            />
         </Layout>
     );
 }
