@@ -101,7 +101,8 @@ const UpsellContent = () => {
         }
         : {
             // STARTER -> PRO UPSELL
-            title: <>Bạn làm TikTok mấy tháng mà vẫn rối?<br />Không phải thiếu AI — bạn làm sai thứ tự.</>,
+
+            title: <>Bạn đã bắt đầu đúng thứ tự.<br />Muốn đi nhanh hơn không?</>,
             ctaNote: "Ưu đãi này chỉ dành cho người vừa hoàn tất Starter",
             desc: (
                 <div className="space-y-6 text-left">
@@ -233,13 +234,7 @@ const UpsellContent = () => {
             </div>
 
             <div className="relative z-10 w-full max-w-5xl">
-                {/* Timer Badge */}
-                <div className="flex justify-center mb-8">
-                    <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-red-500/10 border border-red-500/20 shadow-[0_0_20px_rgba(239,68,68,0.2)] backdrop-blur-md animate-pulse">
-                        <Clock className="w-5 h-5 text-red-400" />
-                        <span className="font-mono text-xl font-bold text-red-400 tracking-widest">{formatTime(timeLeft)}</span>
-                    </div>
-                </div>
+
 
                 <div className="grid lg:grid-cols-5 gap-0 lg:gap-8 items-stretch">
                     {/* LEFT COLUMN - CONTENT (Span 3) */}
@@ -297,6 +292,13 @@ const UpsellContent = () => {
                                     <div className="text-5xl md:text-6xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-brand-purple to-brand-pink drop-shadow-md">
                                         {content.upgradePrice.toLocaleString('vi-VN')}
                                         <span className="text-2xl ml-1 text-brand-pink">đ</span>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-center mb-4">
+                                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 animate-pulse">
+                                        <Clock className="w-4 h-4 text-red-400" />
+                                        <span className="font-mono text-lg font-bold text-red-400 tracking-widest">{formatTime(timeLeft)}</span>
                                     </div>
                                 </div>
 
