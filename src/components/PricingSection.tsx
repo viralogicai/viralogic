@@ -17,22 +17,21 @@ const plans = [
         note: "Starter tập trung giúp bạn làm đúng thứ tự ban đầu.\nKhông bao gồm pipeline sản xuất & scaling.",
         ctaNote: "Bắt đầu với Starter để làm đúng thứ tự.\nSau khi rõ quy trình, bạn có thể nâng cấp Pro để sản xuất & mở rộng nội dung."
     },
-    {
-        id: 'pro',
-        name: 'Pro Creator — Hệ thống',
-        price: 399000,
-        originalPrice: 999000,
-        features: ['Toàn bộ 1000+ kịch bản AI', 'PDF Guide: Quy trình xây kênh', 'Từ ý tưởng → Hook → Script', 'Mỗi video là một lần test'],
-        highlight: true,
-        tag: 'Best Seller'
+    id: 'pro',
+    name: 'Pro Creator — Hệ thống',
+    price: 999000,
+    originalPrice: 1999000,
+    features: ['Toàn bộ 1000+ kịch bản AI', 'PDF Guide: Quy trình xây kênh', 'Từ ý tưởng → Hook → Script', 'Mỗi video là một lần test'],
+    highlight: true,
+    tag: 'Best Seller'
     },
-    {
-        id: 'vip_mentorship',
+{
+    id: 'vip_mentorship',
         name: 'VIP Mentorship — Đi nhanh',
-        price: 999000,
-        features: ['Toàn bộ quyền lợi gói Pro', '3-5 Video Masterclass độc quyền', 'Membership Area riêng Updates', 'Công cụ lọc kịch bản song ngữ'],
-        highlight: false
-    }
+            price: 999000,
+                features: ['Toàn bộ quyền lợi gói Pro', '3-5 Video Masterclass độc quyền', 'Membership Area riêng Updates', 'Công cụ lọc kịch bản song ngữ'],
+                    highlight: false
+}
 ];
 
 interface PricingSectionProps {
