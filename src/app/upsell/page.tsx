@@ -101,7 +101,8 @@ const UpsellContent = () => {
         }
         : {
             // STARTER -> PRO UPSELL
-            title: <>Bạn đã bắt đầu đúng thứ tự.<br />Muốn đi nhanh hơn không?</>,
+            title: <>Bạn làm TikTok mấy tháng mà vẫn rối?<br />Không phải thiếu AI — bạn làm sai thứ tự.</>,
+            ctaNote: "Ưu đãi này chỉ dành cho người vừa hoàn tất Starter",
             desc: (
                 <div className="space-y-6 text-left">
                     <p className="text-lg text-gray-300">
@@ -130,28 +131,42 @@ const UpsellContent = () => {
                         </ul>
                     </div>
 
-                    <div className="pl-2 border-l-2 border-brand-purple/30">
-                        <p className="mb-4 font-medium text-white">Nhưng nếu bạn muốn:</p>
-                        <ul className="space-y-3">
-                            <li className="flex gap-3 text-gray-300">
-                                <ArrowRight className="w-5 h-5 text-brand-purple shrink-0 mt-0.5" />
-                                <span>Lấy sẵn kịch bản cho từng mục tiêu</span>
-                            </li>
-                            <li className="flex gap-3 text-gray-300">
-                                <ArrowRight className="w-5 h-5 text-brand-purple shrink-0 mt-0.5" />
-                                <span>Không muốn tự sắp xếp lại mọi thứ</span>
-                            </li>
-                            <li className="flex gap-3 text-gray-300">
-                                <ArrowRight className="w-5 h-5 text-brand-purple shrink-0 mt-0.5" />
-                                <span>Triển khai nhanh hơn thay vì thử – sai</span>
-                            </li>
-                        </ul>
+                    {/* BLOCK #1: DIFFERENCE DECIDER */}
+                    <div className="bg-brand-purple/10 border-l-4 border-brand-purple p-4 rounded-r-lg">
+                        <p className="text-gray-300 mb-1"><strong className="text-gray-400">Starter</strong> = bạn biết mình nên làm gì.</p>
+                        <p className="text-white"><strong className="text-brand-cyan">Pro</strong> = bạn được đưa sẵn thứ tự để làm ngay.</p>
                     </div>
 
-                    <div className="p-4 bg-brand-cyan/10 border border-brand-cyan/30 rounded-lg">
-                        <p className="font-bold text-brand-cyan flex items-center gap-2 text-lg">
-                            <Star className="w-5 h-5 fill-current" />
-                            Phiên bản Pro được tạo ra cho giai đoạn đó.
+                    {/* BLOCK #2: WARNING FOMO */}
+                    <div className="p-5 rounded-xl border border-red-500/30 bg-red-500/5 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+                            <ShieldCheck className="w-24 h-24 text-red-500" />
+                        </div>
+                        <h4 className="font-bold text-red-400 mb-3 flex items-center gap-2">
+                            ⚠️ Nếu bạn KHÔNG nâng cấp ngay:
+                        </h4>
+                        <p className="text-gray-400 mb-2 text-sm">Bạn vẫn sẽ làm được với Starter, nhưng bạn sẽ:</p>
+                        <ul className="space-y-2 mb-4">
+                            <li className="flex gap-2 text-gray-300 text-sm">
+                                <span className="text-red-500">×</span> Tự sắp xếp lại thứ tự từng bước
+                            </li>
+                            <li className="flex gap-2 text-gray-300 text-sm">
+                                <span className="text-red-500">×</span> Tự thử – sai để ghép prompt
+                            </li>
+                            <li className="flex gap-2 text-gray-300 text-sm">
+                                <span className="text-red-500">×</span> Mất thêm thời gian trước khi triển khai trơn tru
+                            </li>
+                        </ul>
+                        <p className="font-bold text-white text-sm">
+                            👉 Pro được tạo ra cho người không muốn tự ráp lại hệ thống.
+                        </p>
+                    </div>
+
+                    {/* BLOCK #4: MENTOR AUTHORITY */}
+                    <div className="text-center px-4 py-2">
+                        <p className="text-lg md:text-xl font-display italic text-gray-300">
+                            "Pro không dành cho người muốn học thêm,<br />
+                            mà dành cho người muốn <span className="text-white font-bold not-italic decoration-brand-cyan decoration-2 underline underline-offset-4">làm nhanh và đúng</span>."
                         </p>
                     </div>
                 </div>
@@ -293,6 +308,13 @@ const UpsellContent = () => {
                                     {content.ctaText}
                                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                                 </Button>
+
+                                {/* @ts-ignore */}
+                                {content.ctaNote && (
+                                    <p className="mt-3 text-xs text-brand-cyan/80 font-bold italic animate-pulse">
+                                        {content.ctaNote}
+                                    </p>
+                                )}
 
                                 <p className="mt-4 text-[10px] text-gray-400 font-medium tracking-wide opacity-70">
                                     ⚡ Kích hoạt ngay lập tức sau khi thanh toán
