@@ -228,7 +228,7 @@ const ProductBox3D = () => (
                     <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div>
-                    <div className="text-xs sm:text-sm font-bold text-white leading-tight">1000+ Kịch bản</div>
+                    <div className="text-xs sm:text-sm font-bold text-white leading-tight">100+ Kịch bản</div>
                     <div className="text-[10px] sm:text-xs text-gray-400">Đã kiểm chứng</div>
                 </div>
             </div>

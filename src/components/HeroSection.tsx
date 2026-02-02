@@ -103,7 +103,7 @@ export const HeroSection = () => {
                                     <FileText className="w-4 h-4" />
                                 </div>
                                 <div>
-                                    <div className="text-xs font-bold text-white leading-tight">1000+ Kịch bản</div>
+                                    <div className="text-xs font-bold text-white leading-tight">100+ Kịch bản</div>
                                     <div className="text-[9px] text-gray-400">Đã kiểm chứng</div>
                                 </div>
                             </div>
