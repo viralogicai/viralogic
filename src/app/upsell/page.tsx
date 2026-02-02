@@ -110,27 +110,7 @@ const UpsellContent = () => {
                         Bạn vừa quyết định không làm TikTok theo cảm hứng nữa. <span className="text-white font-bold">Đó là bước khó nhất.</span>
                     </p>
 
-                    <div className="p-5 bg-white/5 rounded-xl border border-white/10 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-20 h-20 bg-white/5 rounded-full blur-xl -translate-y-1/2 translate-x-1/2" />
-                        <p className="font-bold text-white mb-3 flex items-center gap-2">
-                            <span className="w-1.5 h-6 bg-gray-500 rounded-full" />
-                            Gói Starter giúp bạn:
-                        </p>
-                        <ul className="space-y-2.5">
-                            <li className="flex gap-3 text-gray-400">
-                                <CheckCircle className="w-5 h-5 text-gray-500 shrink-0" />
-                                <span>Gỡ rối tư duy</span>
-                            </li>
-                            <li className="flex gap-3 text-gray-400">
-                                <CheckCircle className="w-5 h-5 text-gray-500 shrink-0" />
-                                <span>Làm đúng thứ tự cơ bản</span>
-                            </li>
-                            <li className="flex gap-3 text-gray-400">
-                                <CheckCircle className="w-5 h-5 text-gray-500 shrink-0" />
-                                <span>Không mò mẫm như trước</span>
-                            </li>
-                        </ul>
-                    </div>
+
 
                     {/* BLOCK #1: DIFFERENCE DECIDER */}
                     <div className="bg-brand-purple/10 border-l-4 border-brand-purple p-4 rounded-r-lg">
@@ -180,7 +160,7 @@ const UpsellContent = () => {
                 "100+ Prompt độc quyền (Tăng view, Follow, Bán hàng)",
                 "PDF Guide: Quy trình xây kênh từ A–Z",
                 "Không dắt tay từng ngày - Không học lan man",
-                "👉 Chỉ tập trung vào triển khai nhanh & đúng"
+                "Chỉ tập trung vào triển khai nhanh & đúng"
             ],
             ctaText: "Nâng cấp lên Pro – 699.000đ",
             skipText: "Tôi muốn giữ gói hiện tại"
