@@ -61,7 +61,7 @@ export const PricingSection = () => {
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-                            ViraLogic AI được chia thành <span className="text-brand-cyan">3 cấp độ</span>
+                            ViraLogic AI được chia thành <span className="text-brand-cyan">2 cấp độ</span>
                         </h2>
                         <p className="text-gray-400 max-w-2xl mx-auto">
                             ViraLogic AI không bán “nhiều hay ít prompt”. <br className="hidden md:block" />

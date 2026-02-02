@@ -4,13 +4,7 @@ import { verifyAdmin } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import * as XLSX from 'xlsx';
 
-export const config = {
-    api: {
-        bodyParser: {
-            sizeLimit: '10mb',
-        },
-    },
-};
+
 
 export async function POST(request: Request) {
     const admin = await verifyAdmin();
