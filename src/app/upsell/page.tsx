@@ -97,7 +97,7 @@ const UpsellContent = () => {
                 "👉 Vip Masterclass loại bỏ việc thừa"
             ],
             ctaText: "Nâng cấp lên Vip Masterclass – 1.999.000đ",
-            skipText: "Tôi muốn giữ gói hiện tại"
+            skipText: "Tôi chưa cần nâng câp - Gửi tài liệu qua Mail cho tôi"
         }
         : {
             // STARTER -> PRO UPSELL
@@ -163,7 +163,7 @@ const UpsellContent = () => {
                 "Chỉ tập trung vào triển khai nhanh & đúng"
             ],
             ctaText: "Nâng cấp lên Pro – 699.000đ",
-            skipText: "Tôi muốn giữ gói hiện tại"
+            skipText: "Tôi chưa cần nâng câp - Gửi tài liệu qua Mail cho tôi"
         };
 
     useEffect(() => {

@@ -98,6 +98,21 @@ def create_html(email_data):
             # Regular paragraph
             body_content += f'<p style="margin-bottom: 15px;">{line}</p>'
 
+    # Generate meaningful preheader from body
+    preheader_text = ""
+    for line in email_data['body']:
+        clean_line = re.sub(r'[\[\]👉❌✅📌1️⃣2️⃣⚠️🔰🔥💰]', '', line).strip() # Remove icons/buttons
+        if clean_line and not clean_line.startswith("—") and len(clean_line) > 5:
+             preheader_text = clean_line
+             break
+    
+    # Truncate if too long (though usually first line is short)
+    if len(preheader_text) > 100:
+        preheader_text = preheader_text[:97] + "..."
+        
+    # Add padding to prevent "looping" or showing unwanted text
+    preheader_padding = "&nbsp;&zwnj;" * 100
+
     html = f"""<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -110,7 +125,7 @@ def create_html(email_data):
         
         <!-- Preheader -->
         <div style="display:none;font-size:1px;color:#333333;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
-            {email_data['subject']}
+            {preheader_text} {preheader_padding}
         </div>
 
         <!-- Header / Subject -->

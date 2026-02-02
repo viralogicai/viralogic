@@ -107,6 +107,19 @@ def create_html(email_data):
     # Reset button color to Blue for consistency in this string, user can change later.
     body_content = body_content.replace("#FA8C16", "#007bff")
 
+    # Generate meaningful preheader from body
+    preheader_text = ""
+    for line in email_data['body']:
+        clean_line = re.sub(r'[\[\]👉❌✅📌1️⃣2️⃣⚠️🔰🔥💰]', '', line).strip() 
+        if clean_line and not clean_line.startswith("—") and len(clean_line) > 5:
+             preheader_text = clean_line
+             break
+    
+    if len(preheader_text) > 100:
+        preheader_text = preheader_text[:97] + "..."
+        
+    preheader_padding = "&nbsp;&zwnj;" * 100
+
     html = f"""<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -119,7 +132,7 @@ def create_html(email_data):
         
         <!-- Preheader -->
         <div style="display:none;font-size:1px;color:#333333;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
-            {email_data['subject']}
+            {preheader_text} {preheader_padding}
         </div>
 
         <!-- Header / Subject -->
