@@ -275,33 +275,6 @@ export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSucces
                                         <p className="text-[10px] text-gray-500">
                                             Mã đơn hàng: <span className="font-mono">{orderCode}</span>
                                         </p>
-
-                                        {/* Dev simulate button - only show in development */}
-                                        <div className="mt-4 pt-4 border-t border-white/5 bg-yellow-500/10 p-2 rounded-lg">
-                                            <p className="text-xs text-yellow-500 text-center mb-2">DEVELOPER MODE</p>
-                                            <Button
-                                                variant="outline"
-                                                onClick={async () => {
-                                                    try {
-                                                        const res = await fetch('/api/payos/simulate', {
-                                                            method: 'POST',
-                                                            headers: { 'Content-Type': 'application/json' },
-                                                            body: JSON.stringify({ orderCode })
-                                                        });
-                                                        const data = await res.json();
-                                                        console.log('Simulation result:', data);
-                                                    } catch (e) {
-                                                        console.error('Simulation failed:', e);
-                                                    }
-
-                                                    setPaymentState('success');
-                                                    setTimeout(onSuccess, 1000);
-                                                }}
-                                                className="w-full border-yellow-500/50 text-yellow-500 hover:bg-yellow-500/10"
-                                            >
-                                                🛠️ Simulate Payment Success
-                                            </Button>
-                                        </div>
                                     </div>
                                 </>
                             )}
