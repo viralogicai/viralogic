@@ -1,40 +1,75 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { SecureVideoPlayer } from '@/components/SecureVideoPlayer';
-import { Lock, Copy, Download, Folder, FileText, Check } from 'lucide-react';
+import { Lock, Copy, Download, Folder, FileText, Check, Loader2 } from 'lucide-react';
 import { AchievementBoard } from '@/components/AchievementBoard';
 import { Button } from '@/components/Button';
 
-// Mock Data for Tabs
-const TABS = ['TikTok Hooks', 'Viral Scripts', 'CTA Collections', 'Email Sequence'];
-
-// Mock Data for Prompts
-const PROMPTS = [
-    { id: 1, category: 'TikTok Hooks', en: 'Stop scrolling if you want to [Benefit]', vi: 'Dừng lướt ngay nếu bạn muốn [Lợi ích]' },
-    { id: 2, category: 'TikTok Hooks', en: 'Here is the secret to [Result] without [Pain Point]', vi: 'Đây là bí mật để đạt [Kết quả] mà không cần [Nỗi đau]' },
-    { id: 3, category: 'Viral Scripts', en: 'Storytelling Framework: Hook -> Conflict -> Resolution', vi: 'Cấu trúc kể chuyện: Mở đầu -> Mâu thuẫn -> Giải quyết' },
-];
+interface Prompt {
+    id: string;
+    title: string;
+    content: string;
+    category: string;
+    tier: string;
+}
 
 export default function MembershipPage() {
     const { userTier, checkAccess } = useAuth();
     const router = useRouter();
-    const [activeTab, setActiveTab] = useState(TABS[0]);
-    const [copiedId, setCopiedId] = useState<number | null>(null);
+    const [prompts, setPrompts] = useState<Prompt[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [activeTab, setActiveTab] = useState('');
+    const [copiedId, setCopiedId] = useState<string | null>(null);
+
+    // Extract unique categories from prompts
+    const categories = useMemo(() => {
+        const cats = [...new Set(prompts.map(p => p.category))];
+        return cats.sort();
+    }, [prompts]);
+
+    // Filter prompts by active category
+    const filteredPrompts = useMemo(() => {
+        if (!activeTab) return [];
+        return prompts.filter(p => p.category === activeTab);
+    }, [prompts, activeTab]);
 
     useEffect(() => {
         // Enforce VIP Access Only
-        // Admin token check: if localStorage has 'admin_token', we allow access (optional, but good for testing)
-        // const isAdmin = typeof window !== 'undefined' && localStorage.getItem('adminToken');
-
         if (userTier !== 'vip_mentorship') {
             router.push('/membership/login');
         }
     }, [userTier, router]);
 
-    const handleCopy = (text: string, id: number) => {
+    // Fetch prompts from API
+    useEffect(() => {
+        const fetchPrompts = async () => {
+            try {
+                const res = await fetch('/api/prompts?tier=VIP_MENTORSHIP');
+                const data = await res.json();
+                if (data.success && data.data) {
+                    setPrompts(data.data);
+                    // Set first category as active tab
+                    const cats = [...new Set(data.data.map((p: Prompt) => p.category))].sort() as string[];
+                    if (cats.length > 0) {
+                        setActiveTab(cats[0]);
+                    }
+                }
+            } catch (err) {
+                console.error('Failed to fetch prompts:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (userTier === 'vip_mentorship') {
+            fetchPrompts();
+        }
+    }, [userTier]);
+
+    const handleCopy = (text: string, id: string) => {
         navigator.clipboard.writeText(text);
         setCopiedId(id);
         setTimeout(() => setCopiedId(null), 2000);
@@ -46,7 +81,6 @@ export default function MembershipPage() {
             <header className="border-b border-white/10 bg-black/50 backdrop-blur-md sticky top-0 z-50">
                 <div className="container mx-auto px-6 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        {/* <img src="/logo-brand.png" alt="ViraLogic AI" className="h-8 w-auto object-contain" /> */}
                         <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan to-brand-purple">ViraLogic AI</span>
                         <span className="font-display font-medium hidden md:block border-l border-white/10 pl-3 ml-3">Membership Area</span>
                     </div>
@@ -98,63 +132,84 @@ export default function MembershipPage() {
                     </div>
                 </section>
 
-                {/* Prompts Section (Tabs & Table) */}
+                {/* Prompts Section (Dynamic Tabs & Table) */}
                 <section className="mb-16">
-                    <div className="flex flex-wrap gap-2 mb-6 border-b border-white/10 pb-1">
-                        {TABS.map(tab => (
-                            <button
-                                key={tab}
-                                onClick={() => setActiveTab(tab)}
-                                className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${activeTab === tab ? 'bg-brand-cyan/10 text-brand-cyan border-b-2 border-brand-cyan' : 'text-gray-400 hover:text-white'}`}
-                            >
-                                {tab}
-                            </button>
-                        ))}
-                    </div>
+                    <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                        <FileText className="w-5 h-5 text-brand-purple" />
+                        Prompt Library
+                        <span className="text-sm font-normal text-gray-500 ml-2">({prompts.length} prompts)</span>
+                    </h2>
 
-                    <div className="glass-panel rounded-xl overflow-hidden">
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left">
-                                <thead className="bg-white/5 text-xs uppercase text-gray-400">
-                                    <tr>
-                                        <th className="px-6 py-4 w-1/2">English Prompt</th>
-                                        <th className="px-6 py-4 w-1/2">Vietnamese Meaning</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-white/5">
-                                    {PROMPTS.filter(p => p.category === activeTab).length > 0 ? (
-                                        PROMPTS.filter(p => p.category === activeTab).map((prompt) => (
-                                            <tr key={prompt.id} className="hover:bg-white/[0.02]">
-                                                <td className="px-6 py-4">
-                                                    <div className="flex gap-2 items-start group">
-                                                        <p className="text-sm text-gray-200 font-mono bg-black/30 p-2 rounded border border-white/5 flex-1">
-                                                            {prompt.en}
-                                                        </p>
-                                                        <button
-                                                            onClick={() => handleCopy(prompt.en, prompt.id)}
-                                                            className="text-gray-500 hover:text-brand-cyan transition-colors p-1"
-                                                            title="Copy English Prompt"
-                                                        >
-                                                            {copiedId === prompt.id ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                                <td className="px-6 py-4 text-sm text-gray-400">
-                                                    {prompt.vi}
-                                                </td>
-                                            </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan={2} className="px-6 py-8 text-center text-gray-500 italic">
-                                                Select 'TikTok Hooks' or 'Viral Scripts' to see examples.
-                                            </td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
+                    {loading ? (
+                        <div className="flex items-center justify-center py-12">
+                            <Loader2 className="w-8 h-8 animate-spin text-brand-cyan" />
                         </div>
-                    </div>
+                    ) : categories.length === 0 ? (
+                        <div className="glass-panel rounded-xl p-12 text-center">
+                            <p className="text-gray-500">Chưa có prompt nào. Vui lòng liên hệ admin.</p>
+                        </div>
+                    ) : (
+                        <>
+                            {/* Category Tabs */}
+                            <div className="flex flex-wrap gap-2 mb-6 border-b border-white/10 pb-1">
+                                {categories.map(cat => (
+                                    <button
+                                        key={cat}
+                                        onClick={() => setActiveTab(cat)}
+                                        className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${activeTab === cat ? 'bg-brand-cyan/10 text-brand-cyan border-b-2 border-brand-cyan' : 'text-gray-400 hover:text-white'}`}
+                                    >
+                                        {cat}
+                                        <span className="ml-2 text-xs opacity-50">({prompts.filter(p => p.category === cat).length})</span>
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Prompts Table */}
+                            <div className="glass-panel rounded-xl overflow-hidden">
+                                <div className="overflow-x-auto">
+                                    <table className="w-full text-left">
+                                        <thead className="bg-white/5 text-xs uppercase text-gray-400">
+                                            <tr>
+                                                <th className="px-6 py-4 w-1/3">Title</th>
+                                                <th className="px-6 py-4 w-2/3">Prompt Content</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-white/5">
+                                            {filteredPrompts.length > 0 ? (
+                                                filteredPrompts.map((prompt) => (
+                                                    <tr key={prompt.id} className="hover:bg-white/[0.02]">
+                                                        <td className="px-6 py-4">
+                                                            <span className="text-sm font-medium text-brand-cyan">{prompt.title}</span>
+                                                        </td>
+                                                        <td className="px-6 py-4">
+                                                            <div className="flex gap-2 items-start group">
+                                                                <p className="text-sm text-gray-200 font-mono bg-black/30 p-3 rounded border border-white/5 flex-1 whitespace-pre-wrap">
+                                                                    {prompt.content}
+                                                                </p>
+                                                                <button
+                                                                    onClick={() => handleCopy(prompt.content, prompt.id)}
+                                                                    className="text-gray-500 hover:text-brand-cyan transition-colors p-2 shrink-0"
+                                                                    title="Copy Prompt"
+                                                                >
+                                                                    {copiedId === prompt.id ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan={2} className="px-6 py-8 text-center text-gray-500 italic">
+                                                        Không có prompt trong category này.
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </section>
 
                 {/* Video Masterclass (Elite Only) */}
