@@ -23,6 +23,12 @@ function PaymentSuccessContent() {
             return;
         }
 
+        // Handle UPGRADE orders (instant upgrades from Upsell page - no real payment record)
+        if (orderCode?.startsWith('UPGRADE-')) {
+            setStatus('success');
+            return;
+        }
+
         if (!orderCode) return;
 
         const checkStatus = async () => {

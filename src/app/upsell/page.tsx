@@ -190,8 +190,8 @@ const UpsellContent = () => {
     const handleUpgradeSuccess = () => {
         upgradeTier(content.upgradeTierId);
         setIsPaymentOpen(false);
-        // Redirect to success page for the UPGRADED plan
-        router.push(`/payment-success?orderCode=UPGRADE-${Date.now()}&planId=${content.targetPlan}`);
+        // Redirect to success page - payment already verified in modal, use skipped to show success immediately
+        router.push(`/payment-success?status=skipped&planId=${content.targetPlan}`);
     };
 
     const handleSkip = () => {
