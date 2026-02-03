@@ -41,24 +41,32 @@ export async function POST(request: Request) {
         const isVip = payment.planId.toLowerCase().includes('vip') || payment.planId.toLowerCase().includes('mentorship');
         const buyerEmail = (payment.paymentData as any)?.buyerEmail;
 
+        console.log(`[Simulate] planId: "${payment.planId}", isVip: ${isVip}, buyerEmail: ${buyerEmail || 'MISSING'}`);
+
         if (isVip && buyerEmail) {
             try {
-                await prisma.user.upsert({
+                const upsertedUser = await prisma.user.upsert({
                     where: { email: buyerEmail },
                     update: {
-                        tier: 'VIP_MENTORSHIP'
+                        tier: 'VIP_MENTORSHIP',
+                        role: 'USER'
                     },
                     create: {
                         email: buyerEmail,
                         name: buyerEmail.split('@')[0],
                         password: '$2b$10$PLACEHOLDER_PENDING_SETUP',
-                        tier: 'VIP_MENTORSHIP'
+                        tier: 'VIP_MENTORSHIP',
+                        role: 'USER'
                     }
                 });
-                console.log(`[Simulate] Upserted VIP User: ${buyerEmail}`);
+                console.log(`[Simulate] Upserted VIP User: ${buyerEmail}, userId: ${upsertedUser.id}`);
             } catch (err) {
                 console.error(`[Simulate] Failed to upsert user ${buyerEmail}:`, err);
             }
+        } else if (!isVip) {
+            console.log(`[Simulate] Skipping user creation - not a VIP plan`);
+        } else if (!buyerEmail) {
+            console.warn(`[Simulate] Cannot create user - buyerEmail is missing from paymentData`);
         }
 
         // Sync to MailerLite
