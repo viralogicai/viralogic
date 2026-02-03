@@ -86,11 +86,6 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Failed to initialize order' }, { status: 500 });
         }
 
-        // Define webhook URL for PayOS to call after payment
-        const webhookUrl = process.env.VERCEL_URL
-            ? `https://${process.env.VERCEL_URL}/api/payos/webhook`
-            : `${baseUrl}/api/payos/webhook`;
-
         const payosBody = {
             orderCode,
             amount,
@@ -98,7 +93,6 @@ export async function POST(request: Request) {
             cancelUrl,
             returnUrl,
             signature,
-            webhookUrl,
             ...(buyerEmail && { buyerEmail })
         };
 
