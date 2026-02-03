@@ -35,7 +35,11 @@ export default function MemberLoginPage() {
                 return;
             }
 
-            if (data.status === 'SETUP_REQUIRED') {
+            if (data.success || data.status === 'SUCCESS') {
+                // Direct Login Success (Email Only)
+                upgradeTier('vip_mentorship');
+                router.push('/membership');
+            } else if (data.status === 'SETUP_REQUIRED') {
                 setStep('setup');
             } else if (data.status === 'PASSWORD_REQUIRED') {
                 setStep('password');
@@ -116,7 +120,7 @@ export default function MemberLoginPage() {
                 {step === 'email' && (
                     <form onSubmit={handleEmailSubmit} className="space-y-4">
                         <div>
-                            <label className="block text-sm text-gray-400 mb-1">Email Address used for purchase</label>
+                            <label className="block text-sm text-gray-400 mb-1">Email VIP đã đăng ký</label>
                             <div className="relative">
                                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                                 <input
@@ -131,62 +135,11 @@ export default function MemberLoginPage() {
                         </div>
                         {error && <p className="text-red-400 text-sm">{error}</p>}
                         <Button variant="primary" className="w-full" disabled={loading}>
-                            {loading ? <Loader2 className="animate-spin w-5 h-5" /> : 'Continue'}
+                            {loading ? <Loader2 className="animate-spin w-5 h-5" /> : 'Truy cập Membership'}
                         </Button>
-                    </form>
-                )}
-
-                {step === 'password' && (
-                    <form onSubmit={handleLogin} className="space-y-4">
-                        <div className="flex items-center justify-between mb-4 bg-white/5 p-3 rounded-lg">
-                            <span className="text-gray-300 text-sm">{email}</span>
-                            <button type="button" onClick={() => setStep('email')} className="text-xs text-brand-cyan hover:underline">Change</button>
-                        </div>
-                        <div>
-                            <label className="block text-sm text-gray-400 mb-1">Password</label>
-                            <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-                                <input
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white focus:border-brand-cyan focus:outline-none"
-                                    placeholder="Enter password"
-                                    required
-                                />
-                            </div>
-                        </div>
-                        {error && <p className="text-red-400 text-sm">{error}</p>}
-                        <Button variant="primary" className="w-full" disabled={loading}>
-                            {loading ? <Loader2 className="animate-spin w-5 h-5" /> : 'Login'}
-                        </Button>
-                    </form>
-                )}
-
-                {step === 'setup' && (
-                    <form onSubmit={handleSetup} className="space-y-4">
-                        <div className="bg-brand-cyan/10 border border-brand-cyan/20 p-4 rounded-lg mb-4 text-sm text-brand-cyan">
-                            Welcome! Since this is your first time, please create a password for your account.
-                        </div>
-                        <div>
-                            <label className="block text-sm text-gray-400 mb-1">Create Password</label>
-                            <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
-                                <input
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-3 text-white focus:border-brand-cyan focus:outline-none"
-                                    placeholder="New password"
-                                    required
-                                    minLength={6}
-                                />
-                            </div>
-                        </div>
-                        {error && <p className="text-red-400 text-sm">{error}</p>}
-                        <Button variant="primary" className="w-full" disabled={loading}>
-                            {loading ? <Loader2 className="animate-spin w-5 h-5" /> : 'Create Account & Login'}
-                        </Button>
+                        <p className="text-xs text-center text-gray-500 mt-4">
+                            *Dành riêng cho thành viên VIP Mentorship
+                        </p>
                     </form>
                 )}
             </MotionDiv>

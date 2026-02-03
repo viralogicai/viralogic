@@ -28,38 +28,34 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Your account does not have VIP Mentorship access.' }, { status: 403 });
         }
 
-        // Check for Pending Setup
-        if (user.password.startsWith('$2b$10$PLACEHOLDER')) {
-            return NextResponse.json({ status: 'SETUP_REQUIRED', message: 'Please set a password' });
-        }
+        // Check for Pending Setup - REMOVED for Email Only Login
+        // if (user.password.startsWith('$2b$10$PLACEHOLDER')) {
+        //     return NextResponse.json({ status: 'SETUP_REQUIRED', message: 'Please set a password' });
+        // }
 
-        // Normal Login
-        if (password) {
-            if (user.password !== password) {
-                return NextResponse.json({ error: 'Incorrect password' }, { status: 401 });
-            }
+        // Normal Login - SIMPLIFIED: Password check removed as per user request
+        // Auto-login if VIP check passes
 
-            const token = jwt.sign(
-                { userId: user.id, email: user.email, role: user.role, tier: user.tier },
-                JWT_SECRET,
-                { expiresIn: '30d' }
-            );
+        const token = jwt.sign(
+            { userId: user.id, email: user.email, role: user.role, tier: user.tier },
+            JWT_SECRET,
+            { expiresIn: '30d' }
+        );
 
-            return NextResponse.json({
-                success: true,
-                status: 'SUCCESS',
-                data: {
-                    token,
-                    user: {
-                        id: user.id,
-                        email: user.email,
-                        name: user.name,
-                        role: user.role,
-                        tier: user.tier
-                    }
+        return NextResponse.json({
+            success: true,
+            status: 'SUCCESS',
+            data: {
+                token,
+                user: {
+                    id: user.id,
+                    email: user.email,
+                    name: user.name,
+                    role: user.role,
+                    tier: user.tier
                 }
-            });
-        }
+            }
+        });
 
         // If just checking email existence (step 1)
         return NextResponse.json({ status: 'PASSWORD_REQUIRED', message: 'Enter password' });
