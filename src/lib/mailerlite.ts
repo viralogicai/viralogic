@@ -99,6 +99,7 @@ export function getGroupIdByPlan(planId: string): string | null {
         'vip': process.env.MAILERLITE_GROUP_VIP,
         'vip_mentorship': process.env.MAILERLITE_GROUP_VIP,
         'mentorship': process.env.MAILERLITE_GROUP_VIP,
+        'vip masterclass': process.env.MAILERLITE_GROUP_VIP,
     };
 
     return mapping[normalizedPlanId] || null;
