@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import prisma from '@/lib/prisma';
 
 const PAYOS_API_URL = 'https://api-merchant.payos.vn/v2/payment-requests';
 
@@ -11,6 +12,26 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: 'Missing orderCode parameter' }, { status: 400 });
         }
 
+        // First, check our local database for simulated/already processed payments
+        const localPayment = await prisma.payment.findUnique({
+            where: { orderCode: String(orderCode) }
+        });
+
+        if (localPayment && localPayment.status === 'PAID') {
+            // Payment already marked as PAID in our database (could be from simulation or webhook)
+            return NextResponse.json({
+                success: true,
+                data: {
+                    orderCode: localPayment.orderCode,
+                    status: 'PAID',
+                    amount: localPayment.amount,
+                    amountPaid: localPayment.amount,
+                    amountRemaining: 0
+                }
+            });
+        }
+
+        // If not PAID locally, check PayOS API for real payment status
         const clientId = process.env.PAYOS_CLIENT_ID;
         const apiKey = process.env.PAYOS_API_KEY;
 
