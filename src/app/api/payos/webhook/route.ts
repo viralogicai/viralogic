@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { syncCustomerToGetResponse } from '@/lib/getresponse';
+import { syncCustomerToMailerLite } from '@/lib/mailerlite';
 
 interface WebhookData {
     code: string;
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
 
             console.log(`Payment successful: Order ${orderCode}, Amount ${amount}, PaymentLink ${paymentLinkId}`);
 
-            // Update database and sync to GetResponse
+            // Update database and sync to MailerLite
             try {
                 const payment = await prisma.payment.findUnique({
                     where: { orderCode: String(orderCode) }
@@ -84,16 +84,16 @@ export async function POST(request: Request) {
                         }
                     }
 
-                    // Sync to GetResponse
+                    // Sync to MailerLite
                     const paymentData = payment.paymentData as { buyerEmail?: string } | null;
                     if (paymentData?.buyerEmail) {
-                        await syncCustomerToGetResponse(
+                        await syncCustomerToMailerLite(
                             paymentData.buyerEmail,
                             payment.planId,
                             'Customer' // We might want to pass real name if available
                         );
                     } else {
-                        console.warn(`[Webhook] No buyer email found for order ${orderCode}, skipping GetResponse sync`);
+                        console.warn(`[Webhook] No buyer email found for order ${orderCode}, skipping MailerLite sync`);
                     }
                 } else {
                     console.error(`[Webhook] Payment record not found for order ${orderCode}`);

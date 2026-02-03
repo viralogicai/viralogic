@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { syncCustomerToGetResponse } from '@/lib/getresponse';
+import { syncCustomerToMailerLite } from '@/lib/mailerlite';
 
 export async function POST(request: Request) {
     if (process.env.NODE_ENV === 'production') {
@@ -61,24 +61,24 @@ export async function POST(request: Request) {
             }
         }
 
-        // Sync to GetResponse
+        // Sync to MailerLite
         let syncResult = null;
         const paymentData = payment.paymentData as { buyerEmail?: string } | null;
 
         if (paymentData?.buyerEmail) {
             try {
-                syncResult = await syncCustomerToGetResponse(
+                syncResult = await syncCustomerToMailerLite(
                     paymentData.buyerEmail,
                     payment.planId,
                     'Simulated Customer'
                 );
                 if (syncResult) {
-                    console.log(`[Simulate] Synced ${paymentData.buyerEmail} to GetResponse`);
+                    console.log(`[Simulate] Synced ${paymentData.buyerEmail} to MailerLite`);
                 } else {
-                    console.warn(`[Simulate] Failed to sync ${paymentData.buyerEmail} to GetResponse (check logs)`);
+                    console.warn(`[Simulate] Failed to sync ${paymentData.buyerEmail} to MailerLite (check logs)`);
                 }
             } catch (err) {
-                console.error('[Simulate] GetResponse sync failed:', err);
+                console.error('[Simulate] MailerLite sync failed:', err);
                 // We don't fail the request if sync fails, but we report it
             }
         } else {

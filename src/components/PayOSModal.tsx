@@ -275,6 +275,35 @@ export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSucces
                                         <p className="text-[10px] text-gray-500">
                                             Mã đơn hàng: <span className="font-mono">{orderCode}</span>
                                         </p>
+
+                                        {/* Simulate Button - Only for Dev/Test */}
+                                        <div className="pt-2">
+                                            <Button
+                                                variant="outline"
+                                                onClick={async () => {
+                                                    try {
+                                                        const res = await fetch('/api/payos/simulate', {
+                                                            method: 'POST',
+                                                            headers: { 'Content-Type': 'application/json' },
+                                                            body: JSON.stringify({ orderCode })
+                                                        });
+                                                        const data = await res.json();
+                                                        if (data.success) {
+                                                            // Success handled by polling
+                                                            console.log('Simulation triggered');
+                                                        } else {
+                                                            alert('Simulation failed: ' + data.error);
+                                                        }
+                                                    } catch (err) {
+                                                        console.error(err);
+                                                        alert('Simulation error');
+                                                    }
+                                                }}
+                                                className="w-full text-xs py-2 bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500/20 border-yellow-500/50"
+                                            >
+                                                ⚡ Simulate Payment (Test Only)
+                                            </Button>
+                                        </div>
                                     </div>
                                 </>
                             )}
