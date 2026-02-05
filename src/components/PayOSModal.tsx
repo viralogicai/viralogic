@@ -68,6 +68,23 @@ export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSucces
             const cleanup = pollPaymentStatus(
                 newOrderCode,
                 () => {
+                    // Fire TikTok Pixel Purchase Event
+                    if (typeof window !== 'undefined' && (window as any).ttq) {
+                        try {
+                            (window as any).ttq.track('Purchase', {
+                                value: amount,
+                                currency: 'VND',
+                                content_id: planId,
+                                content_name: planName,
+                                content_type: 'product',
+                                order_id: newOrderCode.toString()
+                            });
+                            console.log('TikTok Pixel Purchase fired:', { amount, orderCode: newOrderCode });
+                        } catch (err) {
+                            console.error('TikTok Pixel error:', err);
+                        }
+                    }
+
                     setPaymentState('success');
                     setTimeout(() => {
                         onSuccess();
@@ -80,6 +97,7 @@ export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSucces
                     }
                 }
             );
+
             setStopPolling(() => cleanup);
 
         } catch (error) {
