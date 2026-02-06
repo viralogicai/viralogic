@@ -263,7 +263,23 @@ export default function StarterPage() {
         router.push('/upsell?fromPlan=starter');
     };
 
-    const openPayment = () => setIsPaymentOpen(true);
+    const openPayment = () => {
+        // Fire TikTok Pixel AddToCart
+        if (typeof window !== 'undefined' && (window as any).ttq) {
+            try {
+                (window as any).ttq.track('AddToCart', {
+                    content_id: 'starter',
+                    content_type: 'product',
+                    value: 199000,
+                    currency: 'VND'
+                });
+                console.log('TikTok AddToCart fired: starter');
+            } catch (err) {
+                console.error('TikTok AddToCart error:', err);
+            }
+        }
+        setIsPaymentOpen(true);
+    };
 
     return (
         <div className="min-h-screen text-white font-body selection:bg-brand-pink/30 selection:text-brand-pink-light overflow-x-hidden relative">
