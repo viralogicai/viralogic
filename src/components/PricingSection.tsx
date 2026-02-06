@@ -126,6 +126,21 @@ export const PricingSection = ({ onModalOpenChange }: PricingSectionProps) => {
                                     variant={plan.highlight ? 'primary' : 'outline'}
                                     className="w-full"
                                     onClick={() => {
+                                        // Fire TikTok Pixel AddToCart
+                                        if (typeof window !== 'undefined' && (window as any).ttq) {
+                                            try {
+                                                (window as any).ttq.track('AddToCart', {
+                                                    content_id: plan.id,
+                                                    content_type: 'product',
+                                                    value: plan.price,
+                                                    currency: 'VND'
+                                                });
+                                                console.log('TikTok AddToCart fired:', plan.id);
+                                            } catch (err) {
+                                                console.error('TikTok AddToCart error:', err);
+                                            }
+                                        }
+
                                         setSelectedPlan(plan);
                                         onModalOpenChange?.(true);
                                     }}

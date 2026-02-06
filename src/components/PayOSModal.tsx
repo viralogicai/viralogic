@@ -45,6 +45,21 @@ export const PayOSModal = ({ isOpen, onClose, planName, planId, amount, onSucces
             return;
         }
 
+        // Fire TikTok Pixel InitiateCheckout
+        if (typeof window !== 'undefined' && (window as any).ttq) {
+            try {
+                (window as any).ttq.track('InitiateCheckout', {
+                    content_id: planId,
+                    content_type: 'product',
+                    value: amount,
+                    currency: 'VND'
+                });
+                console.log('TikTok InitiateCheckout fired:', planId);
+            } catch (err) {
+                console.error('TikTok InitiateCheckout error:', err);
+            }
+        }
+
         setPaymentState('loading');
         setErrorMessage('');
 
