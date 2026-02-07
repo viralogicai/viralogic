@@ -16,9 +16,11 @@ export default function TrackStarterATC() {
 
       if ((window as any).ttq) {
         console.log("🚀 FIRE ADD TO CART");
+
         (window as any).ttq.track("AddToCart", {
-          content_id: "starter",
+          content_id: "starter-199k",
           content_type: "product",
+          content_name: "Starter Package 199k",
           value: 199000,
           currency: "VND",
         });
